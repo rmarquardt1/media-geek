@@ -1,0 +1,49 @@
+.SearchResults {
+  display:flex;
+  flex-wrap: wrap;
+  margin:30px;
+  justify-content:space-evenly;
+  margin-top:120px;
+}
+
+.SearchResultsFor {
+  position:absolute;
+  top:80px;
+  text-align:center;
+  left:0;
+  right:0;
+} 
+.NavSearch {
+  width: 250px;
+  position: relative;
+  margin: auto;
+  margin-bottom:10px;
+  display:none;
+}
+
+@media (max-width: 1090px) {
+  .NavSearch {
+    display:block;
+  }
+  .NavSearch input {
+    display:block;
+    height:30px;
+    font-size:18px;
+  }
+  .NavSearch svg {
+    display:block;
+  }
+  .SearchResults {
+    margin-top:160px;
+  }
+
+}
+
+@media (max-width: 500px) {
+  .SearchResults {
+    display:flex;
+    flex-wrap: wrap;
+    margin:160px 10px 0 10px;
+    justify-content:space-evenly;
+  }
+}

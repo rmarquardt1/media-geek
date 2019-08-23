@@ -1,0 +1,72 @@
+.Event {
+  /* padding:10px 0; */
+  display:flex;
+  width:45%;
+  max-width:45%;
+  height:60px;
+  margin:10px;
+  /* box-sizing:border-box; */
+  background:#1a1a1a;
+  padding:10px;
+  align-items:flex-start;
+  border-radius:5px;
+  
+}
+.CalIcon {
+  height:60px;
+  width:60px;
+  min-height:60px;
+  min-width:60px;
+  /* margin-right:20px; */
+  background-size:contain;
+  margin-left:auto;
+}
+.Month {
+  text-align:center;
+  display:block;
+  font-size:12px;
+  font-weight:bold;
+}
+.Day {
+  text-align:center;
+  display:block;
+  color:#000;
+  font-size:30px;
+  padding:2px;
+}
+.EventName {
+  font-weight:bold;
+  max-height:21px;
+  overflow:hidden;
+  /* overflow:hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width:100%; */
+}
+.Venue {
+  color: #ccc;
+  font-weight:bold;
+}
+.VenueLocation {
+  color: #ccc;
+  font-style: italic;
+}
+.EventImage {
+  width:60px;
+  height:60px;
+  min-width:60px;
+  background-size:cover;
+  background-position:center;
+  margin-right:20px;
+  /* margin-left:auto; */
+}
+.EventImage img {
+  height:100%;
+}
+
+@media (max-width: 1250px) {
+  .Event {
+    width:100%;
+    max-width: 100%;
+  }
+}

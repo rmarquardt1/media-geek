@@ -1,0 +1,11 @@
+.AlbumTracks {
+  padding: 0;
+}
+.AlbumTracks ul {
+  list-style:none;
+  padding-left:0;
+}
+.AlbumTracks ul li {
+  padding: 10px 0;
+  border-bottom:1px solid #333;
+}

@@ -1,0 +1,247 @@
+.OpenTvBackdrop {
+  position:fixed;
+  height:100%;
+  width:100%;
+  background-size:cover;
+  background-position:center;
+}
+.OpenTvOverlay {
+  position:fixed;
+  height:100%;
+  width:100%;
+  background-color:rgba(0,0,0,0.6);
+  z-index:3;
+}
+.OpenTvContent {
+  position:relative;
+  z-index:5;
+  padding-top:140px;
+  margin-left:100px;
+  display:flex;
+}
+.OpenTvContent h1 {
+  font-size:52px;
+  margin:0;
+}
+.OpenTvGenRel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.RelRating {
+  /* margin-top:3px; */
+  font-size:16px;
+}
+.OpenTvGenres {
+  font-weight:lighter;
+  margin-top:0;
+  font-size:18px;
+}
+.OpenTvPoster {
+  width:450px;
+  /* z-index:100; */
+  position:relative;
+
+
+
+}
+.OpenTvPoster .PosterImage {
+  width:450px;
+}
+.OpenTvInfo {
+  padding: 0 100px;
+  z-index:50;
+  position:relative;
+}
+.OpenTvDesc {
+  font-size:26px;
+  font-weight:lighter;
+}
+.Container {
+  position:relative;
+  height:300px;
+}
+.OpenTvActors {
+  margin:30px 0;
+  width:100%;
+  opacity:1;
+  display:flex;
+  justify-content:space-between;
+  /* flex-wrap: wrap; */
+  flex-wrap: nowrap;
+  box-sizing:border-box;
+  transition:opacity 0.5s 0.5s;
+}
+.OpenTvActorsAlignFlex::after {
+  content: "";
+  flex: auto;
+  width:170px;
+  max-width:170px;
+}
+.OpenTvVideos {
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin:30px 0;
+  width:100%;
+}
+.OpenTvVideosAlignFlex::after {
+  content: "";
+  flex: auto;
+  width:240px;
+  max-width:240px;
+}
+.OpenTvReviews {
+  display:flex;
+  flex-wrap: wrap;
+  justify-content:space-between;
+  margin:30px 0;
+}
+.OpenTvPosterMobile {
+  display: none;
+}
+.Seasons {
+  margin:20px 0;
+}
+
+
+.FadeOut {
+  opacity:0;
+  transition: 0.5s;
+}
+
+.FadeIn {
+  opacity:1;
+  transition: 0.5s;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 1600px) {
+  .OpenTvPoster {
+    width:350px;
+  }
+  .OpenTvPoster .PosterImage {
+    width:350px;
+  }
+  .OpenTvInfo {
+    padding: 0 50px;
+  }
+  .OpenTvContent {
+    margin-left:50px;
+  }
+}
+
+@media (max-width: 1366px) {
+  .OpenTvPoster {
+    width:300px;
+  }
+  .OpenTvPoster .PosterImage {
+    width:300px;
+  }
+}
+
+@media (max-width: 1090px) {
+  .OpenTvPoster {
+    display:none;
+  }
+  .OpenTvPosterMobile {
+    display:block;
+    /* float: left; */
+    height:240px;
+    margin-right:20px;
+  }
+  .OpenTvPosterMobile img {
+    height:100%;
+  }
+  .OpenTvContent h1 {
+    font-size:34px;
+  }
+  .OpenTvDesc {
+    font-size:20px;
+  }
+  .MobileDescription {
+    display:flex;
+    margin-bottom:26px;
+  }
+  .OpenTvContent {
+    margin-left:0;
+  }
+  .OpenTvInfo {
+    padding: 0 25px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .OpenTvInfo {
+    padding: 0 25px;
+  }
+  .OpenTvContent h1 {
+    font-size:26px;
+  }
+  .OpenTvGenres {
+    font-size:14px;
+    margin-bottom:5px;
+  }
+  .OpenTvDesc {
+    font-size:18px;
+  }
+  .OpenTvGenRel {
+    flex-direction:column;
+    align-items:flex-start;
+  }
+}
+
+@media (max-width: 500px) {
+  .OpenTvInfo {
+    padding:0;
+  }
+  .OpenTvVideos {
+    padding:10px 0;
+    margin:0;
+    justify-content:space-around;
+  }
+  .OpenTvPosterMobile {
+    display:none;
+  }
+  .OpenTvDesc {
+    margin:18px;
+  }
+  .OpenTvContent {
+    padding-top:60px;
+  }
+  .MobileDescription {
+    margin-bottom:0;
+  }
+  .OpenTvActors {
+    margin:0;
+    padding:10px;
+  }
+  
+}

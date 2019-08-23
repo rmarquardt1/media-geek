@@ -1,0 +1,101 @@
+.AlbumThumbContainer {
+  /* margin-bottom:20px; */
+  position:relative;
+  margin:10px;
+  max-width:200px;
+}
+.AlbumTitle {
+  /* box-sizing:border-box;
+  padding-right:20px;
+  width:100%;
+  display:flex;
+  align-items:center;
+  font-weight:bold;
+  max-width:220px;
+  margin-top:5px;
+  font-size:14px; */
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 0;
+  margin-top: 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ReleaseDate {
+  /* font-weight:lighter;
+  margin:3px 0 20px 0;
+  font-style: italic; */
+  font-weight:lighter;
+  /* font-size: 14px; */
+  font-style: italic;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.AlbumThumb {
+  width:200px;
+  min-height: 200px;
+  min-width:200px;
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center;
+  cursor:pointer;
+  display: flex;
+  flex-direction:column;
+  justify-content: flex-end;
+}
+
+.AlbumThumb img {
+  width:100%;
+}
+
+.AlbumSelected {
+  width:100px;
+  height:100px;
+}
+
+@media (max-width: 1410px) {
+
+  .AlbumThumb {
+    width:150px;
+    min-height: 150px;
+    min-width:150px;
+    /* background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center;
+    cursor:pointer; */
+  }
+
+}
+
+@media (max-width: 560px) {
+  .AlbumThumbContainer {
+    width:44%;
+    
+  }
+  .AlbumThumbContainer {
+    position:relative;
+    margin:10px;
+    max-width:initial;
+  }
+  .AlbumThumb {
+    width:initial;
+  }
+
+}
+
+
+@media (max-width: 500px) {
+  .Movie {
+    width: 44%;
+    height:initial;
+    margin:0;
+  }
+  .Movie .Poster {
+    height:initial;
+    background-size: contain !important;
+  }
+  
+
+}

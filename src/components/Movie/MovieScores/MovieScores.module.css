@@ -1,0 +1,22 @@
+.MovieScores {
+  margin-top: 3px;
+  display:flex;
+}
+.Score {
+  display:flex;
+  align-items: center;
+  margin-right:15px;
+  font-size:16px;
+}
+.ImdbIcon {
+  height:30px;
+  margin-right:5px;
+}
+.rtIcon {
+  height: 22px;
+  margin-right:5px;
+}
+.mcIcon {
+  height: 22px;
+  margin-right:5px;
+}

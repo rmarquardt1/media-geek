@@ -1,0 +1,39 @@
+.GameArticle {
+  margin:20px 0;
+  display:flex;
+  background:#333;
+  padding:10px;
+  border-radius: 5px;
+  box-shadow:2px 2px 7px #000;
+  width:45%;
+  min-width:460px;
+}
+hr {
+  width:100%;
+}
+
+.Thumb img {
+  height:100px;
+}
+
+.Details {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  margin-left:20px;
+  width:100%;
+}
+.Title {
+  margin:0 0 5px 0;
+  color:#E5A00D;
+  font-size:18px;
+}
+.ArticleInfo {
+  font-style:italic;
+  font-size:14px;
+}
+.Summary {
+  font-weight:lighter;
+  line-height:1.7rem;
+}
+

@@ -1,0 +1,119 @@
+.Movie {
+  /* margin:10px; */
+  width: 300px;
+  /* height:350px; */
+  cursor:pointer;
+}
+a {
+  margin:10px;
+}
+.Movie .Poster {
+  height:300px;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  background-size:contain;
+}
+.Movie .Poster img {
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-height:300px;
+}
+
+
+
+@media (max-width: 1420px) {
+  .Movie {
+    width: 250px;
+    /* height:250px; */
+  }
+  .Movie .Poster {
+    height:250px;
+  }
+}
+
+@media (max-width: 1220px) {
+  .Movie {
+    width: 200px;
+    /* height:200px; */
+  }
+  .Movie .Poster {
+    height:200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .Movie {
+    width: 150px;
+    /* height:150px; */
+  }
+  .Movie .Poster {
+    height:150px;
+  }
+}
+
+
+@media (max-width: 630px) {
+  a {
+    width:45%;
+  }
+
+  .Movie {
+    width: 100%;
+    /* height:150px; */
+  }
+  .Movie .Poster {
+    height:initial;
+  }
+}
+
+
+
+
+
+@media (max-width: 500px) {
+
+ 
+
+  .Movie {
+    /* width: 175px; */
+    height:initial;
+  }
+  .Movie .Poster {
+    height:initial;
+    background-size: contain !important;
+  }
+}
+
+@media (max-width: 410px) {
+  .Movie {
+    /* width: 100%; */
+    height:initial;
+    margin:0;
+  }
+  .Movie .Poster {
+    height:initial;
+    background-size: contain !important;
+
+  }
+}
+
+
+@media (max-width: 350px) {
+  a {
+    width:100% !important;
+  }
+  .Movie {
+    width: 100%;
+    height:initial;
+    margin:0;
+  }
+  .Movie .Poster {
+    height:initial;
+    background-size: contain !important;
+
+  }
+}

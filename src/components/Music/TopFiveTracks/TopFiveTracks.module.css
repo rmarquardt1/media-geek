@@ -1,0 +1,35 @@
+.TopFiveTracks {
+  padding: 0 10px;
+  width:100%;
+  box-sizing:border-box;
+}
+.TopFiveTracks ul {
+  list-style:none;
+  padding-left:0;
+}
+.TopFiveTracks ul li {
+  padding:5px 0;
+  border-bottom:1px solid #333;
+}
+
+
+
+
+@media (max-width: 1090px) {
+  .TopFiveTracks h2 {
+    background: #990033;
+    /* display: inline-block; */
+    padding: 10px 0 10px 30px;
+    display:none;
+  }
+
+  .TopFiveTracks {
+    padding: 0;
+    
+  }
+
+  .TopFiveTracks ul {
+    list-style:none;
+    padding:0 10px;
+  }
+}

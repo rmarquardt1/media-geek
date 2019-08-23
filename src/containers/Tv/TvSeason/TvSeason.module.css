@@ -1,0 +1,42 @@
+.TvSeason {
+ margin: 10px 0;
+  display:flex;
+  /* border-bottom:1px solid #fff; */
+  /* box-sizing:border-box; */
+  padding: 20px;
+  background:rgba(0,0,0,0.85);
+  border-radius:10px;
+}
+.TvSeason img {
+  width:92px;
+  max-width:92px;
+  min-width:92px;
+}
+
+.Details {
+  margin-left:20px;
+  display:flex;
+  flex-direction:column;
+  width:100%;
+}
+.Details h2 {
+  margin:0;
+  /* font-weight:normal; */
+  width:100%;
+}
+.Details hr {
+  width:100%;
+}
+.Overview {
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  height:100%;
+}
+
+.ViewEpisodes {
+  font-weight: bold;
+  cursor:pointer;
+  color: #66b3ff;
+  margin-top:5px;
+}

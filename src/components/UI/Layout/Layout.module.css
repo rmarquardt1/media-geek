@@ -1,0 +1,54 @@
+.SectionHeader {
+  background: #990033;
+  /* margin-bottom:20px; */
+  
+}
+.SectionHeader h2 {
+  display:inline-block;
+  margin:10px 0 10px 30px;
+}
+
+.NextIcon {
+  background:rgba(0,0,0,0.2);
+  padding:14px;
+  float:right;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.PrevIcon {
+  background:rgba(0,0,0,0.2);
+  padding:14px;
+  /* margin-left:20px; */
+  font-size:24px;
+  /* display:inline-block; */
+  cursor:pointer;
+  float:left;
+}
+
+.Close{
+  height:22px;
+  width:22px;
+  cursor:pointer;
+  /* right:80px;
+  top:40px; */
+  z-index:35;
+  position:absolute;
+  margin:auto;
+  background:#fff;
+  border-radius:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.CloseIcon {
+  color: #990033;
+  font-size:26px;
+}
+.BoxShadow {
+  box-shadow: 3px 3px 10px #000;
+}
+
+.BoxShadowReverse {
+  box-shadow: 0 0 7px #333;
+}

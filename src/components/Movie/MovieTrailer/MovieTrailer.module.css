@@ -1,0 +1,65 @@
+.MovieTrailer {
+  width:220px;
+  /* padding-bottom:20px; */
+  /* position:relative; */
+  margin:10px;
+}
+.VideoName {
+  box-sizing:border-box;
+  /* height:38px; */
+  width:100%;
+  display:flex;
+  /* align-items:center; */
+  /* font-style:italic; */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  
+  font-weight:bold;
+  font-size:14px;
+}
+.MovieThumb {
+  /* height: 120px; */
+  /* width:240px; */
+  background-size:cover;
+  background-repeat:no-repeat;
+  /* margin-right:30px; */
+  cursor:pointer;
+}
+
+.MovieThumb img {
+  width:100%;
+}
+
+
+@media (max-width: 1366px) {
+
+  .MovieThumb {
+    /* height: 100px; */
+    /* width:180px; */
+    /* margin-right:16px; */
+  }
+
+}
+
+
+@media (max-width: 830px) {
+  .MovieThumb {
+    /* height: initial; */
+    width:100%;
+    /* margin-right:16px; */
+  }
+  .MovieTrailer{
+    width:45%;
+    padding-bottom: 30px;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .MovieTrailer{
+    width:43%;
+    padding-bottom: 0;
+  }
+
+}

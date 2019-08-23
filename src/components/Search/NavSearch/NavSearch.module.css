@@ -1,0 +1,28 @@
+.SearchForm {
+  display:flex;
+  align-items:center;
+  height:100%;
+}
+.Input {
+  width:200px;
+  padding:3px 40px 3px 20px;
+  border-radius:20px;
+}
+.Input::placeholder {
+  font-style:italic;
+}
+.SearchIcon {
+  position:absolute;
+  right:15px;
+  height:100%;
+  color:#000;
+  cursor:pointer;
+  font-size:16px;
+}
+
+@media (max-width: 1090px) {
+  .Input, .SearchIcon {
+    display:none;
+  }
+
+}
