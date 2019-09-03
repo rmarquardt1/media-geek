@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import ActorMovie from '../ActorMovie/ActorMovie';
-import Aux from '../../../hoc/Auxiliary/Auxiliary';
+// import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import { goToAnchor } from 'react-scrollable-anchor'
 import { configureAnchors } from 'react-scrollable-anchor'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import Movie from '../../Movie/Movie';
+// import Movie from '../../Movie/Movie';
 
 import uiClasses from '../../UI/Layout/Layout.module.css';
 import classes from './OpenActor.module.css';
@@ -19,28 +19,14 @@ configureAnchors({offset: -60, scrollDuration: 100});
     
 
     state = {
-
-
       bioOpen: false,
       bioFull: this.props.actorBio.bio,
       bioSubString: this.props.actorBio.bio.substr(0, 630),
       bioLength: this.props.actorBio.bio.length,
       bioString: this.props.actorBio.bio,
-      
-
-
-
-
-
-
-
-
-
       sliceStart: 0,
       sliceEnd: null,
       pageSize: null,
-      
-
     }
 
 
@@ -92,40 +78,28 @@ configureAnchors({offset: -60, scrollDuration: 100});
     }
 
     readMoreHandler = () => {
-
-      // if (this.state.bioOpen) {
-      //   goToAnchor('castSection');
-      // }
-      // this.setState({bioOpen: !this.state.bioOpen});
-
       if (!this.state.bioOpen) {
         this.setState({bioString: this.state.bioFull, bioOpen: !this.state.bioOpen});
       } else {
         this.setState({bioString: this.state.bioSubString + '...', bioOpen: !this.state.bioOpen});
         goToAnchor('castSection');
       }
-
-
-
-
-
     }
 
 
     render() {
-      console.log(this.props.actorBio.pic);
-      // const actorMovies =  this.props.movies.results.slice(this.state.sliceStart, this.state.sliceEnd).map(movie => {
-      //   return (
-      //     <ActorMovie
-      //       key={movie.id}
-      //       title={movie.title}
-      //       poster={movie.poster_path}
-      //       release={movie.releaseDate}
-      //       id={movie.id}
-      //       clicked={this.onClick.bind(this, movie)}
-      //     />
-      //   )
-      // });
+      const actorMovies =  this.props.movies.results.slice(this.state.sliceStart, this.state.sliceEnd).map(movie => {
+        return (
+          <ActorMovie
+            key={movie.id}
+            title={movie.title}
+            poster={movie.poster_path}
+            release={movie.releaseDate}
+            id={movie.id}
+            clicked={this.onClick.bind(this, movie)}
+          />
+        )
+      });
 
       const actorPic = this.props.actorBio.pic ? this.props.actorInfo.profilePic : noImage;
 
@@ -139,7 +113,7 @@ configureAnchors({offset: -60, scrollDuration: 100});
     
           <div className={classes.ProfilePic}>
            
-            <img src={actorPic} className={uiClasses.BoxShadow} style={{width: '100%', maxWidth:'240px'}} />
+            <img src={actorPic} className={uiClasses.BoxShadow} style={{width: '100%', maxWidth:'240px'}} alt="" />
           </div>
           <div className={classes.ActorInfo}>
             <h2>{this.props.actorInfo.actorName}</h2>
@@ -157,33 +131,6 @@ configureAnchors({offset: -60, scrollDuration: 100});
             <p className={classes.ShowHide} onClick={this.readMoreHandler}>Read Less...</p>
             : null
           }
-
-
-
-
-
-
-
-
-
-            {/* {this.state.bioOpen ? 
-              <Aux>
-              <p className={classes.ActorBioOpen}>{this.props.actorBio.bio}</p>
-              <div className={classes.ShowHide} onClick={this.readMoreHandler}>Read Less...</div>
-              </Aux>
-              : 
-              <Aux>
-              <p className={classes.ActorBioClosed}>{this.props.actorBio.bio}</p>
-              <div className={classes.ShowHide} onClick={this.readMoreHandler} >Read More...</div>
-              </Aux>
-            } */}
-
-
-
-
-
-
-
           </div>
         </div>
     
@@ -192,7 +139,7 @@ configureAnchors({offset: -60, scrollDuration: 100});
     
         <h2 style={{marginLeft:'10px'}}>Other Movies with {this.props.actorInfo.actorName}</h2>
         <div ref={this.elementRef} className={classes.ActorMovies}>
-          {/* {actorMovies} */}
+          {actorMovies}
         </div>
         </div>
     

@@ -6,7 +6,7 @@ import axios from 'axios';
 import TopFiveTracks from '../../../components/Music/TopFiveTracks/TopFiveTracks';
 import MusicPlayer from '../../../components/Music/MusicPlayer/MusicPlayer';
 import AlbumThumb from '../../../components/Music/MusicAlbum/AlbumThumb/AlbumThumb';
-import Loader from '../../../components/UI/Loader/Loader';
+// import Loader from '../../../components/UI/Loader/Loader';
 import AlbumOpen from '../../../components/Music/MusicAlbum/AlbumOpen/AlbumOpen';
 import MusicEvents from '../../../components/Music/MusicEvents/MusicEvents';
 import RelatedArtist from '../../../components/Music/RelatedArtist/RelatedArtist';
@@ -98,6 +98,9 @@ class OpenMusic extends Component {
         }
       });
     }
+
+
+
 
     if (prevState.eventPageNumber !== this.state.eventPageNumber && this.state.eventPageNumber < this.state.eventTotalPages && this.state.eventPageNumber >= 0) {
       this.getEventsHandler(this.state.eventPageSize, this.state.eventPageNumber);

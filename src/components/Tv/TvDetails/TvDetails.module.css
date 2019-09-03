@@ -9,9 +9,9 @@
 }
 
 .TitleSeasons {
-  display:flex;
+  /* display:flex;
   justify-content:space-between;
-  align-items:center;
+  align-items:center; */
 }
 .Seasons {
   font-style:italic;
@@ -20,7 +20,7 @@
 
 .TvDetails .Title {
   font-weight:bold;
-  margin:5px 0;
+  margin-top:5px;
   overflow:hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -29,7 +29,7 @@
 .TvDetails .ReleaseDate {
   /* font-style:italic; */
   font-size: 14px;
-  margin-top:5px;
+  margin-top:2px;
   font-weight:lighter;
 }
 
@@ -46,8 +46,6 @@
 .ScoresOverride {
   font-size:14px !important;
 }
-
-
 @media (max-width: 1366px) {
   .TvDetails .Title {
     font-size:14px;
@@ -57,5 +55,21 @@
 @media (max-width: 500px) {
   .TvDetails {
     height:initial;
+  }
+  .TvDetails .Title {
+    white-space: break-spaces;
+    max-height:30px;
+  }
+  .MovieScores {
+    display: none;
+  }
+  .Rating {
+    display:none;
+  }
+  .TvDetails .ReleaseDate {
+    display:none;
+  }
+  .Seasons {
+    display:none;
   }
 }

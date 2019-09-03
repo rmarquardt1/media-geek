@@ -11,6 +11,7 @@
   align-items:center;
   justify-content:center;
   background:rgba(0,0,0,0.9);
+  z-index:200;
 }
 .Close{
   height:22px;

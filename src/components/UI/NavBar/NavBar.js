@@ -4,7 +4,7 @@ import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import NavSearch from '../../Search/NavSearch/NavSearch';
 import {NavLink} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faArrowAltCircleLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faArrowAltCircleLeft} from '@fortawesome/free-solid-svg-icons';
 
 import classes from './NavBar.module.css';
 
@@ -40,15 +40,15 @@ class NavBar extends Component {
         <div className={classes.Logo}>
         <h2><span style={{fontWeight:'200'}}>media</span><span style={{fontWeight:'600'}}>Geek</span></h2>
         </div>
-        <div className={classes.Menu}>
+        {/* <div className={classes.Menu}>
         <FontAwesomeIcon 
           className={classes.MenuIcon}
           onClick={this.menuClickHandler}
           icon={faBars}  />
-        </div>
+        </div> */}
       </div>
 
-      <div 
+      {/* <div 
       className={this.state.menuOpen ? classes.MenuDropdown + ' ' + classes.MenuDropdownActive : classes.MenuDropdown}
       >
 
@@ -57,9 +57,8 @@ class NavBar extends Component {
           <li><NavLink to="/Movies" className={classes.NavItem}>Movies</NavLink></li>
           <li><NavLink to="/Music" className={classes.NavItem}>Music</NavLink></li>
           <li><NavLink to="/Tv" className={classes.NavItem}>Television</NavLink></li>
-          {/* <li><NavLink to="/Games" className={classes.NavItem}>Games</NavLink></li> */}
         </ul> 
-      </div>
+      </div> */}
 
 
 

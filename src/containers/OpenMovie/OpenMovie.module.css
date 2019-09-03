@@ -15,8 +15,8 @@
 .OpenMovieContent {
   position:relative;
   z-index:5;
-  padding-top:140px;
-  margin-left:100px;
+  padding-top:86px;
+  margin-left:250px;
   display:flex;
 }
 .OpenMovieContent h1 {
@@ -37,18 +37,36 @@
   margin-top:0;
   font-size:18px;
 }
+
+
+
+
 .OpenMoviePoster {
-  width:450px;
+  /* min-width:450px; */
 }
 .OpenMoviePoster .PosterImage {
-  width:450px;
+  /* width:450px;
+  position:fixed; */
+
+  width:200px;
 }
+
+
+
+
 .OpenMovieInfo {
   padding: 0 100px;
 }
 .OpenMovieDesc {
   font-size:26px;
   font-weight:lighter;
+  display:flex;
+  flex-direction:column;
+  margin-left:50px;
+}
+.MobileDescription {
+  display:flex;
+  margin-bottom:26px;
 }
 .Container {
   position:relative;
@@ -91,40 +109,58 @@
   display: none;
 }
 
+
+
+
+
+
+
 @media (max-width: 1600px) {
-  .OpenMoviePoster {
-    width:350px;
+  /* .OpenMoviePoster {
+    min-width:350px;
   }
   .OpenMoviePoster .PosterImage {
     width:350px;
-  }
+  } */
   .OpenMovieInfo {
     padding: 0 50px;
   }
-  .OpenMovieContent {
-    margin-left:50px;
-  }
+  /* .OpenMovieContent {
+    margin-left:250px;
+  } */
 }
 
 @media (max-width: 1366px) {
-  .OpenMoviePoster {
-    width:300px;
+  /* .OpenMoviePoster {
+    min-width:300px;
   }
   .OpenMoviePoster .PosterImage {
     width:300px;
+  } */
+  .OpenMovieContent h1 {
+    font-size:30px;
   }
+  .OpenMoviePoster .PosterImage {
+    width:150px;
+  }
+  .OpenMovieDesc {
+    margin-left:20px;
+    font-size:22px;
+  }
+  /* .OpenMoviePoster img {
+    width:150px;
+  } */
 }
 
 @media (max-width: 1090px) {
-  .OpenMoviePoster {
+  /* .OpenMoviePoster {
     display:none;
-  }
-  .OpenMoviePosterMobile {
+  } */
+  /* .OpenMoviePosterMobile {
     display:block;
-    /* float: left; */
     height:240px;
     margin-right:20px;
-  }
+  } */
   .OpenMoviePosterMobile img {
     height:100%;
   }
@@ -134,10 +170,10 @@
   .OpenMovieDesc {
     font-size:20px;
   }
-  .MobileDescription {
+  /* .MobileDescription {
     display:flex;
     margin-bottom:26px;
-  }
+  } */
   .OpenMovieContent {
     margin-left:0;
   }
@@ -168,8 +204,26 @@
 }
 
 @media (max-width: 500px) {
+  .OpenMovieMobile {
+    display:flex;
+    align-items:center;
+  }
+  .OpenMovieMobile h1 {
+    font-size:20px;
+    margin-left:10px;
+  }
+  .OpenMoviePoster {
+    display:none;
+    width:50px;
+  }
+  .OpenMoviePoster .PosterImage {
+    width:50px;
+  }
   .OpenMovieInfo {
     padding:0;
+  }
+  .OpenMovieOverview {
+    font-size:16px;
   }
   .OpenMovieVideos {
     padding:10px 0;
@@ -177,8 +231,16 @@
     justify-content:space-around;
   }
   .OpenMoviePosterMobile {
-    display:none;
+    display:block;
+    width:50px;
   }
+
+  .OpenMoviePosterMobile img {
+    width:100%;
+    height:auto;
+  }
+
+
   .OpenMovieDesc {
     margin:18px;
   }

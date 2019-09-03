@@ -18,17 +18,17 @@ return (
     <div className={classes.MovieScores}>
       {props.imdb ? 
         <div className={classes.Score}  style={props.cssOverride}>
-          <img src={imdbIcon} className={classes.ImdbIcon} style={props.imgOverride} /> <span style={props.cssOverride}>{props.imdb}</span>
+          <img src={imdbIcon} className={classes.ImdbIcon} style={props.imgOverride} alt="" /> <span style={props.cssOverride}>{props.imdb}</span>
         </div>
       : null}
       {props.rt ? 
         <div className={classes.Score} style={props.cssOverride}>
-          <img src={rtIconFresh} className={classes.rtIcon} style={props.imgOverride} />  <span style={props.cssOverride}>{props.rt}</span>
+          <img src={rtIconFresh} className={classes.rtIcon} style={props.imgOverride} alt="" />  <span style={props.cssOverride}>{props.rt}</span>
         </div>
       : null}
       {props.mc ? 
         <div  style={{marginRight: 0}} className={classes.Score} >
-          <img src={mcIcon} className={classes.mcIcon} style={props.imgOverride} /> 
+          <img src={mcIcon} className={classes.mcIcon} style={props.imgOverride} alt="" /> 
           <span style={props.cssOverride}>{props.mc}</span>
         </div>
       : null}

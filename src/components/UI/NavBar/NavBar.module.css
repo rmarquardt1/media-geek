@@ -3,15 +3,15 @@
   width:100%;
   text-align:center;
   background: #000;
-  z-index:20;
+  z-index:300;
   top:0;
    display:flex;
   align-items:center;
   justify-content:center;
   height:60px;
-  /* padding:0 60px; */
   box-sizing:border-box;
   border-bottom:1px solid #4d4d4d;
+  display:none;
 }
 .NavBar h2{
   margin:0;
@@ -113,6 +113,9 @@
   /* .Input, .SearchIcon {
     display:none;
   } */
+  .NavBar {
+    display:flex;
+  }
 }
 @media (max-width: 500px) {
   .MenuIcon {

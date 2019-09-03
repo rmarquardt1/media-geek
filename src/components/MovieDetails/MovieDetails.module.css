@@ -28,7 +28,7 @@
 
 
 .Rating {
-  font-weight:bold;
+  /* font-weight:bold; */
   font-style:normal;
 }
 
@@ -46,5 +46,18 @@
 @media (max-width: 500px) {
   .MovieDetails {
     height:initial;
+  }
+  .MovieDetails .Title {
+    white-space: break-spaces;
+    max-height:30px;
+  }
+  .MovieScores {
+    display: none;
+  }
+  .Rating {
+    display:none;
+  }
+  .MovieDetails .ReleaseDate {
+    display:none;
   }
 }

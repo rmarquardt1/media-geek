@@ -12,6 +12,7 @@ import Loader from '../../components/UI/Loader/Loader';
 import ScrollableAnchor from 'react-scrollable-anchor';
 import { configureAnchors } from 'react-scrollable-anchor';
 import NavBar from '../../components/UI/NavBar/NavBar';
+import SideBar from '../../containers/Home/SideBar/SideBar';
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -119,12 +120,7 @@ class OpenMovie extends Component {
       this.resizeHandler();
       // console.log(this.state.movieInfo);
       this.getRatingsHandler();
-
-     
-        // this.getCollectionHandler();
-     
-      
-     
+      // this.getCollectionHandler();
     }).catch(error => {
       console.log('error ' + error);
     });
@@ -320,10 +316,6 @@ class OpenMovie extends Component {
     let actorPageCount = null;
     let collection = null;
     let collectionPageCount = null;
-
-
-     
-
     if (this.state.reviewResults) {
       reviews = this.state.reviewResults.slice(0, 4).map(review => {
         return (
@@ -379,7 +371,7 @@ class OpenMovie extends Component {
       });
       collectionPageCount = collection.length;
       if (collectionPageCount < this.state.collectionPageSize) {
-        const windowW = window.innerWidth;
+        // const windowW = window.innerWidth;
         const diff = this.state.collectionPageSize - collectionPageCount;
         for (let step =0; step < diff; step++ ) {
 
@@ -451,20 +443,45 @@ class OpenMovie extends Component {
           {this.state.playVideo ? <VideoModal videoUrl={this.state.playVideoUrl} close={this.videoCloseHandler} /> : null}
           {this.state.loading ? <Loader /> :
           <Aux>
+            <SideBar />
             <div className={classes.OpenMovieBackdrop} style={{backgroundImage: 'url(http://image.tmdb.org/t/p/original/' + this.state.movieInfo.backdrop_path + ')'}} />
             <div className={classes.OpenMovieOverlay} />
             <div className={classes.OpenMovieContent}>
+            
 
-              <div className={classes.OpenMoviePoster}>
+
+
+              {/* <div className={classes.OpenMoviePoster}>
                 <img className={classes.PosterImage} src={'http://image.tmdb.org/t/p/w500/' + this.state.movieInfo.poster_path} alt="" />
-              </div>
+              </div> */}
+
+
+
+
+
             <div className={classes.OpenMovieInfo}> 
             <div className={classes.MobileDescription}>
-              <div className={classes.OpenMoviePosterMobile}>
-                <img src={'http://image.tmdb.org/t/p/w500/' + this.state.movieInfo.poster_path} alt="" />
+
+            <div className={classes.OpenMoviePoster}>
+                <img className={classes.PosterImage} src={'http://image.tmdb.org/t/p/w500/' + this.state.movieInfo.poster_path} alt="" />
               </div>
+
+
+
+
+
+              
               <div className={classes.OpenMovieDesc}>
-                <h1>{this.state.movieInfo.title}</h1>
+                <div className={classes.OpenMovieMobile}>
+                  <div className={classes.OpenMoviePosterMobile}>
+                    <img src={'http://image.tmdb.org/t/p/w500/' + this.state.movieInfo.poster_path} alt="" />
+                  </div>
+
+
+
+
+                    <h1>{this.state.movieInfo.title}</h1>
+                </div>
                 <div className={classes.OpenMovieGenRel}>
                   <div className={classes.OpenMovieGenres}>{this.state.genres}</div>
                 </div>
@@ -575,7 +592,8 @@ class OpenMovie extends Component {
               </div>
 
 
-              {/* <ScrollableAnchor id={'vidSection'} > */}
+              {this.state.videoResults.length > 0 ?
+              <Aux>
                 <div className={uiClasses.SectionHeader}>
                 {this.state.videoCurrentPage !== 1 ? 
                     <FontAwesomeIcon 
@@ -593,27 +611,29 @@ class OpenMovie extends Component {
                   : null
                   }
                 </div>
-              {/* </ScrollableAnchor> */}
               <div
                 className={classes.OpenMovieVideos}
                 ref={this.vidElementRef}>
               {videos}
               </div>
+              </Aux> : null }
 
               
 
 
-
-
-
-              {/* <ScrollableAnchor id={'reviewSection'} > */}
+              {this.state.reviewResults.length > 0 ?
+                <Aux>
                 <div className={uiClasses.SectionHeader}>
                   <h2>Reviews</h2>
                 </div>
-              {/* </ScrollableAnchor> */}
-              <div className={classes.OpenMovieReviews}>
-                {reviews}
-              </div>
+                <div className={classes.OpenTvReviews}>
+                  {reviews}
+                </div>
+                </Aux>
+              : null }
+
+
+              
               
 
 

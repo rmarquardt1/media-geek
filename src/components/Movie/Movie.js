@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import MovieDetails from '../MovieDetails/MovieDetails';
 import axios from 'axios';
+import Aux from '../../hoc/Auxiliary/Auxiliary';
 
 import uiClasses from '../UI/Layout/Layout.module.css';
 import classes from './Movie.module.css';
@@ -20,8 +21,6 @@ class Movie extends Component {
     this.posterRef = React.createRef();
   }
 
- 
-
   componentDidMount() {
     window.addEventListener('resize', this.resizeHandler);
     this.resizeHandler();
@@ -37,9 +36,6 @@ class Movie extends Component {
     }).catch(error => {
       console.log('error ' + error);
     });
-
-    
-
   }
 
   componentWillUnmount() {
@@ -48,16 +44,18 @@ class Movie extends Component {
 
 
   getRatingsHandler = () => {
+    const rel = new Date(this.props.release) ;
+    const relYear = rel.getFullYear();
     axios.get('http://www.omdbapi.com/',
     {params: {
       apikey: 'ec2bd2c4',
       t: this.props.title,
+      y: relYear,
       type: 'movie'
     }}
     ).then(response => {
       // console.log(response.data.Ratings)
       response.data.Ratings.map(rating => {
-        console.log(rating.Value);
         if (rating.Source === 'Internet Movie Database') {
           this.setState({imdbScore: rating.Value});
         }
@@ -72,13 +70,7 @@ class Movie extends Component {
       console.log('error ' + error);
     });
   
-}
-
-
-
-
-
-
+  }
 
   resizeHandler = () => {
     if (this.posterRef.current) {
@@ -88,26 +80,23 @@ class Movie extends Component {
   }
 
   render() {
-
-    // console.log(this.props);
-    
-    const posterImg = 'url(http://image.tmdb.org/t/p/original/' + this.props.poster + ')';
-
     return (
-      <div className={classes.Movie} onClick={this.props.clicked} >
 
-      {!this.props.poster ? <div><h1>No Image</h1></div> : 
-        // <div 
-        // style={{background: posterImg + 'no-repeat', backgroundSize: 'cover', backgroundColor:'#000'}}
-        // className={classes.Poster}>
+        <div 
+        className={classes.Movie} 
+        onClick={this.props.clicked} 
+        style={{width: this.props.dimensions ? this.props.dimensions.width : '', height: this.props.dimensions ? this.props.dimensions.movieHeight : ''}}
+        >
+
+      
         <div 
         className={classes.Poster} 
         ref={this.posterRef}
-        style={{minHeight: this.state.posterHeight}}
+        style={{minHeight: this.state.posterHeight, width: this.props.dimensions ? this.props.dimensions.width : '', height: this.props.dimensions ? this.props.dimensions.height : ''}}
         >
-        <img src={'http://image.tmdb.org/t/p/w342/' + this.props.poster} className={uiClasses.BoxShadow} />
+        <img src={'http://image.tmdb.org/t/p/w342/' + this.props.poster} className={uiClasses.BoxShadow} alt="" />
         </div> 
-      }
+      
         <MovieDetails
           title={this.props.title}
           release={this.props.release}
@@ -116,8 +105,11 @@ class Movie extends Component {
           imdb={this.state.imdbScore ? this.state.imdbScore : null} 
           rt={this.state.rtScore ? this.state.rtScore : null} 
           mc={this.state.mcScore === '100/100' ? '100' : this.state.mcScore ? this.state.mcScore.substring(0,2) : null}
+          type={this.props.type}
+          fontSize={this.props.dimensions ? this.props.dimensions.fontSize : null}
         />
       </div>
+       
     );
   }
 }

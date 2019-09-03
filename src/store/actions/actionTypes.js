@@ -1,0 +1,11 @@
+export const STORE_TOKEN = 'STORE_TOKEN';
+export const STORE_USERID = 'STORE_USERID';
+export const STORE_DISPLAYNAME = 'STORE_DISPLAYNAME';
+export const CREATE_ACCOUNT = 'CREATE_ACCOUNT';
+
+export const STORE_USERDATA = 'STORE_USERDATA';
+
+export const AUTH_START = 'AUTH_START';
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+export const AUTH_FAIL = 'AUTH_FAIL';
+export const AUTH_LOGOUT = 'AUTH_LOGOUT';

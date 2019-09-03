@@ -40,7 +40,7 @@ class NavSearch extends Component {
           autoFocus={true} 
           type="text" 
           onChange={this.inputHandler}
-          // placeholder={props.searchType}  
+          placeholder={this.props.placeholder}  
           />
         <FontAwesomeIcon 
           className={classes.SearchIcon}

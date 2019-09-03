@@ -13,14 +13,13 @@ import Loader from '../../../components/UI/Loader/Loader';
 import ScrollableAnchor from 'react-scrollable-anchor';
 import { configureAnchors } from 'react-scrollable-anchor';
 import NavBar from '../../../components/UI/NavBar/NavBar';
-
-
+import SideBar from '../../../containers/Home/SideBar/SideBar';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import classes from './OpenTv.module.css';
 import uiClasses from '../../../components/UI/Layout/Layout.module.css';
-import { thisExpression } from '@babel/types';
+import OpenSeason from '../OpenSeason/OpenSeason';
 
 
 
@@ -81,7 +80,9 @@ class OpenTv extends Component {
     collectionSliceStart: 0,
     collectionSliceEnd: null,
     collectionPageSize: null,
-    collectionLoad: true
+    collectionLoad: true,
+
+    openSeasonNumber: null
   }
 
   constructor(props) {
@@ -99,7 +100,6 @@ class OpenTv extends Component {
   }
 
   componentDidMount() {
-    
     window.scrollTo(0,0);
     window.addEventListener('resize', this.resizeHandler.bind(this));
     this.getTvHandler();
@@ -115,6 +115,11 @@ class OpenTv extends Component {
     }}
     ).then(response => {
       console.log(response);
+
+      const firstAir = new Date(response.data.first_air_date);
+      const lastAir = new Date(response.data.last_air_date);
+
+      const airSpan = firstAir.getFullYear() !== lastAir.getFullYear() ? firstAir.getFullYear() + '-' + lastAir.getFullYear() : firstAir.getFullYear();
       this.setState({
         tvInfo: response.data,
         // rating: response.data.release_dates.results.find(rating => rating.iso_3166_1 === 'US').release_dates[0].certification,
@@ -125,7 +130,8 @@ class OpenTv extends Component {
         seasonResults: response.data.seasons,
         // videoPages: Math.floor(response.data.videos.results.length / this.state.actorSlice),
         actorCount: response.data.credits.cast.length,
-        loading: false
+        loading: false,
+        airDate: airSpan
         // actorPages: Math.floor(response.data.credits.cast.length / this.state.actorSlice),
       });
       const gen = response.data.genres.map(genre => {
@@ -133,13 +139,8 @@ class OpenTv extends Component {
       }).join('\xa0/\xa0');
       this.setState({genres: gen});
       this.resizeHandler();
-      
       // this.getRatingsHandler();
-
       // this.getCollectionHandler();
-     
-      
-     
     }).catch(error => {
       console.log('error ' + error);
     });
@@ -233,7 +234,7 @@ class OpenTv extends Component {
 
   actorClickHandler = (actorInfo, actorChar, actorPic) => {
     console.log(actorInfo.actorId);
-    axios.get('https://api.themoviedb.org/3/discover/movies?',
+    axios.get('https://api.themoviedb.org/3/discover/movie?',
       {params: {
         api_key: '4c7294000365c14a8e42109c863ff772',
         with_people: actorInfo.actorId
@@ -325,6 +326,15 @@ class OpenTv extends Component {
     }, 500);
   }
 
+
+  seasonClickHandler = (seasonNumber) => {
+    this.setState({openSeasonNumber: seasonNumber});
+  }
+
+  closeEpisodesHandler = () => {
+    this.setState({openSeasonNumber: null})
+  }
+
   render() {
     let actors = null;
     let videos = null;
@@ -390,7 +400,7 @@ class OpenTv extends Component {
       });
       collectionPageCount = collection.length;
       if (collectionPageCount < this.state.collectionPageSize) {
-        const windowW = window.innerWidth;
+        // const windowW = window.innerWidth;
         const diff = this.state.collectionPageSize - collectionPageCount;
         for (let step =0; step < diff; step++ ) {
 
@@ -426,12 +436,14 @@ class OpenTv extends Component {
     }
 
     if (this.state.seasonResults) {
-      seasons = this.state.seasonResults.slice(0,3).map(season => {
+      seasons = this.state.seasonResults.map(season => {
         // console.log(season);
         return (
           <TvSeason
             key={season.id}
             seasonInfo={season}
+            tvId={this.state.tvId}
+            click={() => this.seasonClickHandler(season.season_number)}
           />
         );
       });
@@ -449,7 +461,7 @@ class OpenTv extends Component {
 
 
 
-
+    
 
     return (
 
@@ -461,53 +473,43 @@ class OpenTv extends Component {
           {this.state.playVideo ? <VideoModal videoUrl={this.state.playVideoUrl} close={this.videoCloseHandler} /> : null}
           {this.state.loading ? <Loader /> :
           <Aux>
+            <SideBar />
             <div className={classes.OpenTvBackdrop} style={{backgroundImage: 'url(http://image.tmdb.org/t/p/original/' + this.state.tvInfo.backdrop_path + ')'}} />
             <div className={classes.OpenTvOverlay} />
             <div className={classes.OpenTvContent}>
 
-              <div className={classes.OpenTvPoster}>
+              {/* <div className={classes.OpenTvPoster}>
                 <img className={classes.PosterImage} src={'http://image.tmdb.org/t/p/w500/' + this.state.tvInfo.poster_path} alt="" />
-              </div>
+              </div> */}
             <div className={classes.OpenTvInfo}> 
             <div className={classes.MobileDescription}>
+
+            <div className={classes.OpenTvPoster}>
+                <img className={classes.PosterImage} src={'http://image.tmdb.org/t/p/w500/' + this.state.tvInfo.poster_path} alt="" />
+              </div>
+
+
+
+              
+              <div className={classes.OpenTvDesc}>
+                <div className={classes.OpenTvMobile}>
               <div className={classes.OpenTvPosterMobile}>
                 <img src={'http://image.tmdb.org/t/p/w500/' + this.state.tvInfo.poster_path} alt="" />
               </div>
-              <div className={classes.OpenTvDesc}>
                 <h1>{this.state.tvInfo.name}</h1>
+                </div>
+
+
                 <div className={classes.OpenTvGenRel}>
                   <div className={classes.OpenTvGenres}>{this.state.genres}</div>
                 </div>
-                <div className={classes.RelRating}>{relYear}  (<strong>{this.state.rating}</strong>)</div>
+                <div className={classes.RelRating}>{this.state.airDate}  
+                {/* (<strong>{this.state.rating}</strong>) */}
+                </div>
                 <MovieScores imdb={this.state.imdbScore} rt={this.state.rtScore} mc={this.state.mcScore} />
                 <p className={classes.OpenTvOverview}>{this.state.tvInfo.overview}</p>
               </div>
             </div>
-
-
-
-            <ScrollableAnchor id={'seasonsSection'} >
-                <div className={uiClasses.SectionHeader}>
-                  <h2>Seasons / Episodes</h2>
-                </div>
-              </ScrollableAnchor>
-
-              <div className={classes.Seasons}>
-                {this.state.seasonResults ? seasons : null}
-              </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             <ScrollableAnchor id={'castSection'} >
@@ -548,8 +550,8 @@ class OpenTv extends Component {
                   : actors}
               </div>
 
-
-              {/* <ScrollableAnchor id={'vidSection'} > */}
+              {this.state.videoResults.length > 0 ?
+              <Aux>
                 <div className={uiClasses.SectionHeader}>
                 {this.state.videoCurrentPage !== 1 ? 
                     <FontAwesomeIcon 
@@ -567,9 +569,8 @@ class OpenTv extends Component {
                   : null
                   }
                 </div>
-              {/* </ScrollableAnchor> */}
+              
               <div
-                // className={classes.OpenTvVideos}
                 className= {this.state.videoFadeOut ? classes.FadeOut + ' ' + classes.OpenTvVideos
                   : this.state.videoFadeIn ? classes.FadeIn + ' ' + classes.OpenTvVideos
                   : classes.OpenTvVideos
@@ -577,21 +578,48 @@ class OpenTv extends Component {
                 ref={this.vidElementRef}>
               {videos}
               </div>
+              </Aux> : null }
+
+
+
+            <ScrollableAnchor id={'seasonsSection'} >
+                <div className={uiClasses.SectionHeader}>
+                  <h2>Seasons / Episodes</h2>
+                </div>
+              </ScrollableAnchor>
+
+              <div className={classes.Seasons}>
+
+              {this.state.openSeasonNumber ? 
+              <OpenSeason
+                seasonNumber={this.state.openSeasonNumber}
+                tvId={this.state.tvId}
+                click={this.closeEpisodesHandler}
+              />
+              : this.state.seasonResults ? seasons : null }
+              </div>
+
+            
+
+
+              
 
               
 
 
 
-
-
-              {/* <ScrollableAnchor id={'reviewSection'} > */}
+              {this.state.reviewResults.length > 0 ?
+                <Aux>
                 <div className={uiClasses.SectionHeader}>
                   <h2>Reviews</h2>
                 </div>
-              {/* </ScrollableAnchor> */}
-              <div className={classes.OpenTvReviews}>
-                {reviews}
-              </div>
+                <div className={classes.OpenTvReviews}>
+                  {reviews}
+                </div>
+                </Aux>
+              : null }
+
+              
               
 
 

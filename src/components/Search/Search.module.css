@@ -3,16 +3,21 @@
   display:flex;
   justify-content:center;
   align-items:center;
-  position:absolute;
-  top:50%;
+  /* position:absolute;
+  top:50%; */
   z-index:10;
   padding:0 40px;
   box-sizing:border-box;
+  height:100vh;
 }
-
-.SearchForm {
+.SearchContainer {
+  margin-left: 250px;
   position:relative;
+  height:100vh;
 }
+/* .SearchForm {
+  position:relative;
+} */
 
 .Input {
   height:30px;
@@ -39,8 +44,8 @@
 }
 
 .SearchIcon {
-  position:absolute;
-  right:15px;
+  position:relative;
+  right:30px;
   height:100%;
   color:#000;
   cursor:pointer;
@@ -58,11 +63,13 @@
 
 .SearchType {
   text-align:center;
-  position:absolute;
+  /* position:absolute; */
   font-weight:lighter;
-  top:-60px;
+  /* top:-60px;
   left:0;
-  right:0;font-size:30px;
+  right:0; */
+  font-size:30px;
+  margin-bottom:20px;
 }
 .SearchTypeIcon {
   margin-right:10px;
@@ -119,6 +126,9 @@
   .Input {
     height:30px;
     font-size:18px;
+  }
+  .SearchContainer {
+    margin-left: 0;
   }
   
 

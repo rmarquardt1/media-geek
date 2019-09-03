@@ -1,7 +1,9 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faArrowAltCircleLeft, faFilm, faHeadphones, faGamepad, faMask, faTv } from '@fortawesome/free-solid-svg-icons';
+import SideBar from '../../containers/Home/SideBar/SideBar';
+import Aux from '../../hoc/Auxiliary/Auxiliary';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faFilm, faHeadphones, faGamepad, faMask, faTv } from '@fortawesome/free-solid-svg-icons';
 import classes from './Search.module.css';
 
   const search = (props) => {
@@ -62,7 +64,10 @@ import classes from './Search.module.css';
       // : null;
 
       return (
-          <div className={searchStyle.join(' ')}>
+        <Aux>
+          <SideBar />
+          <div className={classes.SearchContainer}>
+          <div  className={searchStyle.join(' ')}>
             {/* <div style={{position: 'absolute', left:100}}>
               <div 
               className={props.itemOpen ? [classes.BackIcon] : [classes.BackIconHide] }
@@ -73,6 +78,7 @@ import classes from './Search.module.css';
 
               </div>
             </div> */}
+            
             <form className={classes.SearchForm} onSubmit={props.submit}>
             {/* <form className={classes.SearchForm} onSubmit={'hello'}> */}
               {searchType}
@@ -89,7 +95,10 @@ import classes from './Search.module.css';
                 onClick={props.submit} />
                 </div>
             </form>
+            </div>
           </div>
+          
+          </Aux>
     );
   }
 

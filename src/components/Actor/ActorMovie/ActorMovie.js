@@ -6,7 +6,7 @@ import classes from './ActorMovie.module.css';
 const actorMovie = (props) => {
   return (
     <div className={classes.ActorMovie} >
-      <img src={'http://image.tmdb.org/t/p/w154/' + props.poster} className={uiClasses.BoxShadow} onClick={props.clicked}/>
+      <img src={'http://image.tmdb.org/t/p/w154/' + props.poster} className={uiClasses.BoxShadow} onClick={props.clicked} alt=""/>
       <div className={classes.Title}>{props.title}</div>
     </div>
   );

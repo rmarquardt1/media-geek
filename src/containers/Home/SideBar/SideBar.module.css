@@ -1,0 +1,120 @@
+.SideBar {
+  position:fixed;
+  top:0;
+  left:0;
+  width:250px;
+  /* min-width:200px; */
+  background:#262F3D;
+  height:100%;
+  /* padding:20px; */
+  box-sizing:border-box;
+  z-index:100;
+  /* font-size:14px; */
+
+}
+
+
+
+
+.MenuIcon {
+  cursor:pointer;
+  font-size:26px;
+  position:fixed;
+  left:30px;
+  top:17px;
+  z-index:305;
+  display:none;
+}
+
+.ItemHeader {
+  display:flex;
+  width:100%;
+  align-items:center;
+  justify-content: space-between;
+  cursor:pointer;
+}
+
+.SideBar ul {
+  padding: 0;
+  margin:0;
+  list-style:none;
+}
+.SideBar ul li {
+  border-bottom:1px solid #4d4d4d;
+  padding:20px;
+}
+
+
+.Arrow {
+  transform: rotate(0);
+  transition: transform 0.5s;
+}
+
+
+.ArrowDown {
+  transform: rotate(180deg);
+  transition: transform 0.5s;
+}
+
+.Account div {
+  margin-bottom:20px;
+}
+
+.FlexCenter {
+  display:flex;
+  align-items:center;
+}
+
+.FlexRight {
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+}
+
+.UserIcon {
+  font-size:30px;
+  margin-right:20px;
+  color:#1a8cff;
+}
+
+.LogoutLink {
+  font-style: italic;
+  font-size:14px;
+}
+
+.NavIcon {
+  font-size:20px;
+}
+.NavIconTv {
+  font-size:16px;
+}
+.ListIcon {
+  width:40px;
+}
+.CreateAccount {
+  cursor:pointer;
+}
+
+
+
+
+
+
+@media (max-width: 1090px) {
+  .SideBar {
+    /* display:none; */
+    left:-300px;
+    top:60px;
+    transition: left 0.3s ease-out;
+    width:300px;
+  }
+
+  .SideBarSlideIn {
+    left:0;
+    transition: left 0.3s ease-in;
+  }
+  .MenuIcon {
+    display:block;
+  }
+
+}
