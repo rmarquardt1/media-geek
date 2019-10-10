@@ -1,0 +1,22 @@
+.SearchForm {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  position: relative;
+}
+.Input {
+  width: 100%;
+  padding: 7px 40px 7px 20px;
+  border-radius: 20px;
+}
+.Input::placeholder {
+  font-style: italic;
+}
+.SearchIcon {
+  position: absolute;
+  right: 10px;
+  height: 100%;
+  color: #000;
+  cursor: pointer;
+  font-size: 18px;
+}

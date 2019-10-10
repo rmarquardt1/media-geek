@@ -1,0 +1,39 @@
+.Videos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 30px 0;
+  width: 100%;
+}
+.VideosAlignFlex::after {
+  content: '';
+  flex: auto;
+  width: 240px;
+  max-width: 240px;
+}
+.NavRight {
+  float: right;
+  display: flex;
+  align-items: center;
+  height: 52px;
+}
+.MoreLess {
+  margin-right: 50px;
+  cursor: pointer;
+}
+.More {
+  margin-right: 93px;
+}
+@media (max-width: 500px) {
+  .Videos {
+    padding: 10px 0;
+    margin: 0;
+    justify-content: space-around;
+  }
+  .MoreLess {
+    margin-right: 20px;
+  }
+  .More {
+    margin-right: 63px;
+  }
+}

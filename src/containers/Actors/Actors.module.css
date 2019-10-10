@@ -1,0 +1,49 @@
+.Actors {
+  margin: 30px 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  position: relative;
+  right: 0;
+  transition: right 0.4s linear;
+}
+.ActorsAlignFlex::after {
+  content: '';
+  flex: auto;
+  width: 170px;
+  max-width: 170px;
+}
+.NavRight {
+  float: right;
+  display: flex;
+  align-items: center;
+  height: 52px;
+}
+.MoreLess {
+  margin-right: 50px;
+  cursor: pointer;
+}
+.More {
+  margin-right: 93px;
+}
+.FadeOut {
+  opacity: 0;
+  transition: 0.5s;
+}
+.FadeIn {
+  opacity: 1;
+  transition: 0.5s;
+}
+@media (max-width: 500px) {
+  .Actors {
+    margin: 0;
+    padding: 10px 0;
+  }
+  .MoreLess {
+    margin-right: 20px;
+  }
+  .More {
+    margin-right: 63px;
+  }
+}

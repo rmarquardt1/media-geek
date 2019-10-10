@@ -1,80 +1,53 @@
 .Movie {
-  margin:10px;
+  margin: 10px;
   width: 300px;
-  /* height:520px; */
-  cursor:pointer;
-  
+  height: 520px;
+  cursor: pointer;
 }
 .Movie .Poster {
-  height:450px;
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  position:relative;
+  height: 450px;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  position: relative;
+  border-radius: 3px;
 }
 .Movie .Poster img {
-  width:100%;
+  width: 100%;
+  border-radius: 3px;
 }
-
 .Movie .Poster img.Network {
-  position:absolute;
-  height:16px;
-  padding:5px;
-  background:#fff;
-  width:initial;
-  right:0;
-  bottom:0;
+  position: absolute;
+  height: 16px;
+  padding: 5px;
+  background: #fff;
+  width: initial;
+  right: 0;
+  bottom: 0;
 }
-
 @media (max-width: 1366px) {
   .Movie {
     width: 220px;
-    height:400px;
+    height: 400px;
   }
   .Movie .Poster {
-    height:330px;
+    height: 330px;
   }
 }
-
 @media (max-width: 768px) {
   .Movie {
     width: 200px;
-    height:350px;
+    height: 370px;
   }
   .Movie .Poster {
-    height:300px;
+    height: 300px;
   }
 }
-
 @media (max-width: 500px) {
-  .Movie {
-    width: 100%;
-    height:initial;
-    margin:0;
-  }
   .Movie .Poster {
-    height:initial;
+    height: initial;
     background-size: contain !important;
-  }
-  .Movie {
-    height:initial;
-  }
-  .Movie .Poster img.Network {
-    height:10px;
-  }
-}
-
-@media (max-width: 410px) {
-  .Movie {
-    width: 100%;
-    height:initial;
-    margin:0;
-  }
-  .Movie .Poster {
-    height:initial;
-    background-size: contain !important;
-
   }
 }

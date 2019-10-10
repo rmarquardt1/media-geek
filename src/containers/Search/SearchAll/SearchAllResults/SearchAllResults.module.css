@@ -1,0 +1,88 @@
+.SearchResultsContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0 100px 100px 350px;
+}
+.SearchResults {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+.SearchResultsFor {
+  text-align: center;
+  margin: 25px 0 25px 250px;
+}
+.NavSearch {
+  width: 250px;
+  position: relative;
+  margin: auto;
+  margin-bottom: 10px;
+  display: none;
+}
+.NavRight,
+.NavLeft {
+  padding: 14px;
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 5;
+  background: rgba(0, 0, 0, 0.2);
+}
+.NavRight {
+  position: absolute;
+  right: 0;
+}
+.NavLeft {
+  margin-left: initial;
+  position: Absolute;
+  left: 0;
+}
+.MoviesIcon {
+  margin-left: 10px;
+  margin-top: 2px;
+  font-size: 26px;
+}
+.TvIcon {
+  margin-left: 10px;
+  margin-top: 2px;
+  font-size: 20px;
+}
+@media (max-width: 1090px) {
+  .NavSearch {
+    display: block;
+  }
+  .NavSearch input {
+    display: block;
+    height: 30px;
+    font-size: 18px;
+  }
+  .NavSearch svg {
+    display: block;
+  }
+  .SearchResultsContainer {
+    margin: 0 30px;
+  }
+  .SearchResultsFor {
+    margin: 85px 0 25px 0;
+  }
+}
+@media (max-width: 500px) {
+  .SearchResultsContainer {
+    margin: 0;
+  }
+  .SearchResultsFor {
+    margin: 80px 0 30px 0;
+  }
+  .MoviesIcon {
+    margin-right: 10px;
+    font-size: 32px;
+  }
+  .TvIcon {
+    margin-right: 10px;
+    font-size: 26px;
+  }
+}

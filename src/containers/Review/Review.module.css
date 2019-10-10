@@ -1,0 +1,31 @@
+.Review {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  box-shadow: 3px 3px 10px #000;
+  width: 100%;
+  margin: 20px auto 0 auto;
+}
+.ReviewHeadline {
+  margin-top: 0;
+  font-size: 18px;
+}
+hr {
+  color: #4d4d4d;
+}
+.ReviewSummary {
+  color: #ccc;
+  line-height: 1.7rem;
+  font-size: 16px;
+}
+.ReadMore {
+  font-weight: bold;
+  cursor: pointer;
+  color: #66b3ff;
+}
+@media (max-width: 500px) {
+  .ReviewSummary {
+    font-weight: normal;
+    line-height: 1.4rem;
+    font-size: 14px;
+  }
+}

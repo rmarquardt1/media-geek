@@ -1,0 +1,51 @@
+.OpenActor {
+  display: flex;
+  position: relative;
+  margin: 10px;
+}
+.ProfilePic {
+  margin-right: 20px;
+}
+.ActorInfo {
+  width: 100%;
+}
+.ActorInfo h2 {
+  margin: 0;
+}
+.ActorMovies {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.CharacterName {
+  font-weight: lighter;
+}
+.ActorBioClosed {
+  overflow: hidden;
+  height: 108px;
+  margin-bottom: 7px;
+}
+.ActorBioOpen {
+  overflow: initial;
+  height: initial;
+  margin-bottom: 7px;
+}
+.ShowHide {
+  font-weight: bold;
+  cursor: pointer;
+  color: #66b3ff;
+}
+@media (max-width: 500px) {
+  .ProfilePic {
+    max-width: 38px;
+    position: absolute;
+  }
+  .ActorInfo h2,
+  .CharacterName,
+  .Divider {
+    margin-left: 50px;
+  }
+  .Divider {
+    margin-left: 45px;
+  }
+}

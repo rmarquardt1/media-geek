@@ -1,0 +1,102 @@
+.SearchResultsContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 70px 100px 100px 350px;
+  position: relative;
+  z-index: 5;
+}
+.SearchResults {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+.SearchResultsFor {
+  text-align: center;
+  margin: 25px 0 25px 250px;
+}
+.Background {
+  position: fixed;
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  background-position: center;
+  background-size: cover;
+}
+.Overlay {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.7);
+}
+.NavSearch {
+  width: 250px;
+  position: relative;
+  margin: auto;
+  margin-bottom: 10px;
+  display: none;
+}
+.NavRight,
+.NavLeft {
+  height: 32px;
+  width: 45px;
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 5;
+}
+.NavLeft {
+  margin-left: initial;
+}
+.MoviesIcon {
+  margin-right: 20px;
+  font-size: 32px;
+}
+.TvIcon {
+  margin-right: 20px;
+  font-size: 32px;
+}
+@media (max-width: 1600px) {
+  .SearchResultsContainer {
+    padding: 70px 50px 100px 300px;
+  }
+}
+@media (max-width: 1090px) {
+  .SearchResultsContainer {
+    padding: 100px 50px 100px 50px;
+  }
+  .NavSearch {
+    display: block;
+  }
+  .NavSearch input {
+    display: block;
+    height: 30px;
+    font-size: 18px;
+  }
+  .NavSearch svg {
+    display: block;
+  }
+  .SearchResultsFor {
+    margin: 85px 0 25px 0;
+  }
+}
+@media (max-width: 500px) {
+  .SearchResultsContainer {
+    margin: 0;
+    padding: 60px 0 0 0;
+  }
+  .SearchResultsFor {
+    margin: 80px 0 30px 0;
+  }
+  .MoviesIcon {
+    margin-right: 10px;
+    font-size: 32px;
+  }
+  .TvIcon {
+    margin-right: 10px;
+    font-size: 26px;
+  }
+}

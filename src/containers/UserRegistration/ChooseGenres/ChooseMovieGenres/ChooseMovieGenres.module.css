@@ -1,0 +1,66 @@
+.ChooseMovieGenres {
+  padding-left: 250px;
+  padding-top: 80px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+}
+.InnerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.InnerContainer h1 {
+  font-weight: lighter;
+  margin-bottom: 30px;
+}
+.MovieGenresList {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  justify-content: center;
+}
+.ButtonRed {
+  margin-top: 50px;
+  color: #fff;
+  text-decoration: none;
+  padding: 0 20px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  background: #990033;
+  font-size: 16px;
+  width: 200px;
+  box-sizing: border-box;
+  cursor: pointer;
+  border: 1px solid #4d0019;
+}
+@media (max-width: 1090px) {
+  .ChooseMovieGenres {
+    padding-left: 0;
+  }
+}
+@media (max-width: 500px) {
+  .InnerContainer h1 {
+    font-size: 22px;
+    font-weight: normal;
+    text-align: center;
+  }
+  .ButtonRed {
+    margin-top: 30px;
+    margin-bottom: 50px;
+  }
+}
+@media (max-height: 700px) {
+  .InnerContainer h1 {
+    margin-bottom: 20px;
+  }
+  .ButtonRed {
+    margin-top: 20px;
+  }
+}

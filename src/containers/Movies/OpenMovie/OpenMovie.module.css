@@ -1,0 +1,351 @@
+.OpenMovieBackdrop {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  padding-left: 250px;
+}
+.OpenMovieOverlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 3;
+}
+.OpenMovieContent {
+  position: relative;
+  z-index: 5;
+  padding-top: 40px;
+  margin-left: 250px;
+  display: flex;
+}
+.OpenMovieContent h1 {
+  font-size: 52px;
+  margin: 0 150px 0 0;
+}
+.OpenMovieGenRel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.RelRating {
+  font-size: 16px;
+}
+.OpenMovieGenres {
+  font-weight: lighter;
+  margin-top: 0;
+  font-size: 18px;
+}
+.GenRelMobile {
+  display: none;
+}
+.OpenMoviePoster {
+  position: relative;
+}
+.OpenMoviePoster .PosterImage {
+  width: 200px;
+}
+.OpenMovieInfo {
+  padding: 0 100px;
+  transform: translateY(-50px);
+  transition: transform 0.3s;
+  overflow: hidden;
+}
+.ShowSearch {
+  transform: translateY(0);
+  transition: transform 0.3s;
+}
+.OpenMovieDesc {
+  font-size: 26px;
+  font-weight: lighter;
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+  position: relative;
+}
+.MobileDescription {
+  display: flex;
+  margin-bottom: 26px;
+}
+.Container {
+  position: relative;
+  height: 300px;
+}
+.OpenMovieReviews {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 10px 50px 10px;
+}
+.OpenMoviePosterMobile {
+  display: none;
+}
+.OpenMovieStats {
+  margin: 30px 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+.FadeOut {
+  opacity: 0;
+  transition: 0.3s;
+}
+.FadeIn {
+  opacity: 1;
+  transition: 0.3s;
+}
+.FavoriteIcon {
+  position: absolute;
+  top: 30px;
+  right: 90px;
+  font-size: 32px;
+  color: #ccc;
+  cursor: pointer;
+}
+.FavoriteIcon:hover {
+  color: #ff1a66;
+  transition: color 0.3s;
+}
+.FavoritedIcon {
+  position: absolute;
+  top: 30px;
+  right: 90px;
+  font-size: 32px;
+  color: #ff1a66;
+  cursor: pointer;
+}
+.WatchlistIcon {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  font-size: 32px;
+  color: #ccc;
+  cursor: pointer;
+}
+.WatchlistIcon:hover {
+  color: #ffcc00;
+  transition: color 0.3s;
+}
+.WatchlistSelectedIcon {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  font-size: 32px;
+  color: #ffcc00;
+  cursor: pointer;
+}
+.SearchIcon {
+  position: absolute;
+  top: 30px;
+  right: 150px;
+  font-size: 32px;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.SearchIcon:hover {
+  color: #1a8cff;
+  transition: color 0.3s;
+}
+.SearchIconSelected {
+  position: absolute;
+  top: 30px;
+  right: 150px;
+  font-size: 32px;
+  color: #1a8cff;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.NavRight {
+  float: right;
+  display: flex;
+  align-items: center;
+  height: 52px;
+}
+.MoreLess {
+  margin-right: 50px;
+  cursor: pointer;
+}
+.More {
+  margin-right: 93px;
+}
+@media (max-width: 1600px) {
+  .OpenMovieInfo {
+    padding: 0 50px;
+  }
+}
+@media (max-width: 1366px) {
+  .FavoriteIcon,
+  .FavoritedIcon {
+    top: 10px;
+    right: 80px;
+    font-size: 26px;
+  }
+  .WatchlistIcon,
+  .WatchlistSelectedIcon {
+    top: 10px;
+    right: 30px;
+    font-size: 26px;
+  }
+  .SearchIcon,
+  .SearchIconSelected {
+    top: 10px;
+    right: 130px;
+    font-size: 26px;
+  }
+  .OpenMovieContent h1 {
+    font-size: 30px;
+  }
+  .OpenMoviePoster .PosterImage {
+    width: 150px;
+  }
+  .OpenMovieDesc {
+    margin-left: 20px;
+    font-size: 22px;
+  }
+}
+@media (max-width: 1090px) {
+  .OpenMovieBackdrop {
+    padding-left: 0;
+  }
+  .OpenMoviePosterMobile img {
+    height: 100%;
+  }
+  .OpenMovieContent h1 {
+    font-size: 34px;
+  }
+  .OpenMovieDesc {
+    font-size: 20px;
+  }
+  .OpenMovieContent {
+    margin-left: 0;
+    padding-top: 86px;
+  }
+  .OpenMovieInfo {
+    padding: 0 25px;
+  }
+}
+@media (max-width: 768px) {
+  .FavoriteIcon,
+  .FavoritedIcon {
+    top: 5px;
+    right: 80px;
+    font-size: 26px;
+  }
+  .WatchlistIcon,
+  .WatchlistSelectedIcon {
+    top: 5px;
+    right: 30px;
+    font-size: 26px;
+  }
+  .SearchIcon,
+  .SearchIconSelected {
+    top: 5px;
+    right: 130px;
+    font-size: 26px;
+  }
+  .OpenMovieInfo {
+    padding: 0 25px;
+  }
+  .OpenMovieContent h1 {
+    font-size: 26px;
+  }
+  .OpenMovieGenres {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  .OpenMovieDesc {
+    font-size: 18px;
+  }
+  .RelRating {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 14px;
+  }
+}
+@media (max-width: 500px) {
+  .GenRelShow,
+  .RelRatingShow {
+    display: none;
+  }
+  .GenRelMobile {
+    display: block;
+    margin-left: 10px;
+    font-weight: normal;
+    color: #ccc;
+  }
+  .GenRelMobile .OpenMovieGenres {
+    margin-bottom: 0;
+    color: #ccc;
+    font-weight: normal;
+  }
+  .MoreLess {
+    margin-right: 20px;
+  }
+  .More {
+    margin-right: 63px;
+  }
+  .FavoriteIcon,
+  .FavoritedIcon {
+    top: 5px;
+    right: 50px;
+    font-size: 20px;
+  }
+  .WatchlistIcon,
+  .WatchlistSelectedIcon {
+    top: 5px;
+    right: 10px;
+    font-size: 20px;
+  }
+  .SearchIcon,
+  .SearchIconSelected {
+    top: 5px;
+    right: 90px;
+    font-size: 20px;
+  }
+  .OpenMovieDesc {
+    margin-right: 110px;
+  }
+  .OpenMovieMobile {
+    display: flex;
+  }
+  .OpenMovieMobile h1 {
+    font-size: 20px;
+    margin: 0 110px 5px 10px;
+  }
+  .OpenMoviePoster {
+    display: none;
+    width: 50px;
+  }
+  .OpenMoviePoster .PosterImage {
+    width: 50px;
+  }
+  .OpenMovieInfo {
+    padding: 0;
+  }
+  .OpenMovieOverview {
+    font-size: 16px;
+    font-weight: normal;
+    color: #ccc;
+  }
+  .OpenMoviePosterMobile {
+    display: block;
+    width: 50px;
+  }
+  .OpenMoviePosterMobile img {
+    width: 100%;
+    height: auto;
+  }
+  .OpenMovieDesc {
+    margin: 18px;
+  }
+  .OpenMovieContent {
+    padding-top: 0;
+  }
+  .MobileDescription {
+    margin-bottom: 0;
+  }
+}

@@ -1,0 +1,39 @@
+.Network {
+  height: 100px;
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: center;
+  margin: 20px;
+  position: relative;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.NetworkClicked {
+  background: #ffccdd;
+}
+.Network img {
+  width: 80%;
+}
+@media (max-width: 1090px) {
+  .Network {
+    height: 80px;
+    width: 120px;
+  }
+}
+@media (max-width: 768px) {
+  .Network {
+    height: 66px;
+    width: 100px;
+  }
+}
+@media (max-width: 768px) {
+  .Network {
+    height: 50px;
+    width: 75px;
+    margin: 10px;
+  }
+}

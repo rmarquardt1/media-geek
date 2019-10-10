@@ -1,0 +1,124 @@
+.ImageBarTop {
+  height: 50px;
+  background: rgba(0, 0, 0, 0.85);
+  width: 100%;
+  position: fixed;
+  z-index: 90;
+}
+.ImageBarBottom {
+  height: 50px;
+  background: rgba(0, 0, 0, 0.85);
+  width: 100%;
+  position: fixed;
+  z-index: 90;
+  bottom: 0;
+}
+.ImageBarRight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 75px;
+  height: calc(100% - 100px);
+  background: rgba(0, 0, 0, 0.85);
+  position: fixed;
+  right: 0;
+}
+.ImageBarLeft {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 75px;
+  height: calc(100% - 100px);
+  background: rgba(0, 0, 0, 0.85);
+  position: fixed;
+  left: 250px;
+}
+.ImageNav {
+  font-size: 24px;
+  cursor: pointer;
+}
+.FullSizeImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 100px);
+  width: calc(100% - 400px);
+  top: 50px;
+  left: 325px;
+  right: 50px;
+  background: rgba(0, 0, 0, 0.85);
+  position: fixed;
+  z-index: 90;
+  box-sizing: border-box;
+}
+.FullSizeImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.ImageClose {
+  right: 25px;
+  top: 15px;
+  z-index: 100;
+}
+.FadeOut {
+  opacity: 0;
+  transition: 0.3s;
+}
+.FadeIn {
+  opacity: 1;
+  transition: 0.3s;
+}
+.Loading {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: flex;
+}
+@media (max-width: 1090px) {
+  .ImageBarTop {
+    z-index: 91;
+  }
+  .ImageBarRight {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 75px;
+    height: calc(100% - 100px);
+    background: rgba(0, 0, 0, 0.85);
+    position: fixed;
+    right: 0;
+  }
+  .ImageBarLeft {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 75px;
+    height: calc(100% - 100px);
+    background: rgba(0, 0, 0, 0.85);
+    position: fixed;
+    left: 0;
+  }
+  .ImageNav {
+    font-size: 24px;
+    cursor: pointer;
+  }
+  .FullSizeImage {
+    width: calc(100% - 150px);
+    left: 75px;
+  }
+  .FullSizeImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .ImageClose {
+    top: 100px;
+    right: 100px;
+  }
+}
+@media (max-width: 500px) {
+  .ImageClose {
+    right: 70px;
+  }
+}

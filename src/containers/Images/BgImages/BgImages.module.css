@@ -1,0 +1,81 @@
+.List {
+  margin-top:10px;
+}
+.List h2 {
+  margin:10px;
+  font-weight:normal;
+}
+.ListItems {
+  display:flex;
+  flex-wrap:nowrap;
+  justify-content: space-between;
+  margin-top:20px;
+  position:relative;
+  right:0;
+  transition: right 0.4s linear;
+}
+.ImagesContainer {
+  overflow:hidden;
+}
+.Bar {
+  height:45px;
+  width:10px;
+  background:#1a8cff;
+}
+.NavRight, .NavLeft {
+  height:45px;
+  width:45px;
+  margin-left:auto;
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  font-size:24px;
+  cursor:pointer;
+  z-index:5;
+}
+.NavLeft {
+  margin-left:initial;
+}
+.FadeOut {
+  opacity:0;
+  transition: 0.3s;
+}
+.FadeIn {
+  opacity:1;
+  transition: 0.3s;
+}
+a {
+  width:initial;
+}
+.ImageThumb {
+  margin:10px;
+}
+.ImageThumb img {
+  cursor:pointer;
+}
+@media (max-width: 768px) {
+  .ImageThumb img {
+    width:130px;
+  }
+}
+@media (max-width: 500px) {
+  .ListItems {
+    margin:10px 0 0 0;
+  }
+  .ImagesContainer {
+    margin:0 10px;
+  }
+  .List h2 {
+    font-size:18px;
+    margin:0 0 0 10px;
+  }
+  .Bar {
+    height:30px;
+  }
+  .ImageThumb {
+    margin:5px;
+  }
+  .ImageThumb img {
+    width:100px;
+  }
+}

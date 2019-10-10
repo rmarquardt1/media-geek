@@ -1,0 +1,85 @@
+.TvSeasonContainer {
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 10px;
+  width: 330px;
+  margin: 10px 10px 30px 10px;
+}
+.TvSeason {
+  display: flex;
+  padding: 20px;
+}
+.TvSeason img {
+  height: 150px;
+}
+.Details {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.Details h3 {
+  margin: 0;
+  width: 100%;
+}
+.Details hr {
+  width: 100%;
+}
+.Overview {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  font-size: 14px;
+}
+.ViewEpisodes {
+  font-weight: bold;
+  cursor: pointer;
+  color: #66b3ff;
+  margin-top: 5px;
+  font-size: 14px;
+}
+.TvEpisodes {
+  padding: 20px;
+}
+.OverviewInfo {
+  overflow: auto;
+  height: 80px;
+  color: #ccc;
+}
+@media (max-width: 1366px) {
+  .TvSeasonContainer {
+    width: 47%;
+  }
+}
+@media (max-width: 768px) {
+  .TvSeasonContainer {
+    width: 100%;
+    max-height: 115px;
+    margin-bottom: 20px;
+  }
+  .TvSeason {
+    max-height: 115px;
+    padding: 10px;
+  }
+  .TvSeason img {
+    height: 90px;
+  }
+  .Details {
+    position: relative;
+  }
+  .ViewEpisodes {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 0;
+  }
+  hr {
+    margin: 4px 0;
+  }
+  .OverviewInfo {
+    height: 62px;
+  }
+  .Details h3 {
+    font-size: 16px;
+  }
+}

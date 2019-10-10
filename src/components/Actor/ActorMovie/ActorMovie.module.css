@@ -1,17 +1,16 @@
 .ActorMovie {
-  max-width:150px;
-  margin:10px;
-  cursor:pointer;
+  max-width: 150px;
+  margin: 10px;
+  cursor: pointer;
 }
 .Title {
-  font-size:14px;
+  font-size: 14px;
 }
-
 @media (max-width: 768px) {
   .ActorMovie {
-    max-width:100px;
+    max-width: 100px;
   }
   .ActorMovie img {
-    width:100%;
+    width: 100%;
   }
 }

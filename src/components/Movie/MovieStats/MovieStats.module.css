@@ -1,0 +1,84 @@
+.MovieStats {
+  margin: 0 10px;
+  display: flex;
+  font-size: 18px;
+  width: 100%;
+}
+.Collection {
+  font-size: 18px;
+  max-width: 185px;
+  margin-right: 50px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #262626;
+  display: flex;
+  flex-direction: column;
+}
+.PosterContainer {
+  flex-grow: 0;
+  display: flex;
+}
+.PartOfCollection {
+  font-size: 16px;
+}
+.CollectionName {
+  font-weight: bold;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+.CollectionPoster {
+  cursor: pointer;
+  flex-grow: 1;
+}
+.Stats1 {
+  width: 100%;
+}
+.Row {
+  display: flex;
+  margin-bottom: 20px;
+}
+.Label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+.Value {
+  color: #ccc;
+}
+.Row .Value a {
+  color: #66b3ff;
+}
+.Tagline {
+  font-size: 32px;
+  font-style: italic;
+}
+@media (max-width: 768px) {
+  .MovieStats {
+    font-size: 16px;
+    flex-direction: column-reverse;
+  }
+  .Tagline {
+    font-size: 22px;
+  }
+  .Collection {
+    font-size: 16px;
+    max-width: initial;
+    max-height: 200px;
+    height: 200px;
+    margin-right: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-image: initial;
+    display: flex;
+    flex-direction: column;
+  }
+  .CollectionPoster {
+    width: 100%;
+    display: none;
+  }
+  .PosterContainer {
+    flex-grow: 1;
+    background-position: center;
+  }
+}

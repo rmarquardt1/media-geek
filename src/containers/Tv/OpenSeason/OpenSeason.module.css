@@ -1,7 +1,7 @@
 .Episodes {
-  display:flex;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  position:relative;
-  margin-bottom:30px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  position: relative;
+  margin-bottom: 30px;
 }

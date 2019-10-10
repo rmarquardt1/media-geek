@@ -2,10 +2,20 @@ import * as actionTypes from './actionTypes';
 import axios from 'axios';
 import ls from 'local-storage';
 
-// const initialState = {
-//   token: null,
-//   userId: null
-// }
+export const videoResults = videos => {
+  return {
+    type: actionTypes.VIDEO_RESULTS,
+    vidResults: videos
+  };
+};
+
+export const videoSlice = (sliceEnd, pageSize) => {
+  return {
+    type: actionTypes.VIDEO_SLICE,
+    sliceEnd: sliceEnd,
+    pageSize: pageSize
+  };
+};
 
 export const authStart = () => {
   return {
@@ -13,21 +23,16 @@ export const authStart = () => {
   };
 };
 
-export const authSuccess  = (authData) => {
-
-  
-  
+export const authSuccess = authData => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     authData: authData
   };
-  
-  
 };
 
-export const authFail = (error) => {
+export const authFail = error => {
   return {
-    type:actionTypes.AUTH_FAIL,
+    type: actionTypes.AUTH_FAIL,
     error: error
   };
 };
@@ -42,37 +47,26 @@ export const logout = () => {
   };
 };
 
-// export const isLoaded = (loaded) => {
-//   return {
-//     type:actionTypes.STORE_USERDATA,
-//     loaded: true
-//   };
-// };
-
-
-export const storeUserData = (uid) => {
+export const storeUserData = uid => {
   console.log('triggered');
-  axios.get('https://mediageek-650c6.firebaseio.com/users/' + uid + '/.json')
+  axios
+    .get('https://mediageek-650c6.firebaseio.com/users/' + uid + '/.json')
     .then(response => {
-      // localStorage.setItem('userData', JSON.stringify(response.data));
-
-      ls.set('userData', JSON.stringify(response.data));
-
-
+      ls.set('userData', response.data);
       window.location.reload();
-
-    }).catch(error => {
+    })
+    .catch(error => {
       console.log('error ' + error);
     });
-}
+};
 
-export const checkAuthTimeout = (expirationTime => {
+export const checkAuthTimeout = expirationTime => {
   return dispatch => {
     setTimeout(() => {
       dispatch(logout());
-    }, expirationTime * 1000)
+    }, expirationTime * 1000);
   };
-});
+};
 
 export const auth = (email, password) => {
   return dispatch => {
@@ -81,28 +75,29 @@ export const auth = (email, password) => {
       email: email,
       password: password,
       returnSecureToken: true
-    }
-    axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCrTy3utVnOygLS3WIu3YJnG6MjcJuaFOU', authData)
-    .then(response => {
-
-      dispatch(authSuccess());
-      dispatch(checkAuthTimeout(response.data.expiresIn));
-      const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-
-
-      localStorage.setItem('token', response.data.idToken);
-      localStorage.setItem('expirationDate', expirationDate);
-      localStorage.setItem('userId', response.data.localId);
-
-
-
-      dispatch(storeUserData(response.data.localId));
-    }).catch(error => {
-      console.log('error ' + error);
-      dispatch(authFail(error));
-    });
-  }
-}
+    };
+    axios
+      .post(
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCrTy3utVnOygLS3WIu3YJnG6MjcJuaFOU',
+        authData
+      )
+      .then(response => {
+        dispatch(authSuccess());
+        dispatch(checkAuthTimeout(response.data.expiresIn));
+        const expirationDate = new Date(
+          new Date().getTime() + response.data.expiresIn * 1000
+        );
+        localStorage.setItem('token', response.data.idToken);
+        localStorage.setItem('expirationDate', expirationDate);
+        localStorage.setItem('userId', response.data.localId);
+        dispatch(storeUserData(response.data.localId));
+      })
+      .catch(error => {
+        console.log('error ' + error);
+        dispatch(authFail(error));
+      });
+  };
+};
 
 export const registerUser = (email, password, display) => {
   return dispatch => {
@@ -111,38 +106,51 @@ export const registerUser = (email, password, display) => {
       email: email,
       password: password,
       returnSecureToken: true
-    }
-    axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCrTy3utVnOygLS3WIu3YJnG6MjcJuaFOU', authData)
-    .then(response => {
-      console.log(response);
-      dispatch(authSuccess());
-      dispatch(checkAuthTimeout(response.data.expiresIn));
-      const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-      localStorage.setItem('token', response.data.idToken);
-      localStorage.setItem('expirationDate', expirationDate);
-      localStorage.setItem('userId', response.data.localId);
-      const uid = response.data.localId;
-      const profile = {
+    };
+    axios
+      .post(
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCrTy3utVnOygLS3WIu3YJnG6MjcJuaFOU',
+        authData
+      )
+      .then(response => {
+        console.log(response);
+        dispatch(authSuccess());
+        dispatch(checkAuthTimeout(response.data.expiresIn));
+        const expirationDate = new Date(
+          new Date().getTime() + response.data.expiresIn * 1000
+        );
+        localStorage.setItem('token', response.data.idToken);
+        localStorage.setItem('expirationDate', expirationDate);
+        localStorage.setItem('userId', response.data.localId);
+        const uid = response.data.localId;
+        const profile = {
           displayName: display,
           favTv: '',
           favMovies: '',
           favTvGenres: '',
           favMovieGenres: '',
           favNetworks: '',
-          movieWatchlist: ''
-      };
-      axios.put('https://mediageek-650c6.firebaseio.com/users/' + uid + '.json', profile).then(response => {
-        console.log(response);
-      }).catch(error => {
+          movieWatchlist: '',
+          tvWatchlist: ''
+        };
+        axios
+          .put(
+            'https://mediageek-650c6.firebaseio.com/users/' + uid + '.json',
+            profile
+          )
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => {
+            console.log('error ' + error);
+          });
+      })
+      .catch(error => {
         console.log('error ' + error);
+        dispatch(authFail(error));
       });
-
-    }).catch(error => {
-      console.log('error ' + error);
-      dispatch(authFail(error));
-    });
-  }
-}
+  };
+};
 
 export const authCheckState = () => {
   return dispatch => {
@@ -151,26 +159,17 @@ export const authCheckState = () => {
       dispatch(logout());
     } else {
       const expirationDate = new Date(localStorage.getItem('expirationDate'));
-      if (expirationDate <= new Date())  {
+      if (expirationDate <= new Date()) {
         dispatch(logout());
       } else {
-        const userId = localStorage.getItem('userId')
+        const userId = localStorage.getItem('userId');
         dispatch(authSuccess(token, userId));
-        dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
-      } 
+        dispatch(
+          checkAuthTimeout(
+            (expirationDate.getTime() - new Date().getTime()) / 1000
+          )
+        );
+      }
     }
-  }
-}
-
-
-
-
-
-
-
-// const reducer = (state, action) => {
-  
-
-// }
-
-// export default reducer;
+  };
+};

@@ -1,7 +1,7 @@
 .SearchResults {
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
-  margin:30px;
-  justify-content:center;
-  margin-top:120px;
+  margin: 30px;
+  justify-content: center;
+  margin-top: 120px;
 }

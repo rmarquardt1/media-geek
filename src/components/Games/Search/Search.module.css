@@ -1,68 +1,52 @@
 .Search {
-  width:100%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  position:absolute;
-  top:50%;
-  z-index:10;
-  padding:0 40px;
-  box-sizing:border-box;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+  padding: 0 40px;
+  box-sizing: border-box;
 }
-
 .SearchForm {
-  position:relative;
+  position: relative;
 }
-
 .Input {
-  height:30px;
-  width:200px;
-  font-size:18px;
-  padding:3px 40px 3px 20px;
-  border-radius:20px;
+  height: 30px;
+  width: 200px;
+  font-size: 18px;
+  padding: 3px 40px 3px 20px;
+  border-radius: 20px;
 }
-
 .Submitted {
   top: 45px;
   animation-name: inputUp;
   animation-duration: 0.3s;
-  animation-timing-function:linear;
+  animation-timing-function: linear;
 }
-
 .SubmittedResults {
-  justify-content:center;
+  justify-content: center;
 }
-
 .SearchIcon {
-  position:absolute;
-  right:15px;
-  height:100%;
-  color:#000;
-  cursor:pointer;
-  font-size:22px;
-}
-
-/* button {
-  display:none;
+  position: absolute;
+  right: 15px;
+  height: 100%;
+  color: #000;
+  cursor: pointer;
+  font-size: 22px;
 }
 .RightDiv {
-  display:none;
-}
-.ButtonShow, .DivShow {
-  display:block;
-} */
-
-
-.RightDiv {
-  display:none;
+  display: none;
 }
 .DivShow {
-  display:block;
+  display: block;
 }
-
-
-
 @keyframes inputUp {
-  from {top: 50%;}
-  to {top: 60px}
+  from {
+    top: 50%;
+  }
+  to {
+    top: 60px;
+  }
 }

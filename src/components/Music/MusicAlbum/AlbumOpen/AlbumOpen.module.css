@@ -1,49 +1,44 @@
 .AlbumOpen {
-  width:100%;
-  display:flex;
-  margin-bottom:30px;
+  width: 100%;
+  display: flex;
+  margin-bottom: 30px;
 }
 .AlbumInfo {
-  /* display:flex;
-  justify-content: space-between;
-  align-items:center; */
-  width:100%;
+  width: 100%;
 }
 .AlbumTitle {
-  /* height: 60px; */
-  display:flex;
+  display: flex;
   justify-content: space-between;
-  align-items:center;
-  width:100%;
+  align-items: center;
+  width: 100%;
 }
-
 .AlbumInfo h1 {
-  font-weight:lighter;
+  font-weight: lighter;
 }
 .AlbumCover {
-  width:30%;
-  margin-right:30px;
+  width: 30%;
+  margin-right: 30px;
 }
 .AlbumCover img {
-  width:100%;
+  width: 100%;
 }
-.Close{
-  height:22px;
-  width:22px;
-  cursor:pointer;
-  right:80px;
-  background:#fff;
-  border-radius:11px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.Close {
+  height: 22px;
+  width: 22px;
+  cursor: pointer;
+  right: 80px;
+  background: #fff;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .CloseIcon {
   color: #990033;
-  font-size:26px;
-  cursor:pointer;
+  font-size: 26px;
+  cursor: pointer;
 }
 .ReleaseYear {
   font-style: italic;
-  color:#ccc;
+  color: #ccc;
 }

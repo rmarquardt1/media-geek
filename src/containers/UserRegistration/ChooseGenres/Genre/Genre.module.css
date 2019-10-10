@@ -1,0 +1,45 @@
+.Genre {
+  height: 50px;
+  width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: center;
+  margin: 20px;
+  position: relative;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid #66b3ff;
+  border-radius: 30px;
+  text-align: center;
+}
+@media (max-width: 1090px) {
+  .Genre {
+    height: 80px;
+    width: 120px;
+  }
+}
+@media (max-width: 768px) {
+  .Genre {
+    height: 66px;
+    width: 100px;
+  }
+}
+@media (max-width: 768px) {
+  .Genre {
+    height: 40px;
+    width: 110px;
+    margin: 10px;
+    font-size: 14px;
+  }
+}
+@media (max-width: 400px) {
+  .Genre {
+    height: 40px;
+    width: 92px;
+    margin: 5px;
+    font-size: 12px;
+  }
+}

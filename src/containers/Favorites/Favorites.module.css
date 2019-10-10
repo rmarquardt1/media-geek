@@ -1,0 +1,22 @@
+.Fav {
+  cursor: pointer;
+}
+.Fav:hover {
+  background: #45546e;
+}
+.FavInfo {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-right: 20px;
+}
+.FavRelYear {
+  font-style: italic;
+  color: #ccc;
+  font-size: 12px;
+}
+.Title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

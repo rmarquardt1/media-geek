@@ -1,8 +1,8 @@
-.PickedMovies h2 {
+.PickedTv h2 {
   margin:10px;
   font-weight:normal;
 }
-.PickedMoviesMovies {
+.PickedTvSeries {
   display:flex;
   flex-wrap:wrap;
   justify-content: space-between;
@@ -24,16 +24,25 @@
   align-items:center;
   font-size:24px;
   cursor:pointer;
+  z-index:5;
 }
 .NavLeft {
   margin-left:initial;
 }
+.FadeOut {
+  opacity:0;
+  transition: 0.3s;
+}
+.FadeIn {
+  opacity:1;
+  transition: 0.3s;
+}
 @media (max-width: 500px) {
-  .PickedMoviesMovies {
-    margin: 0 10px;
+  .PickedTvSeries {
+    margin: 10px;
     max-height:175px;
   }
-  .PickedMovies h2 {
+  .PickedTv h2 {
     font-size:18px;
     margin:0 0 0 10px;
   }

@@ -1,0 +1,208 @@
+.SideBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  background: #262f3d;
+  height: 100%;
+  box-sizing: border-box;
+  z-index: 100;
+}
+.LogoContainer {
+  display: flex;
+  align-items: center;
+}
+.LogoContainer h2 {
+  margin: 0;
+}
+.Logo {
+  height: 26px;
+  margin-right: 14px;
+}
+.LogoText {
+  font-size: 20px;
+}
+.MenuIcon {
+  cursor: pointer;
+  font-size: 26px;
+  position: fixed;
+  left: 30px;
+  top: 17px;
+  z-index: 305;
+  display: none;
+}
+.ItemHeader {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.SideBar ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.SideBar ul li {
+  border-bottom: 1px solid #4d4d4d;
+  padding: 20px;
+}
+.Arrow {
+  transform: rotate(0);
+  transition: transform 0.5s;
+}
+.ArrowDown {
+  transform: rotate(180deg);
+  transition: transform 0.5s;
+}
+.FlexCenter {
+  display: flex;
+}
+.Hover:hover {
+  background: #313c4e;
+}
+.FlexRight {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.UserIcon {
+  font-size: 24px;
+  color: #1a8cff;
+}
+.LogoutLink {
+  font-style: italic;
+  font-size: 12px;
+  margin-top: 3px;
+}
+.LogoutLink a {
+  color: #a6a6a6;
+}
+.NavIcon {
+  font-size: 20px;
+}
+.NavIconTv {
+  font-size: 16px;
+}
+.ListIcon {
+  width: 40px;
+  min-width: 40px;
+}
+.CreateAccount {
+  cursor: pointer;
+}
+.SearchHeading {
+  cursor: pointer;
+  position: relative;
+}
+.Search {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.2s linear;
+}
+.SearchOpen {
+  margin: 20px 0 10px 0;
+  height: 30px;
+  transition: height 0.2s linear;
+}
+.SearchChevron {
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+}
+.SignIn {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.3s linear;
+}
+.SignInOpen {
+  height: 160px;
+  transition: height 0.3s linear;
+}
+.FavWatchlist {
+  padding: 0 !important;
+}
+.FavWatchHeading {
+  padding-left: 20px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.FavWatchInnerHeading {
+  width: 100%;
+  padding-right: 20px;
+  position: relative;
+}
+.FavWatchChevron {
+  position: absolute;
+  right: 20px;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+}
+.FavIcon {
+  font-size: 18px;
+  color: #ff1a66;
+}
+.FavoritesWatch {
+  max-height: 0;
+  margin: 0;
+  background: #313c4e;
+  overflow-y: scroll;
+  scrollbar-color: #1a8cff #262f3d;
+  scrollbar-width: thin;
+}
+.FavoritesWatch::-webkit-scrollbar {
+  width: 7px;
+  background: #262f3d;
+}
+.FavoritesWatch::-webkit-scrollbar-thumb {
+  background: #1a8cff;
+}
+.FavoritesWatchOpen {
+  padding: 0 0 20px 0 !important;
+  height: 100%;
+  max-height: 235px;
+  transition: max-height 0.3s linear;
+}
+.FavoritesWatch li {
+  padding: 5px 0 !important;
+  border-bottom: none !important;
+  font-size: 14px;
+  display: flex;
+  align-items: flex-start;
+}
+.FavoritesWatch li img {
+  height: 40px;
+  margin-right: 10px;
+  margin-left: 20px;
+}
+.FavWatchActive {
+  background: #313c4e;
+}
+.StarIcon {
+  color: #ffcc00;
+  font-size: 18px;
+}
+.HideLinks {
+  display: none;
+}
+@media (max-width: 1090px) {
+  .SideBar {
+    left: -310px;
+    top: 60px;
+    transition: left 0.3s ease-out;
+    width: 300px;
+  }
+  .SideBarSlideIn {
+    left: 0;
+    transition: left 0.3s ease-in;
+  }
+  .MenuIcon {
+    display: block;
+  }
+}

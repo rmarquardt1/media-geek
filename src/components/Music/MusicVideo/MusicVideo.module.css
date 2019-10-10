@@ -1,28 +1,26 @@
-.GameVideo {
-  margin-bottom:16px;
-  position:relative;
-  
+.MusicVideo {
+  margin-bottom: 16px;
+  position: relative;
 }
 .VideoTitle {
-  box-sizing:border-box;
-  padding-right:20px;
-  width:100%;
-  display:flex;
-  align-items:center;
-  font-style:italic;
-  max-width:220px;
+  box-sizing: border-box;
+  padding-right: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-style: italic;
+  max-width: 220px;
 }
 .VideoThumb {
   height: 120px;
-  width:220px;
+  width: 220px;
   min-height: 120px;
-  min-width:220px;
-  background-size:cover;
-  background-repeat:no-repeat;
-  background-position:center;
-  margin-right:20px;
+  min-width: 220px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 20px;
 }
-
 .VideoThumb img {
-  width:100%;
+  width: 100%;
 }

@@ -3,11 +3,10 @@ import Tracks from './Tracks/Tracks';
 
 import classes from './TopFiveTracks.module.css';
 
-const topFiveTracks = (props) => {
-
+const topFiveTracks = props => {
   const songs = props.tracks.data.map(song => {
     return (
-      <Tracks 
+      <Tracks
         key={song.id}
         title={song.title}
         album={song.album.title}
@@ -19,16 +18,13 @@ const topFiveTracks = (props) => {
       />
     );
   });
-  
+
   return (
     <div className={classes.TopFiveTracks}>
       <h2>Top Tracks</h2>
-      <ul>
-        {songs}
-      </ul>
+      <ul>{songs}</ul>
     </div>
   );
-
-}
+};
 
 export default topFiveTracks;

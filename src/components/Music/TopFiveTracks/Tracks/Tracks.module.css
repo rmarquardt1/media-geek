@@ -1,21 +1,21 @@
 .Tracks {
-  display:flex;
-  padding:7px 0;
+  display: flex;
+  padding: 7px 0;
 }
 .Thumb {
-  margin-right:10px;
+  margin-right: 10px;
 }
 .TrackInfo {
-  display:inline-flex;
-  flex-direction:column;
-  justify-content:center;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .AlbumName {
-  font-style:italic;
-  font-size:14px;
+  font-style: italic;
+  font-size: 14px;
 }
 .PlayIcon {
-  float: right; 
-  font-size:24px;
-  cursor:pointer;
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
 }

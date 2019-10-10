@@ -1,22 +1,18 @@
 .ButtonHide {
-  display:none;
+  display: none;
 }
 .ButtonShow {
-  color:#fff;
-  font-weight:lighter;
-  font-size:24px;
-  text-decoration:none;
-  padding:0 20px;
-  height:40px;
-  /* width:160px; */
-  /* border:1px solid #fff; */
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:30px;
-  margin:0 20px;
-  background:#333;
-  font-size:16px;
+  color: #fff;
+  font-weight: lighter;
+  font-size: 24px;
+  text-decoration: none;
+  padding: 0 20px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  margin: 0 20px;
+  background: #333;
+  font-size: 16px;
 }
-
-

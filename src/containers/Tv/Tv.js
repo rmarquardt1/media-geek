@@ -1,55 +1,82 @@
-import React, {Component} from 'react';
-import {Redirect} from 'react-router-dom'; 
-import Search from '../../components/Search/Search';
-import NavBar from '../../components/UI/NavBar/NavBar';
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import NavBar from '../UI/NavBar/NavBar';
+import NavSearch from '../Search/NavSearch/NavSearch';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
+import SideBar from '../UI/SideBar/SideBar';
+import List from '../List/List';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTv, faSearch } from '@fortawesome/free-solid-svg-icons';
+import uiClasses from '../../components/UI/Layout/Layout.module.css';
 import classes from './Tv.module.css';
 
 class Tv extends Component {
   state = {
     searchQuery: 'Stranger',
-    searchResults: false
-  }
+    searchResults: false,
+    showSearch: false
+  };
 
-  inputHandler = (event) => {
-    this.setState({searchQuery: event.target.value})
-  }
+  inputHandler = event => {
+    this.setState({ searchQuery: event.target.value });
+  };
 
-  searchHandler = (event) => {
+  searchHandler = event => {
     event.preventDefault();
-    this.setState({searchResults: true});
-  }
+    this.setState({ searchResults: true });
+  };
+
+  showSearchHandler = () => {
+    this.setState({ showSearch: !this.state.showSearch });
+  };
+
   render() {
-
     if (this.state.searchResults) {
-      this.setState({searchResults: false})
-      return <Redirect to={'/Tv/SearchResults/' + this.state.searchQuery} />
+      this.setState({ searchResults: false });
+      return <Redirect to={'/Tv/SearchResults/' + this.state.searchQuery} />;
     }
-      return (
-        <Aux>
-          <NavBar />
-          <section className={classes.Tv}>
-            <Search
-              submitted={this.state.submitted}
-              changed={this.inputHandler}
-              submit={this.searchHandler}
-              event={this.event}
-              back={this.backToResultsHandler}
-              itemOpen={this.state.openItem}
-              searchType='tv'
-              placeholder='Title'
+    return (
+      <Aux>
+        <SideBar isAuth={this.props.isAuth} />
+        <NavBar />
+        <div className={classes.Tv}>
+          <div className={uiClasses.SectionHeader + ' ' + uiClasses.PageHeader}>
+            <div className={uiClasses.PageTitle}>
+              <FontAwesomeIcon className={classes.TvIcon} icon={faTv} />
+              <h2>Television</h2>
+            </div>
+            <FontAwesomeIcon
+              className={uiClasses.HeaderSearchIcon}
+              icon={faSearch}
+              onClick={this.showSearchHandler}
             />
-          </section>
-        </Aux>
-      );
-
-    }
-
+          </div>
+          <div
+            className={
+              this.state.showSearch
+                ? classes.SearchSectionShow + ' ' + classes.SearchSection
+                : classes.SearchSection
+            }
+          >
+            <NavSearch searchType="tv" placeholder="Search Television" />
+          </div>
+          <List listType="popularTv" mediaType="tv" heading="Popular Shows" />
+          <List
+            listType="topRatedTv"
+            mediaType="tv"
+            heading="Top Rated Shows"
+          />
+          <List
+            listType="airingThisWeek"
+            mediaType="tv"
+            heading="Airing This Week"
+          />
+          <List listType="airingToday" mediaType="tv" heading="Airing Today" />
+        </div>
+      </Aux>
+    );
   }
-
-
-
-
+}
 
 export default Tv;

@@ -1,49 +1,46 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
-import TvEpisode from '../../../components/Tv/TvEpisode/TvEpisode';
+import TvEpisode from '../TvEpisode/TvEpisode';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import classes from './OpenSeason.module.css';
 import uiClasses from '../../../components/UI/Layout/Layout.module.css';
 
-
-
-
 class OpenSeason extends Component {
-
   state = {
     episodeList: null
-  }
-
+  };
 
   componentDidMount() {
     this.getEpisodes();
   }
 
   getEpisodes = () => {
-
-    
-
-    axios.get('https://api.themoviedb.org/3/tv/' + this.props.tvId + '/season/' + this.props.seasonNumber,
-    {params: {
-      api_key: '4c7294000365c14a8e42109c863ff772'
-    }}
-    ).then(response => {
-      console.log(response.data.episodes);
-      this.setState({episodeList: response.data.episodes});
-    }).catch(error => {
-      console.log('error ' + error);
-    });
-
-  }
-
+    axios
+      .get(
+        'https://api.themoviedb.org/3/tv/' +
+          this.props.tvId +
+          '/season/' +
+          this.props.seasonNumber,
+        {
+          params: {
+            api_key: '4c7294000365c14a8e42109c863ff772'
+          }
+        }
+      )
+      .then(response => {
+        this.setState({ episodeList: response.data.episodes });
+      })
+      .catch(error => {
+        console.log('error ' + error);
+      });
+  };
 
   render() {
     let episodes = null;
-
     if (this.state.episodeList) {
-    episodes = this.state.episodeList.map(episode => {
+      episodes = this.state.episodeList.map(episode => {
         return (
           <TvEpisode
             key={episode.id}
@@ -58,23 +55,22 @@ class OpenSeason extends Component {
         );
       });
     }
-
-
     return (
-
-
       <div className={classes.Episodes}>
-        <div className={uiClasses.Close} style={{right:'10px', top: '7px'}} onClick={this.props.click}>
-            <FontAwesomeIcon icon={faTimesCircle} className={uiClasses.CloseIcon} />
-          </div>
+        <div
+          className={uiClasses.Close}
+          style={{ right: '10px', top: '7px' }}
+          onClick={this.props.click}
+        >
+          <FontAwesomeIcon
+            icon={faTimesCircle}
+            className={uiClasses.CloseIcon}
+          />
+        </div>
         {episodes}
       </div>
-
-
     );
-
   }
-
 }
 
 export default OpenSeason;

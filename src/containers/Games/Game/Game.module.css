@@ -1,0 +1,21 @@
+.Movie {
+  margin: 20px;
+  width: 300px;
+  height: 550px;
+  cursor: pointer;
+}
+.Movie .Poster {
+  height: 410px;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background-size: contain;
+}
+.Movie .Poster img {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-height: 410px;
+}

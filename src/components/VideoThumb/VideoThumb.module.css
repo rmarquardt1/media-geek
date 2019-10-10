@@ -1,0 +1,37 @@
+.VideoThumbContainer {
+  width: 220px;
+  margin: 10px;
+}
+.VideoName {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  font-size: 14px;
+}
+.VideoThumb {
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.VideoThumb img {
+  width: 100%;
+}
+@media (max-width: 830px) {
+  .VideoThumb {
+    width: 100%;
+  }
+  .VideoThumbContainer {
+    width: 45%;
+    padding-bottom: 30px;
+  }
+}
+@media (max-width: 500px) {
+  .VideoThumbContainer {
+    width: 43%;
+    padding-bottom: 0;
+  }
+}

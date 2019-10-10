@@ -1,98 +1,70 @@
 .OpenMovieBackdrop {
-  position:fixed;
-  height:100%;
-  width:100%;
-  background-size:cover;
-  background-position:center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
 }
 .OpenMovieOverlay {
-  position:fixed;
-  height:100%;
-  width:100%;
-  background-color:rgba(0,0,0,0.7);
-  z-index:3;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 3;
 }
 .OpenMovieContent {
-  position:relative;
-  z-index:5;
-  padding-top:200px;
-  margin-left:100px;
-  display:flex;
+  position: relative;
+  z-index: 5;
+  padding-top: 200px;
+  margin-left: 100px;
+  display: flex;
 }
 .OpenMovieContent h1 {
-  font-size:52px;
-  margin:0;
+  font-size: 52px;
+  margin: 0;
 }
 .OpenMovieGenres {
-  font-weight:lighter;
-  margin-top:0;
-  font-size:18px;
+  font-weight: lighter;
+  margin-top: 0;
+  font-size: 18px;
 }
 .OpenMoviePoster {
-  width:450px;
+  width: 450px;
 }
 .OpenMoviePoster img {
-  width:450px;
+  width: 450px;
 }
-
 .OpenMovieInfo {
   padding: 0 100px;
 }
-
 .OpenMovieDesc {
-  
-  font-size:26px;
-  font-weight:lighter;
+  font-size: 26px;
+  font-weight: lighter;
 }
-
-
-
 .Container {
-  position:relative;
-  height:300px;
-  /* white-space:nowrap; */
-
-}
-
-
-
-.OpenMovieCast {
-  /* display:flex;
-  justify-content: space-between; */
-  /* white-space: nowrap;
-  position:relative; */
-  /* width:500px; */
-  /* position:absolute;
-  white-space:nowrap;
-  overflow:scroll; */
-
-
-
+  position: relative;
+  height: 300px;
 }
 .OpenMovieActors {
-  position:absolute;
-  /* white-space:nowrap; */
-  overflow-x:auto;
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  scrollbar-width:thin;
-  scrollbar-color: #E5A00D black;
-  /* white-space:nowrap;
-  overflow:scroll; */
+  position: absolute;
+  overflow-x: auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  scrollbar-width: thin;
+  scrollbar-color: #e5a00d black;
 }
-
 .OpenMovieVideos {
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  max-height:350px;
-  overflow-y:auto;
-  scrollbar-width:thin;
-  scrollbar-color: #E5A00D black;
+  max-height: 350px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #e5a00d black;
 }
 .OpenMovieReviews {
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
-  justify-content:space-between;
+  justify-content: space-between;
 }

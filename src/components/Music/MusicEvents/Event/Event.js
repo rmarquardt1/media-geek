@@ -1,10 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import classes from './Event.module.css';
-import calIcon from '../../../../assets/images/cal-icon.png'
+import classes from "./Event.module.css";
+import calIcon from "../../../../assets/images/cal-icon.png";
 
-const event = (props) => {
-
+const event = props => {
   const eDate = new Date(props.eventInfo.eventDate);
   const month = [];
   month[0] = "Jan";
@@ -19,57 +18,33 @@ const event = (props) => {
   month[9] = "Oct";
   month[10] = "Nov";
   month[11] = "Dec";
-
   const eMonth = month[eDate.getMonth()];
   const eDay = eDate.getDate();
 
   return (
-    // <li className={classes.Event}>
-
     <div className={classes.Event} onClick={props.eventClick}>
-
-        <div className={classes.EventImage}
-          style={{backgroundImage: 'url(' + props.eventInfo.images[9].url + ')'}}
-        >
-          {/* <img src={props.eventInfo.images[9].url} /> */}
-        </div>
-
-      
-
+      <div
+        className={classes.EventImage}
+        style={{
+          backgroundImage: "url(" + props.eventInfo.images[9].url + ")"
+        }}
+      ></div>
       <div className={event.Info}>
-        <div className={classes.EventName}>
-          {props.eventInfo.name}
-        </div>
-        <div className={classes.Venue}>
-          {props.eventInfo.venueName}
-        </div>
+        <div className={classes.EventName}>{props.eventInfo.name}</div>
+        <div className={classes.Venue}>{props.eventInfo.venueName}</div>
         <div className={classes.VenueLocation}>
           {props.eventInfo.venueCity}, {props.eventInfo.venueState}
         </div>
-        
-        
-
-
-
       </div>
-
-      <div className={classes.CalIcon} style={{backgroundImage: 'url(' + calIcon + ')'}} >
+      <div
+        className={classes.CalIcon}
+        style={{ backgroundImage: "url(" + calIcon + ")" }}
+      >
         <span className={classes.Month}>{eMonth}</span>
         <span className={classes.Day}>{eDay}</span>
       </div>
-
-      
-
-    
-    
     </div>
-      
-    // </li>
-    
-  )
+  );
+};
 
-}
-
-export default event; 
-  
-
+export default event;
