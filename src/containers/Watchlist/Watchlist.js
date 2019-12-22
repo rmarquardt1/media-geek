@@ -65,7 +65,7 @@ class Watchlist extends Component {
 
   getTvWatchlistHandler = () => {
     const userData = JSON.parse(localStorage.getItem('userData'));
-    const favs = userData.favTv;
+    const favs = userData.tvWatchlist;
     favs.map(fav => {
       axios
         .get('https://api.themoviedb.org/3/tv/' + fav, {

@@ -20,3 +20,68 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.Fav a {
+  display: flex;
+  padding: 10px 10px 10px 20px;
+}
+.Fav img {
+  max-width: 26px;
+  margin-right: 10px;
+}
+.FavInfo .Title {
+  font-size: 14px;
+}
+.Favorites {
+  margin-top: 69px;
+  background: #313c4e;
+  z-index: 101;
+  height: 100%;
+  width: 250px;
+  border-left: 1px solid #4d4d4d;
+  padding-bottom: 40px;
+}
+.FavSlideIn {
+  left: 250px;
+  transition: left 0.7s linear;
+}
+.FavHeader {
+  background: #313c4e;
+  width: 250px;
+  height: 68px;
+  border-bottom: 1px solid #4d4d4d;
+  z-index: 102;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.Header {
+  display: flex;
+}
+.FavIcon {
+  font-size: 18px;
+  color: #ff1a66;
+  margin: 0 13px 0 26px;
+}
+.StarIcon {
+  font-size: 18px;
+  color: #ffcc00;
+  margin: 0 13px 0 26px;
+}
+.ChevronLeft {
+  margin-right: 20px;
+  cursor: pointer;
+}
+@media (max-width: 1090px) {
+  .Favorites {
+    width: 300px;
+  }
+  .FavHeader {
+    width: 300px;
+  }
+}
+@media (max-width: 500px) {
+  .FavInfo .Title {
+    font-size: 12px;
+  }
+}

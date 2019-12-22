@@ -33,6 +33,10 @@ class NavSearch extends Component {
       this.setState({ submitted: false });
       return <Redirect to={'/Movies/SearchResults/' + this.state.query} />;
     }
+    if (this.state.submitted && this.props.searchType === 'all') {
+      this.setState({ submitted: false });
+      return <Redirect to={'/SearchResults/' + this.state.query} />;
+    }
     return (
       <form className={classes.SearchForm} onSubmit={this.searchHandler}>
         <input
@@ -44,7 +48,7 @@ class NavSearch extends Component {
         <FontAwesomeIcon
           className={classes.SearchIcon}
           icon={faSearch}
-          onClick={this.inputHandler}
+          onClick={this.searchHandler}
         />
       </form>
     );

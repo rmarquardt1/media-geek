@@ -3,7 +3,10 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ReactGA from 'react-ga';
 import Movies from './containers/Movies/Movies';
+import Calendar from "./containers/Calendar/Calendar";
+import Streaming from './containers/Streaming/Streaming';
 // import Games from "./containers/Games/Games";
+import SideBar from './containers/UI/SideBar/SideBar';
 import Music from './containers/Music/Music';
 import Tv from './containers/Tv/Tv';
 import Aux from './hoc/Auxiliary/Auxiliary';
@@ -16,7 +19,7 @@ import MusicSearchResults from './containers/Music/SearchResults/SearchResults';
 import TvSearchResults from './containers/Tv/SearchResults/SearchResults';
 import SearchAllResults from './containers/Search/SearchAll/SearchAllResults/SearchAllResults';
 import MovieCollection from './containers/Movies/MovieCollection/MovieCollection';
-import Home from './containers/Home/Home';
+import Home from './components/Home/Home';
 import Logout from './containers/Auth/Logout/Logout';
 import * as actions from './store/actions/auth';
 import UserRegistration from './containers/UserRegistration/UserRegistration';
@@ -33,6 +36,7 @@ class App extends Component {
     return (
       <Aux>
         <NavBar />
+        <SideBar isAuth={this.props.isAuthenticated} />
         <Route
           path="/"
           exact
@@ -48,10 +52,24 @@ class App extends Component {
           )}
         />
         <Route
+          path="/Streaming"
+          exact
+          render={props => (
+            <Streaming {...props} isAuth={this.props.isAuthenticated} />
+          )}
+        />
+        <Route
           path="/Tv"
           exact
           render={props => (
             <Tv {...props} isAuth={this.props.isAuthenticated} />
+          )}
+        />
+        <Route
+          path="/Calendar"
+          exact
+          render={props => (
+            <Calendar {...props} isAuth={this.props.isAuthenticated} />
           )}
         />
         <Route

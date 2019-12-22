@@ -3,14 +3,13 @@
   position: relative;
   height: 52px;
   box-shadow: 3px 3px 10px #000;
-  border-radius: 3px;
 }
 .SectionHeader h2 {
   display: inline-block;
   margin: 10px 0;
   position: absolute;
-  left: 43px;
-  transition: left 0.1s linear;
+  left: 18px;
+  transition: left 0.3s linear;
 }
 h2.SectionHeaderMoveLeft {
   left: 60px;
@@ -30,6 +29,9 @@ h2.SectionHeaderMoveLeft {
   align-items: center;
   width: 100%;
 }
+.SectionHeader h2 {
+  left: 46px !important;
+}
 .HeaderSearchIcon {
   font-size: 24px;
   cursor: pointer;
@@ -39,7 +41,7 @@ h2.SectionHeaderMoveLeft {
   width: 300px;
   margin: auto auto 40px auto;
   transform: translateY(-50px);
-  transition: transform 0.3s;
+  transition: transform 0.3s linear;
 }
 .ShowSearch {
   width: 300px;
@@ -83,9 +85,28 @@ h2.SectionHeaderMoveLeft {
 .BoxShadowReverse {
   box-shadow: 0 0 7px #333;
 }
+.NoResults {
+  font-weight: lighter !important;
+  font-style: italic;
+  font-size: 20px;
+}
+@media (max-width: 1090px) {
+  .SearchResultsSearch {
+    display:none;
+  }
+  
+}
 @media (max-width: 500px) {
+  .SectionHeader h2 {
+    left: 0;
+    font-weight: normal;
+    font-size: 20px;
+  }
   .SectionHeader {
     border-radius: 0;
+    height: 40px;
+    display: flex;
+    align-items: center;
   }
   .HeaderSearchIcon {
     font-size: 20px;

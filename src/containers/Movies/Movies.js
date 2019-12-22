@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import ReactGA from 'react-ga';
-import NavBar from '../UI/NavBar/NavBar';
 import NavSearch from '../Search/NavSearch/NavSearch';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
-import SideBar from '../UI/SideBar/SideBar';
 import List from '../List/List';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,7 +16,6 @@ ReactGA.pageview(window.location.pathname + window.location.search);
 class Movies extends Component {
   state = {
     searchQuery: null,
-    searchResults: false,
     showSearch: false
   };
 
@@ -26,31 +23,18 @@ class Movies extends Component {
     this.setState({ searchQuery: event.target.value });
   };
 
-  searchHandler = event => {
-    event.preventDefault();
-    this.setState({ searchResults: true });
-  };
-
   showSearchHandler = () => {
     this.setState({ showSearch: !this.state.showSearch });
   };
 
   render() {
-    if (this.state.searchResults) {
-      this.setState({ searchResults: false });
-      return (
-        <Redirect to={'/Movies/SearchResults/' + this.state.searchQuery} />
-      );
-    }
     return (
       <Aux>
-        <SideBar isAuth={this.props.isAuth} />
-        <NavBar searchType="movies" />
         <div className={classes.Movies}>
           <div className={uiClasses.SectionHeader + ' ' + uiClasses.PageHeader}>
             <div className={uiClasses.PageTitle}>
               <FontAwesomeIcon className={classes.MoviesIcon} icon={faFilm} />
-              <h2>Movies</h2>
+              <h2 style={{left: '46px'}}>Movies</h2>
             </div>
             <FontAwesomeIcon
               className={uiClasses.HeaderSearchIcon}

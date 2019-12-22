@@ -1,0 +1,53 @@
+.Movies {
+  margin: 70px 100px 100px 350px;
+}
+.SectionHeaderSearch h2 {
+  display: flex;
+  margin: 0 10px 10px 10px;
+  padding: 10px 20px 10px 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+.SectionHeaderH2 {
+  left:50px !important;
+}
+.MoviesIcon {
+  margin-left: 10px;
+  margin-top: 2px;
+  font-size: 26px;
+}
+.SearchSection {
+  width: 300px;
+  margin: 10px auto;
+  position: relative;
+  top: -42px;
+  height: 0px;
+  transition: all 0.3s linear;
+}
+.SearchSectionShow {
+  display: block;
+  top: 0;
+  height: 80px;
+  transition: all 0.3s linear;
+}
+.StreamingIcon {
+  margin-left: 10px;
+  margin-top: 2px;
+  height:26px;
+  color:#fff;
+}
+@media (max-width: 1600px) {
+  .Home {
+    margin: 70px 50px 100px 300px;
+  }
+}
+@media (max-width: 1090px) {
+  .Movies {
+    margin: 100px 50px 100px 50px;
+  }
+}
+@media (max-width: 500px) {
+  .Movies {
+    margin: 60px 0;
+  }
+}

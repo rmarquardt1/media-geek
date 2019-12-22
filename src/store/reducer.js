@@ -17,7 +17,9 @@ const initialState = {
   videoSliceEnd: null,
   videoPageSize: null,
   videoCurrentPage: 1,
-  videoShowAll: false
+  videoShowAll: false,
+  showSidebar: false,
+  showSearchSidebar: false
 };
 
 const authStart = (state, action) => {
@@ -73,16 +75,21 @@ const reducer = (state = initialState, action) => {
       return updateObject(state, {
         userData: action.loaded
       });
-    case actionTypes.VIDEO_RESULTS:
+    case actionTypes.CLEAR_AUTH_FAIL:
       return {
         ...state,
-        videoResults: action.vidResults
+        error: null
       };
-    case actionTypes.VIDEO_SLICE:
+    case actionTypes.SHOW_SEARCH_SIDEBAR:
       return {
         ...state,
-        videoSliceEnd: action.sliceEnd,
-        videoPageSize: action.pageSize
+        showSearchSidebar: action.show
+      };
+
+    case actionTypes.SHOW_SIDEBAR:
+      return {
+        ...state,
+        showSidebar: action.show
       };
     default:
       return state;

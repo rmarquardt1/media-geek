@@ -14,7 +14,6 @@ import classes from './Tv.module.css';
 class Tv extends Component {
   state = {
     searchQuery: 'Stranger',
-    searchResults: false,
     showSearch: false
   };
 
@@ -22,20 +21,11 @@ class Tv extends Component {
     this.setState({ searchQuery: event.target.value });
   };
 
-  searchHandler = event => {
-    event.preventDefault();
-    this.setState({ searchResults: true });
-  };
-
   showSearchHandler = () => {
     this.setState({ showSearch: !this.state.showSearch });
   };
 
   render() {
-    if (this.state.searchResults) {
-      this.setState({ searchResults: false });
-      return <Redirect to={'/Tv/SearchResults/' + this.state.searchQuery} />;
-    }
     return (
       <Aux>
         <SideBar isAuth={this.props.isAuth} />
@@ -44,7 +34,7 @@ class Tv extends Component {
           <div className={uiClasses.SectionHeader + ' ' + uiClasses.PageHeader}>
             <div className={uiClasses.PageTitle}>
               <FontAwesomeIcon className={classes.TvIcon} icon={faTv} />
-              <h2>Television</h2>
+              <h2 style={{left: '46px'}}>Television</h2>
             </div>
             <FontAwesomeIcon
               className={uiClasses.HeaderSearchIcon}

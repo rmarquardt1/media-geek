@@ -4,21 +4,21 @@ import * as actions from '../../../store/actions/auth';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import axios from 'axios';
 import Images from '../../Images/Images';
-import Actors from '../../Actors/Actors';
-import Videos from '../../Videos/Videos';
+import List from '../../List/List';
+import VideoList from '../../List/VideoList/VideoList';
+import ActorList from '../../List/ActorList/ActorList';
 import Review from '../../Review/Review';
 import VideoModal from '../../../components/UI/VideoModal/VideoModal';
-import MovieScores from '../../Scores/Scores';
+import Scores from '../../Scores/Scores';
 import MovieCollection from '../MovieCollection/MovieCollection';
 import MovieStats from '../../../components/Movie/MovieStats/MovieStats';
 import FullSizeImage from '../../../components/FullSizeImage/FullSizeImage';
 import Loader from '../../../components/UI/Loader/Loader';
-import NavBar from '../../UI/NavBar/NavBar';
-import SideBar from '../../../containers/UI/SideBar/SideBar';
 import NavSearch from '../../Search/NavSearch/NavSearch';
+import AddEvent from '../../Calendar/AddEvent/AddEvent';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faStar, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faStar, faSearch, faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
 import classes from './OpenMovie.module.css';
 import uiClasses from '../../../components/UI/Layout/Layout.module.css';
 
@@ -43,7 +43,8 @@ class OpenMovie extends Component {
     loading: false,
     movieInfo: null,
     movieId: null,
-    movieCollection: null
+    movieCollection: null,
+    showAddEvent: false
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -112,8 +113,21 @@ class OpenMovie extends Component {
         this.setState({ genres: gen });
       })
       .catch(error => {
-        console.log('error ' + error);
+        if (error.response && error.response.status === 429) {
+          const timeOut = parseInt(
+            error.response.headers['retry-after'] + '000'
+          );
+          this.getMovieTryAgainHandler(timeOut);
+        } else {
+          console.log('error: ' + error);
+        }
       });
+  };
+
+  getMovieTryAgainHandler = timeOut => {
+    setTimeout(() => {
+      this.getMovieHandler();
+    }, timeOut);
   };
 
   videoPlayHandler = url => {
@@ -236,6 +250,10 @@ class OpenMovie extends Component {
     this.setState({ fullSizeImgUrl: null, fullSizeImgId: null });
   };
 
+  addEventClickHandler = () => {
+    this.setState({ showAddEvent: !this.state.showAddEvent });
+  };
+
   render() {
     let reviews = null;
     let collection = null;
@@ -291,7 +309,6 @@ class OpenMovie extends Component {
 
     return (
       <Aux>
-        <NavBar searchType="movies" />
         {this.state.fullSizeImgUrl ? (
           <FullSizeImage
             url={this.state.fullSizeImgUrl}
@@ -313,7 +330,6 @@ class OpenMovie extends Component {
               <Loader />
             ) : (
               <Aux>
-                <SideBar isAuth={this.props.isAuth} />
                 <div
                   className={classes.OpenMovieBackdrop}
                   style={{
@@ -327,6 +343,18 @@ class OpenMovie extends Component {
                 />
                 <div className={classes.OpenMovieOverlay} />
                 <div className={classes.OpenMovieContent}>
+
+                {this.state.showAddEvent ? (
+                      <AddEvent 
+                        close={this.addEventClickHandler} 
+                        title={this.state.movieInfo.title}
+                        description={this.state.movieInfo.overview}
+                        mediaId={this.props.match.params.id}
+                        poster={'http://image.tmdb.org/t/p/w500/' + this.state.movieInfo.poster_path}
+                      />
+                  ) : null}
+
+
                   <div
                     className={
                       this.state.showSearch
@@ -362,24 +390,37 @@ class OpenMovie extends Component {
                         />
                       </div>
                       <div className={classes.OpenMovieDesc}>
-                        <FontAwesomeIcon
-                          icon={faHeart}
-                          className={
-                            this.state.favorite
-                              ? classes.FavoritedIcon
-                              : classes.FavoriteIcon
-                          }
-                          onClick={this.favoriteClickHandler}
-                        />
-                        <FontAwesomeIcon
-                          icon={faStar}
-                          className={
-                            this.state.watchlist
-                              ? classes.WatchlistSelectedIcon
-                              : classes.WatchlistIcon
-                          }
-                          onClick={this.watchlistClickHandler}
-                        />
+                        {this.props.isAuth ? (
+                          <Aux>
+                            <FontAwesomeIcon
+                              icon={faCalendarPlus}
+                              className={
+                                this.state.calendar
+                                  ? classes.CalendarSelectedIcon
+                                  : classes.CalendarIcon
+                              }
+                              onClick={this.addEventClickHandler}
+                            />
+                            <FontAwesomeIcon
+                              icon={faStar}
+                              className={
+                                this.state.watchlist
+                                  ? classes.WatchlistSelectedIcon
+                                  : classes.WatchlistIcon
+                              }
+                              onClick={this.watchlistClickHandler}
+                            />
+                            <FontAwesomeIcon
+                              icon={faHeart}
+                              className={
+                                this.state.favorite
+                                  ? classes.FavoritedIcon
+                                  : classes.FavoriteIcon
+                              }
+                              onClick={this.favoriteClickHandler}
+                            />
+                          </Aux>
+                        ) : null}
                         <FontAwesomeIcon
                           icon={faSearch}
                           className={
@@ -387,6 +428,7 @@ class OpenMovie extends Component {
                               ? classes.SearchIconSelected
                               : classes.SearchIcon
                           }
+                          style={!this.props.isAuth ? { right: '30px' } : null}
                           onClick={this.showSearchHandler}
                         />
                         <div className={classes.OpenMovieMobile}>
@@ -439,7 +481,7 @@ class OpenMovie extends Component {
                             ? '(' + this.state.rating + ')'
                             : null}
                         </div>
-                        <MovieScores
+                        <Scores
                           title={this.state.movieInfo.title}
                           type="movie"
                         />
@@ -458,18 +500,35 @@ class OpenMovie extends Component {
                       />
                     </div>
                     {this.state.actorResults.length > 0 ? (
-                      <Actors
+                      <ActorList
+                        movieId={this.state.movieId}
+                        heading="Cast"
                         actors={this.state.actorResults}
                         openMovie={this.getMovieHandler}
                       />
                     ) : null}
-                    {this.state.videoResults.length > 0 ? (
-                      <Videos
-                        vids={this.state.videoResults}
+                    {this.state.actorResults.length > 0 ? (
+                      <VideoList
+                        heading="Videos"
+                        actors={this.state.videoResults}
                         play={this.videoPlayHandler}
-                        close={this.videoCloseHandler}
                       />
                     ) : null}
+                    <div className={uiClasses.SectionHeader}>
+                      <h2>Related</h2>
+                    </div>
+                    <List
+                      listType="similiarMovies"
+                      mediaType="movies"
+                      movieId={this.state.movieId}
+                      heading="Similiar Movies"
+                    />
+                    <List
+                      listType="recommendedMovies"
+                      mediaType="movies"
+                      movieId={this.state.movieId}
+                      heading="Recommended Movies"
+                    />
                     <Images
                       imdbId={this.state.imdbId}
                       imgClick={this.imageClickHandler}
@@ -501,7 +560,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(OpenMovie);
+export default connect(null, mapDispatchToProps)(OpenMovie);

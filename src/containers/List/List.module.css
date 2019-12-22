@@ -1,17 +1,55 @@
 .List {
-  margin-top: 20px;
+  margin: 20px 0;
 }
 .List h2 {
   margin: 10px;
   font-weight: normal;
 }
+.ListContainer {
+  overflow: hidden;
+  width: 100%;
+}
 .ListItems {
   display: flex;
+  /* max-height: 360px; */
+  margin-top: 20px;
+  position: relative;
+  right: 0;
+  transition: all 700ms cubic-bezier(0, 0, 0, 1);
+  overflow-x: scroll;
+  overflow-y: hidden;
+  /* scrollbar-color: #262f3d #0f1318; */
+  scrollbar-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+}
+.ListItems::-webkit-scrollbar {
+  /* background-color: #0f1318; */
+  display: none;
+}
+.ListItems::-webkit-scrollbar-thumb {
+  background-color: #262f3d;
+}
+.ListContainerShowAll {
+  width: 100%;
+}
+.ListItemsShowAll {
+  display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  max-height: 360px;
+  max-height: initial;
   overflow: hidden;
   margin-top: 20px;
+  position: relative;
+  right: 0;
+  transition: all 700ms cubic-bezier(0, 0, 0, 1);
+  /* scrollbar-color: rgba(0, 0, 0, 0.6) #262f3d; */
+  scrollbar-color: #262f3d #0f1318;
+}
+.ShowAll {
+  margin-right: 75px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.ShowChevronDown {
+  margin-right: 10px;
 }
 .Bar {
   height: 45px;
@@ -21,7 +59,6 @@
 .NavRight,
 .NavLeft {
   height: 45px;
-  width: 45px;
   margin-left: auto;
   display: flex;
   justify-content: center;
@@ -30,8 +67,12 @@
   cursor: pointer;
   z-index: 5;
 }
+.NavRight {
+  margin-right: 10px;
+}
 .NavLeft {
   margin-left: initial;
+  width: 45px;
 }
 .FadeOut {
   opacity: 0;
@@ -44,10 +85,79 @@
 a {
   width: initial;
 }
+.NetworkLogo {
+  width: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.Netflix {
+  height: 50px;
+  background-image: url('../../assets/images/netflix_logo.png');
+}
+.Amazon {
+  background-image: url('../../assets/images/amazon_logo.jpg');
+  padding-left: 14px;
+  height: 36px;
+}
+.Hulu {
+  background-image: url('../../assets/images/hulu_logo.jpg');
+  padding-left: 14px;
+  height: 36px;
+}
+.DisneyPlus {
+  background-image: url('../../assets/images/disney_plus_logo.jpg');
+  padding-left: 14px;
+  height: 36px;
+}
+@media (max-width: 768px) {
+  .ShowAll {
+    width: 100%;
+    text-align: right;
+    padding-right: 20px;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  .ShowAllMobile {
+    padding-right: 30px;
+    /* padding: 10px 30px 20px 0; */
+  }
+}
 @media (max-width: 500px) {
+  .Netflix {
+    height: 24px;
+  }
+  .Amazon {
+    padding-left: 10px;
+    height: 26px;
+  }
+  .Hulu {
+    padding-left: 10px;
+    height: 26px;
+  }
+  .DisneyPlus {
+    padding-left: 14px;
+    height: 26px;
+  }
+  .ShowAll {
+    font-size: 14px;
+  }
+  .chevronArrow {
+    display: none;
+  }
   .ListItems {
     margin: 10px;
     max-height: 175px;
+    scrollbar-color: #262f3d #0f1318;
+  }
+  .ListItems::-webkit-scrollbar {
+    background-color: #0f1318;
+  }
+  .ListItems::-webkit-scrollbar-thumb {
+    background-color: #262f3d;
+  }
+  .ListItemsShowAll {
+    margin: 10px;
   }
   .List h2 {
     font-size: 18px;

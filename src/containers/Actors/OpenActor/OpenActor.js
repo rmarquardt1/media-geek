@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
-import ActorMovie from '../../../components/Actor/ActorMovie/ActorMovie';
+import List from '../../List/List';
 import { goToAnchor } from 'react-scrollable-anchor';
 import { configureAnchors } from 'react-scrollable-anchor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -83,21 +82,6 @@ class OpenActor extends Component {
   };
 
   render() {
-    const actorMovies = this.props.movies.results
-      .slice(this.state.sliceStart, this.state.sliceEnd)
-      .map(movie => {
-        return (
-          <NavLink to={'/Movies/' + movie.id} key={movie.id}>
-            <ActorMovie
-              title={movie.title}
-              poster={movie.poster_path}
-              release={movie.releaseDate}
-              id={movie.id}
-            />
-          </NavLink>
-        );
-      });
-
     const actorPic = this.props.actorBio.pic
       ? this.props.actorInfo.profilePic
       : noImage;
@@ -143,12 +127,12 @@ class OpenActor extends Component {
             </div>
           </div>
         </div>
-        <h2 style={{ marginLeft: '10px' }}>
-          Other Movies with {this.props.actorInfo.actorName}
-        </h2>
-        <div ref={this.elementRef} className={classes.ActorMovies}>
-          {actorMovies}
-        </div>
+        <List
+          listType="actorMovies"
+          mediaType="movies"
+          heading={'Other Movies with ' + this.props.actorInfo.actorName}
+          actorId={this.props.actorInfo.actorId}
+        />
       </div>
     );
   }

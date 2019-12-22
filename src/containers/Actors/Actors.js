@@ -18,25 +18,19 @@ class Actors extends Component {
   state = {
     actors: null,
     actorCount: null,
-    actorSliceStart: 0,
-    actorSliceEnd: null,
     actorPageSize: null,
     actorCurrentPage: 1,
     actorContainerWidth: null,
-    fadeOut: false,
-    fadeIn: false,
     actorShowAll: false,
     openActorMovies: null,
     openActorInfo: null,
     openActorBio: null,
     openActorChar: null,
+    openActorId: null,
     scrollWidth: 0,
-    sectionW: null,
-    actorMargin: null,
     moveRight: 0,
-    moveLeft: null,
-    headerMoveLeft: false
-
+    headerMoveLeft: false,
+    currentElPosition: 0
     // initialPos: null,
     // newPos: null,
     // offsetX: 0,
@@ -76,29 +70,22 @@ class Actors extends Component {
     const windowW = window.innerWidth;
     if (this.actorsElementRef.current && !this.state.actorShowAll) {
       const actElWidth = this.actorsElementRef.current.clientWidth;
+      const scrollW = this.actorsElementRef.current.scrollWidth;
       const actThumbWidth = windowW < 501 ? 120 : windowW < 1367 ? 140 : 170;
       const actElCount = Math.floor(actElWidth / actThumbWidth);
-      const sliceEnd = this.state.actorSliceStart + actElCount;
       const marg = (actElWidth / actElCount - actThumbWidth) / 2 + 10;
-      let move = { ...this.state }.moveRight;
-      move = move !== 0 ? actElWidth : 0;
+      const move = this.state.currentElPosition * (actThumbWidth - 20 + marg * 2);
       this.setState({
-        actorSliceEnd: sliceEnd,
         actorPageSize: actElCount,
-        sectionW: actElWidth,
-        actorMargin: marg,
-        moveRight: move
+        moveRight: move,
+        containerWidth: actElWidth,
+        scrollWidth: scrollW
       });
-      this.loadActorsHandler(
-        this.state.actorSliceStart,
-        sliceEnd,
-        actElCount,
-        marg
-      );
+      this.loadActorsHandler(marg);
     }
   };
 
-  loadActorsHandler = (start, end, pageSize, marg) => {
+  loadActorsHandler = marg => {
     const actors = this.props.actors.map(actor => {
       const actorInfo = {
         actorName: actor.name,
@@ -110,6 +97,7 @@ class Actors extends Component {
           marg={marg + 'px'}
           actorName={actor.name}
           character={actor.character}
+          id={actor.id}
           profilePic={'http://image.tmdb.org/t/p/w185' + actor.profile_path}
           profilePicId={actor.profile_path}
           key={Math.random()}
@@ -117,7 +105,8 @@ class Actors extends Component {
             this,
             actorInfo,
             actor.character,
-            actor.profile_path
+            actor.profile_path,
+            actor.actorId
           )}
         />
       );
@@ -129,8 +118,12 @@ class Actors extends Component {
   };
 
   navHandler = direction => {
+    const windowW = window.innerWidth;
     const actElWidth = this.actorsElementRef.current.clientWidth;
     const scrollW = this.actorsElementRef.current.scrollWidth;
+    const actThumbWidth = windowW <= 500 ? 95 : 190;
+    const actElCount = Math.floor(actElWidth / actThumbWidth);
+    const currentElPos = { ...this.state }.currentElPosition;
     const currentPos = { ...this.state }.moveRight;
     switch (direction) {
       case 'right':
@@ -138,14 +131,16 @@ class Actors extends Component {
           moveRight: currentPos + actElWidth,
           actorContainerWidth: actElWidth,
           scrollWidth: scrollW,
-          headerMoveLeft: true
+          headerMoveLeft: true,
+          currentElPosition: currentElPos + actElCount
         });
         break;
       case 'left':
         this.setState({
           moveRight: currentPos - actElWidth,
           actorContainerWidth: actElWidth,
-          scrollWidth: scrollW
+          scrollWidth: scrollW,
+          currentElPosition: currentElPos - actElCount
         });
         break;
       default:
@@ -203,13 +198,13 @@ class Actors extends Component {
           openActorChar: actorChar,
           openActorMovies: response.data,
           openActorInfo: actorInfo,
-          moveRight: 0
+          moveRight: 0,
+          openActorId: actorInfo.actorId
         });
       })
       .catch(error => {
         console.log('error ' + error);
       });
-
     axios
       .get('https://api.themoviedb.org/3/person/' + actorInfo.actorId + '?', {
         params: {
@@ -218,6 +213,7 @@ class Actors extends Component {
         }
       })
       .then(response => {
+        console.log(response.data.id);
         this.setState({
           openActorBio: {
             pic: actorPic,
@@ -225,7 +221,8 @@ class Actors extends Component {
             birthday: response.data.birthday,
             death: response.data.deathday,
             homepage: response.data.homepage,
-            birthplace: response.data.place_of_birth
+            birthplace: response.data.place_of_birth,
+            id: response.data.id
           }
         });
       })
@@ -257,8 +254,10 @@ class Actors extends Component {
             Cast
           </h2>
           <div className={classes.NavRight}>
-            {this.state.actorPageSize < this.state.actorCount &&
-            !this.state.openActorMovies ? (
+            {/* {this.state.actorPageSize < this.state.actorCount &&
+            !this.state.openActorMovies ? ( */}
+            {this.state.moveRight + this.state.actorContainerWidth <
+          this.state.scrollWidth ? (
               <div
                 className={
                   this.state.actorShowAll
@@ -295,14 +294,7 @@ class Actors extends Component {
           style={{ overflow: 'hidden', width: '100%' }}
         >
           <div
-            className={
-              classes.Actors
-              // this.state.fadeOut
-              //   ? classes.FadeOut + " " + classes.Actors
-              //   : this.state.fadeIn
-              //   ? classes.FadeIn + " " + classes.Actors
-              //   : classes.Actors
-            }
+            className={classes.Actors}
             style={
               this.state.actorShowAll
                 ? { flexWrap: 'wrap', right: 0 }
@@ -319,7 +311,9 @@ class Actors extends Component {
             }
             ref={this.actorsElementRef}
           >
-            {this.state.openActorMovies && this.state.openActorBio ? (
+            {this.state.openActorMovies &&
+            this.state.openActorBio &&
+            this.state.openActorId ? (
               <OpenActor
                 character={this.state.openActorChar}
                 movies={this.state.openActorMovies}
@@ -327,6 +321,7 @@ class Actors extends Component {
                 actorBio={this.state.openActorBio}
                 close={this.actorCloseHandler}
                 openMovieClick={this.props.openMovie}
+                actorId={this.state.openActorId}
               />
             ) : (
               this.state.actors

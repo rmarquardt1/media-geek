@@ -10,7 +10,7 @@
   position: fixed;
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.8);
   z-index: 3;
 }
 .OpenMovieContent {
@@ -28,6 +28,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.OpenMovieOverview {
+  font-weight: lighter;
+  margin-top: 12px;
+  margin-bottom: 0;
 }
 .RelRating {
   font-size: 16px;
@@ -66,7 +71,7 @@
 }
 .MobileDescription {
   display: flex;
-  margin-bottom: 26px;
+  margin-bottom: 30px;
 }
 .Container {
   position: relative;
@@ -100,7 +105,7 @@
 .FavoriteIcon {
   position: absolute;
   top: 30px;
-  right: 90px;
+  right: 150px;
   font-size: 32px;
   color: #ccc;
   cursor: pointer;
@@ -112,7 +117,7 @@
 .FavoritedIcon {
   position: absolute;
   top: 30px;
-  right: 90px;
+  right: 150px;
   font-size: 32px;
   color: #ff1a66;
   cursor: pointer;
@@ -120,7 +125,7 @@
 .WatchlistIcon {
   position: absolute;
   top: 30px;
-  right: 30px;
+  right: 90px;
   font-size: 32px;
   color: #ccc;
   cursor: pointer;
@@ -132,7 +137,7 @@
 .WatchlistSelectedIcon {
   position: absolute;
   top: 30px;
-  right: 30px;
+  right: 90px;
   font-size: 32px;
   color: #ffcc00;
   cursor: pointer;
@@ -140,7 +145,7 @@
 .SearchIcon {
   position: absolute;
   top: 30px;
-  right: 150px;
+  right: 210px;
   font-size: 32px;
   color: #ccc;
   cursor: pointer;
@@ -153,12 +158,36 @@
 .SearchIconSelected {
   position: absolute;
   top: 30px;
-  right: 150px;
+  right: 210px;
   font-size: 32px;
   color: #1a8cff;
   cursor: pointer;
   transition: color 0.3s;
 }
+.CalendarIcon {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  font-size: 32px;
+  color: #ccc;
+  cursor: pointer;
+}
+.CalendarIcon:hover {
+  color: #fd7e14;
+  transition: color 0.3s;
+}
+.CalendarSelectedIcon {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  font-size: 32px;
+  color: #fd7e14;
+  cursor: pointer;
+}
+
+
+
+
 .NavRight {
   float: right;
   display: flex;
@@ -225,7 +254,11 @@
     padding-top: 86px;
   }
   .OpenMovieInfo {
+    margin-top: 50px;
     padding: 0 25px;
+  }
+  .SearchIcon {
+    display:none;
   }
 }
 @media (max-width: 768px) {
@@ -325,6 +358,7 @@
   }
   .OpenMovieInfo {
     padding: 0;
+    margin-top: 110px;
   }
   .OpenMovieOverview {
     font-size: 16px;

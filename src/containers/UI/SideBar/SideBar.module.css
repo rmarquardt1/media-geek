@@ -55,10 +55,17 @@
   transform: rotate(180deg);
   transition: transform 0.5s;
 }
+.ArrowRight {
+  transform: rotate(-90deg);
+  transition: transform 0.5s;
+}
 .FlexCenter {
   display: flex;
 }
 .Hover:hover {
+  background: #313c4e;
+}
+.Selected {
   background: #313c4e;
 }
 .FlexRight {
@@ -83,6 +90,9 @@
 }
 .NavIconTv {
   font-size: 16px;
+}
+.CalendarIcon {
+  font-size: 20px;
 }
 .ListIcon {
   width: 40px;
@@ -188,10 +198,35 @@
   color: #ffcc00;
   font-size: 18px;
 }
-.HideLinks {
-  display: none;
+.Favs {
+  position: fixed;
+  left: -10px;
+  width: 250px;
+  z-index: 99;
+  top: 0;
+  transition: left 0.3s linear;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #313c4e;
+}
+.FavsShow {
+  left: 250px;
+}
+.StreamingIcon {
+  height: 24px;
 }
 @media (max-width: 1090px) {
+  .Favs {
+    position: fixed;
+    left: -310px;
+    width: 300px;
+    top: 60px;
+    height: calc(100% - 60px);
+  }
+  .FavsShow {
+    left: 0;
+  }
   .SideBar {
     left: -310px;
     top: 60px;
@@ -204,5 +239,13 @@
   }
   .MenuIcon {
     display: block;
+  }
+}
+@media (max-width: 500px) {
+  .FavsShow {
+    left: 0;
+  }
+  .SideBar ul li {
+    font-size: 14px;
   }
 }

@@ -1,0 +1,103 @@
+.EventDetailsContainer {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  animation: fadeIn 0.3s;
+}
+.EventDetails {
+  height: 400px;
+  width: 800px;
+  margin-left: -250px;
+  background: #262f3d;
+  display: flex;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.EventDetailsFadeOut {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.EventInfo {
+  /* margin-left: 20px; */
+  margin: 0 10px 0 20px;
+  display: flex;
+  flex-direction: column;
+  position:relative;
+}
+.EventInfo {
+  margin-top: 0;
+}
+.EventInfo h1 {
+  margin-top: 0;
+}
+.PosterImage {
+  height: 100%;
+  box-sizing: border-box;
+}
+.EditDelete {
+  position: absolute;
+  bottom: 10px;
+  right:0;
+}
+.EditDelete span {
+  margin-right:10px;
+}
+.Edit, .Remove {
+  cursor: pointer;
+  display:inline-block;
+}
+.Edit {
+  padding-right: 15px;
+  border-right: 2px solid #4d4d4d;
+}
+.Remove {
+  padding-left: 15px;
+}
+.PencilIcon, .RemoveIcon {
+  font-size: 14px;
+}
+
+
+
+h3 {
+  margin: 0;
+}
+@media (max-width: 1090px) {
+  .EventDetails {
+    width: initial;
+    margin: 0 50px;
+  }
+}
+@media (max-width: 768px) {
+  .EventDetails {
+    height: 300px;
+    margin: 0 25px;
+  }
+  .EventInfo h1 {
+    font-size: 24px;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+

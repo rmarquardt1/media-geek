@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
+import * as actions from '../../store/actions/auth';
 
 import classes from './Auth.module.css';
 
@@ -47,6 +47,10 @@ class Auth extends Component {
             placeholder="Password"
             onChange={this.inputHandler}
           />
+          {this.props.authError
+          ? <div className={classes.AuthError}>Invalid Credentials</div>
+          : null}
+          
           <button className={classes.ButtonBlue}>SIGN IN</button>
         </form>
       </div>
@@ -56,13 +60,15 @@ class Auth extends Component {
 
 const mapStateToProps = state => {
   return {
-    token: state.tokenId
+    token: state.tokenId,
+    authError: state.error
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAuth: (email, password) => dispatch(actions.auth(email, password))
+    onAuth: (email, password) => dispatch(actions.auth(email, password)),
+    clearAuthError: () => dispatch(actions.clearAuthFail())
   };
 };
 

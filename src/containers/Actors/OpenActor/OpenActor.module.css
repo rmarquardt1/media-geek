@@ -10,7 +10,7 @@
   width: 100%;
 }
 .ActorInfo h2 {
-  margin: 0;
+  margin: 0 !important;
 }
 .ActorMovies {
   display: flex;

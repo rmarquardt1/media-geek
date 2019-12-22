@@ -12,7 +12,7 @@
   margin-top:20px;
   position:relative;
   right:0;
-  transition: right 0.4s linear;
+  transition: all 700ms cubic-bezier(0.000, 0.000, 0.000, 1.000);
 }
 .ImagesContainer {
   overflow:hidden;
@@ -52,10 +52,12 @@ a {
 }
 .ImageThumb img {
   cursor:pointer;
+  /* min-height:112px; */
 }
 @media (max-width: 768px) {
   .ImageThumb img {
     width:130px;
+    /* min-height:73px; */
   }
 }
 @media (max-width: 500px) {

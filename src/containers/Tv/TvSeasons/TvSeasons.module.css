@@ -1,8 +1,11 @@
 .Seasons {
-  margin: 30px 0 0 0;
+  margin: 30px 0 10px 0;
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  position: relative;
+  right: 0;
+  transition: right 0.4s linear;
 }
 .NavRight {
   float: right;
@@ -26,9 +29,6 @@
   transition: 0.5s;
 }
 @media (max-width: 768px) {
-  .Seasons {
-    margin: 30px 10px 10px 10px;
-  }
   .MoreLess {
     margin-right: 20px;
   }

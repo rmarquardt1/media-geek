@@ -5,3 +5,43 @@
   position: relative;
   margin-bottom: 30px;
 }
+.SeasonInfo {
+  display: flex;
+  margin: 0 10px;
+  padding-top: 10px;
+}
+.Info {
+  width: 100%;
+  position: relative;
+}
+.Info h2 {
+  margin: 0 0 10px 0 !important;
+}
+.InfoHeading img {
+  max-width: 50px;
+}
+.Info p {
+  font-size: 18px;
+  font-weight: lighter;
+  margin: 0 40px 0 0;
+}
+@media (max-width: 1366px) {
+  .Info p {
+    font-size: 20px;
+  }
+}
+@media (max-width: 768px) {
+  .Info p {
+    font-size: 18px;
+  }
+}
+@media (max-width: 500px) {
+  .Info h2 {
+    margin: 0 0 5px 0;
+  }
+  .Info p {
+    font-weight: normal;
+    font-size: 16px;
+    color: #ccc;
+  }
+}

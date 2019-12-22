@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions/auth';
 import axios from 'axios';
 import Auth from '../../Auth/Auth';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import Favorites from '../../Favorites/Favorites';
-import Watchlist from '../../Watchlist/Watchlist';
 import SearchAll from '../../Search/SearchAll/SearchAll';
 import mgLogo from '../../../assets/images/mg-icon.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,24 +18,25 @@ import {
   faTv,
   faHome,
   faHeart,
-  faStar
+  faStar,
+  faCalendarAlt
 } from '@fortawesome/free-solid-svg-icons';
+import faMixcloud from '../../../assets/images/mixcloud-brands.svg';
 import uiClasses from '../../../components/UI/Layout/Layout.module.css';
 import classes from './SideBar.module.css';
 
 class SideBar extends Component {
   state = {
     showSignIn: false,
-    showSearch: false,
-    slideOut: false,
     userFavorites: [],
     showFavorites: false,
     showWatchlist: false,
-    watchHideLinks: false,
-    favHideLinks: false
+    watchShowLinks: false,
+    favShowLinks: false
   };
 
   componentDidMount() {
+    document.addEventListener('click', this.hideMenuHandler);
     if (
       this.props.isAuth &&
       localStorage.getItem('userData') &&
@@ -42,38 +44,65 @@ class SideBar extends Component {
     ) {
       this.getFavoritesHandler();
     }
+    if (this.props.authError) {
+      this.props.clearAuthError();
+    }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.hideMenuHandler);
   }
 
   menuHandler = event => {
+    if (this.props.authError) {
+      this.props.clearAuthError();
+    }
     if (event.target.id === 'signIn') {
       this.setState({ showSignIn: !this.state.showSignIn });
     }
   };
 
+  hideMenuHandler = event => {
+    if (!this.node.contains(event.target)) {
+      this.props.showSidebarHandler(false);
+    }
+  };
+
   favoritesMenuHandler = () => {
+    const windowW = window.innerWidth;
+    if (windowW <= 1090) {
+      this.showMenuHandler();
+    }
     this.setState({
       showFavorites: !this.state.showFavorites,
       showWatchlist: false,
-      favHideLinks: !this.state.favHideLinks,
-      showSearch: false
+      favShowLinks: !this.state.favShowLinks,
+      watchShowLinks: false
     });
+    this.props.showSearchSidebar(false);
   };
 
   watchlistMenuHandler = () => {
+    const windowW = window.innerWidth;
+    if (windowW <= 1090) {
+      this.showMenuHandler();
+    }
     this.setState({
       showWatchlist: !this.state.showWatchlist,
       showFavorites: false,
-      watchHideLinks: !this.state.watchHideLinks,
+      watchShowLinks: !this.state.watchShowLinks,
+      favShowLinks: false,
       showSearch: false
     });
+    this.props.showSearchSidebar(false);
   };
 
   showMenuHandler = () => {
-    this.setState({ slideOut: !this.state.slideOut });
+    this.props.showSidebarHandler(!this.props.showSidebar);
   };
 
   showSearchHandler = () => {
-    this.setState({ showSearch: !this.state.showSearch });
+    this.props.showSearchSidebar(!this.props.showSearch);
   };
 
   getFavoritesHandler = () => {
@@ -112,7 +141,7 @@ class SideBar extends Component {
       ? JSON.parse(localStorage.getItem('userData'))
       : null;
     const displayName = userData ? userData.displayName : null;
-    const sideBarClass = this.state.slideOut
+    const sideBarClass = this.props.showSidebar
       ? classes.SideBar +
         ' ' +
         uiClasses.BoxShadow +
@@ -120,7 +149,7 @@ class SideBar extends Component {
         classes.SideBarSlideIn
       : classes.SideBar + ' ' + uiClasses.BoxShadow;
     return (
-      <Aux>
+      <div ref={node => (this.node = node)}>
         <FontAwesomeIcon
           icon={faBars}
           className={classes.MenuIcon}
@@ -129,7 +158,7 @@ class SideBar extends Component {
         <div className={sideBarClass}>
           <ul>
             <NavLink to="/">
-              <li>
+              <li onClick={this.showMenuHandler}>
                 <div className={classes.LogoContainer}>
                   <img className={classes.Logo} src={mgLogo} alt="" />
                   <div className={classes.LogoText}>
@@ -159,6 +188,7 @@ class SideBar extends Component {
                         ? classes.SignIn + ' ' + classes.SignInOpen
                         : classes.SignIn
                     }
+                    style={this.props.authError ? { height: '175px' } : null}
                   >
                     <Auth />
                   </div>
@@ -187,13 +217,7 @@ class SideBar extends Component {
                 </div>
               </li>
             )}
-            <li
-              className={
-                this.state.watchHideLinks || this.state.favHideLinks
-                  ? classes.HideLinks
-                  : null
-              }
-            >
+            <li>
               <div
                 className={classes.SearchHeading + ' ' + classes.FlexCenter}
                 onClick={this.showSearchHandler}
@@ -204,11 +228,11 @@ class SideBar extends Component {
                     className={classes.NavIcon}
                   />
                 </div>
-                Search
+                Search All
                 <FontAwesomeIcon
                   icon={faChevronDown}
                   className={
-                    this.state.showSearch
+                    this.props.showSearch
                       ? classes.SearchChevron +
                         ' ' +
                         classes.Arrow +
@@ -220,21 +244,20 @@ class SideBar extends Component {
               </div>
               <div
                 className={
-                  this.state.showSearch
+                  this.props.showSearch
                     ? classes.Search + ' ' + classes.SearchOpen
                     : classes.Search + ' ' + classes.Hover
                 }
               >
-                <SearchAll searchType="movies" placeholder="Search All" />
+                {this.props.showSearch ? (
+                  <SearchAll searchType="movies" placeholder="Search All" />
+                ) : null}
               </div>
             </li>
             <NavLink to="/">
               <li
-                className={
-                  this.state.watchHideLinks || this.state.favHideLinks
-                    ? classes.FlexCenter + ' ' + classes.HideLinks
-                    : classes.FlexCenter + ' ' + classes.Hover
-                }
+                className={classes.FlexCenter + ' ' + classes.Hover}
+                onClick={this.showMenuHandler}
               >
                 <div className={classes.ListIcon}>
                   <FontAwesomeIcon icon={faHome} className={classes.NavIcon} />
@@ -244,11 +267,8 @@ class SideBar extends Component {
             </NavLink>
             <NavLink to="/Movies">
               <li
-                className={
-                  this.state.watchHideLinks || this.state.favHideLinks
-                    ? classes.FlexCenter + ' ' + classes.HideLinks
-                    : classes.FlexCenter + ' ' + classes.Hover
-                }
+                className={classes.FlexCenter + ' ' + classes.Hover}
+                onClick={this.showMenuHandler}
               >
                 <div className={classes.ListIcon}>
                   <FontAwesomeIcon icon={faFilm} className={classes.NavIcon} />
@@ -258,11 +278,8 @@ class SideBar extends Component {
             </NavLink>
             <NavLink to="/Tv">
               <li
-                className={
-                  this.state.watchHideLinks || this.state.favHideLinks
-                    ? classes.FlexCenter + ' ' + classes.HideLinks
-                    : classes.FlexCenter + ' ' + classes.Hover
-                }
+                className={classes.FlexCenter + ' ' + classes.Hover}
+                onClick={this.showMenuHandler}
               >
                 <div className={classes.ListIcon}>
                   <FontAwesomeIcon icon={faTv} className={classes.NavIconTv} />
@@ -270,14 +287,36 @@ class SideBar extends Component {
                 Television
               </li>
             </NavLink>
+            <NavLink to="/Streaming">
+              <li
+                className={classes.FlexCenter + ' ' + classes.Hover}
+                onClick={this.showMenuHandler}
+              >
+                <div className={classes.ListIcon}>
+                  <img src={faMixcloud} className={classes.StreamingIcon} />
+                </div>
+                Streaming TV
+              </li>
+            </NavLink>
+
+            <NavLink to="/Calendar">
+              <li
+                className={classes.FlexCenter + ' ' + classes.Hover}
+                onClick={this.showMenuHandler}
+              >
+                <div className={classes.ListIcon}>
+                <FontAwesomeIcon icon={faCalendarAlt} className={classes.CalendarIcon} />
+                </div>
+                Calendar
+              </li>
+            </NavLink>
+
             {this.props.isAuth && localStorage.getItem('userData') ? (
               <Aux>
                 <li
                   className={
-                    this.state.showFavorites
-                      ? classes.FavWatchlist + ' ' + classes.FavWatchActive
-                      : this.state.watchHideLinks
-                      ? classes.HideLinks
+                    this.state.favShowLinks
+                      ? classes.FavWatchlist + ' ' + classes.Selected
                       : classes.FavWatchlist + ' ' + classes.Hover
                   }
                 >
@@ -301,33 +340,15 @@ class SideBar extends Component {
                               ' ' +
                               classes.Arrow +
                               ' ' +
-                              classes.ArrowDown
+                              classes.ArrowRight
                             : classes.FavWatchChevron + ' ' + classes.Arrow
                         }
                       />
                     </div>
                   </div>
-                  <ul
-                    className={
-                      this.state.showFavorites
-                        ? classes.FavoritesWatch +
-                          ' ' +
-                          classes.FavoritesWatchOpen
-                        : classes.FavoritesWatch
-                    }
-                  >
-                    <Favorites />
-                  </ul>
                 </li>
-                <li
-                  className={
-                    this.state.showWatchlist
-                      ? classes.FavWatchlist + ' ' + classes.FavWatchActive
-                      : this.state.favHideLinks
-                      ? classes.HideLinks
-                      : classes.FavWatchlist + ' ' + classes.Hover
-                  }
-                >
+
+                <li className={classes.FavWatchlist + ' ' + classes.Hover}>
                   <div
                     className={classes.FavWatchHeading}
                     onClick={this.watchlistMenuHandler}
@@ -348,31 +369,66 @@ class SideBar extends Component {
                               ' ' +
                               classes.Arrow +
                               ' ' +
-                              classes.ArrowDown
+                              classes.ArrowRight
                             : classes.FavWatchChevron + ' ' + classes.Arrow
                         }
                       />
                     </div>
                   </div>
-                  <ul
-                    className={
-                      this.state.showWatchlist
-                        ? classes.FavoritesWatch +
-                          ' ' +
-                          classes.FavoritesWatchOpen
-                        : classes.FavoritesWatch
-                    }
-                  >
-                    <Watchlist />
-                  </ul>
                 </li>
               </Aux>
             ) : null}
           </ul>
         </div>
-      </Aux>
+        {this.props.isAuth && localStorage.getItem('userData') ? (
+          <Aux>
+            <div
+              className={
+                !this.state.watchShowLinks
+                  ? classes.Favs
+                  : classes.Favs +
+                    ' ' +
+                    uiClasses.BoxShadow +
+                    ' ' +
+                    classes.FavsShow
+              }
+            >
+              <Favorites click={this.watchlistMenuHandler} type="watchlist" />
+            </div>
+            <div
+              className={
+                !this.state.favShowLinks
+                  ? classes.Favs
+                  : classes.Favs +
+                    ' ' +
+                    uiClasses.BoxShadow +
+                    ' ' +
+                    classes.FavsShow
+              }
+            >
+              <Favorites click={this.favoritesMenuHandler} type="favs" />
+            </div>
+          </Aux>
+        ) : null}
+      </div>
     );
   }
 }
 
-export default SideBar;
+const mapStateToProps = state => {
+  return {
+    authError: state.error,
+    showSearch: state.showSearchSidebar,
+    showSidebar: state.showSidebar
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    clearAuthError: () => dispatch(actions.clearAuthFail()),
+    showSearchSidebar: show => dispatch(actions.showSearchSidebar(show)),
+    showSidebarHandler: show => dispatch(actions.showSidebarHandler(show))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar);

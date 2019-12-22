@@ -1,0 +1,28 @@
+.CalendarContainer {
+  margin-left: 250px;
+  margin-top: 70px;
+  position: relative;
+  height: 100vh;
+  display: flex;
+}
+.CalendarOverlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 1090px) {
+  .CalendarContainer {
+    margin-left: initial;
+    margin-top: 100px;
+  }
+}
+@media (max-width: 500px) {
+  .CalendarContainer {
+    margin-top: 70px;
+  }
+}

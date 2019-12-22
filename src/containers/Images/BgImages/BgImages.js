@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import Aux from '../../../hoc/Auxiliary/Auxiliary';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -13,14 +11,17 @@ import classes from './BgImages.module.css';
 
 class BgImages extends Component {
   state = {
-    images: null,
-    movieBgs: null,
-    sliceStart: 0,
-    sliceEnd: 0,
-    rowCount: null,
-    showAll: false,
+    listData: null,
+    list: null,
+    mobileDisplay: false,
+    containerWidth: 0,
+    currentElPosition: 0,
+    listLoaded: false,
+    scrollWidth: 0,
     moveRight: 0,
-    containerWidth: null
+    headerMoveLeft: false,
+    showNav: false,
+    requestAttempt: 0
   };
 
   constructor(props) {
@@ -28,114 +29,123 @@ class BgImages extends Component {
     this.containerWidthRef = React.createRef();
   }
 
-  componentWillUpdate(prevProp, prevState) {
-    if (prevState.sliceEnd !== this.state.sliceEnd) {
-      this.loadImagesHandler();
-    }
-  }
-
   componentDidMount() {
     window.addEventListener('resize', this.resizeHandler);
-    this.getImagesHandler();
+    this.getMoviesHandler();
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeHandler);
   }
 
-  getImageMargin = () => {
-    const windowW = window.innerWidth;
-    const imageW = windowW < 500 ? 100 : windowW < 768 ? 130 : 200;
-    const thumbWidth =
-      this.containerWidthRef.current.clientWidth / this.state.rowCount;
-    return (thumbWidth - imageW) / 2;
-  };
-
-  getImagesHandler = () => {
-    axios
+  getMoviesHandler = async () => {
+    let listDataResponse = null;
+    await axios
       .get('http://webservice.fanart.tv/v3/movies/' + this.props.imdbId, {
         params: {
           api_key: 'c3f4fba1e26da407177b194566ca2d3f'
         }
       })
       .then(response => {
-        this.setState({
-          images: response.data.moviebackground,
-          bgCount: response.data.moviebackground.length
-        });
-        this.loadImagesHandler(response.data.moviebackground);
-        this.resizeHandler();
+        listDataResponse = response.data.moviebackground;
       })
       .catch(error => {
         console.log('error ' + error);
+        if (this.state.requestAttempt < 4) {
+          this.getMoviesHandler();
+          this.setState({ requestAttempt: this.state.requestAttempt + 1 });
+        }
       });
+
+    this.setState({ listData: listDataResponse });
+    this.resizeHandler();
   };
 
-  loadImagesHandler = images => {
-    const movieImages = images ? images : this.state.images;
-    const marg = this.getImageMargin() + 'px';
-    const movieBackgrounds = movieImages
-      .slice(this.state.sliceStart, this.state.sliceEnd)
-      .map(result => {
-        const url = result.url.replace('/fanart/', '/preview/');
-        return (
-          <div
-            style={{ marginLeft: marg, marginRight: marg }}
-            className={classes.ImageThumb}
-            key={Math.random()}
-          >
-            <img
-              className={uiClasses.BoxShadow}
-              src={url}
-              alt=""
-              onClick={() =>
-                this.props.imgClick(result.url, movieImages, result.id)
-              }
-            />
-          </div>
-        );
-      });
-    if (movieBackgrounds.length < this.state.rowCount) {
-      const w = window.innerWidth;
-      const diff = this.state.rowCount - movieBackgrounds.length;
-      for (let step = 0; step < diff; step++) {
-        movieBackgrounds.push(
-          <div
-            key={step}
-            style={{
-              content: '""',
-              flex: 'auto',
-              width: w <= 500 ? 110 : w <= 768 ? 150 : 220,
-              maxWidth: w <= 500 ? 110 : w <= 768 ? 150 : 220
-            }}
-          ></div>
-        );
-      }
-    }
+  loadListHandler = marg => {
+    const releases = this.state.listData
+      ? this.state.listData.map(result => {
+          const url = result.url.replace('/fanart/', '/preview/');
+          return (
+            <div
+              style={{ marginLeft: marg, marginRight: marg }}
+              className={classes.ImageThumb}
+              key={Math.random()}
+            >
+              <img
+                className={uiClasses.BoxShadow}
+                src={url}
+                alt=""
+                onClick={() =>
+                  this.props.imgClick(
+                    result.url,
+                    this.state.listData,
+                    result.id
+                  )
+                }
+              />
+            </div>
+          );
+        })
+      : null;
     this.setState({
-      movieBgs: movieBackgrounds
+      list: releases,
+      listLoaded: true
     });
   };
 
+  resizeHandler = () => {
+    const windowW = window.innerWidth;
+    if (this.containerWidthRef.current) {
+      const containerW = this.containerWidthRef.current.clientWidth;
+      const scrollW = this.containerWidthRef.current.scrollWidth;
+      const thumbW = windowW <= 500 ? 120 : windowW <= 768 ? 150 : 220;
+      const elCount = Math.floor(containerW / thumbW);
+      const marg = (containerW / elCount - thumbW) / 2 + 10;
+      const move = this.state.currentElPosition * (thumbW - 20 + marg * 2);
+      this.setState({
+        moveRight: move,
+        containerWidth: containerW,
+        scrollWidth: scrollW
+      });
+      if (!this.state.listLoaded && this.state.listData) {
+        this.loadListHandler(marg);
+        if (elCount < this.state.list.length) {
+          this.setState({ showNav: true });
+        }
+      } else {
+        const thumbs = this.containerWidthRef.current.childNodes;
+        thumbs.forEach(item => {
+          item.style.marginLeft = marg + 'px';
+          item.style.marginRight = marg + 'px';
+        });
+      }
+    }
+  };
+
   navHandler = direction => {
-    const elWidth = this.containerWidthRef.current.clientWidth;
+    const windowW = window.innerWidth;
+    const containerW = this.containerWidthRef.current.clientWidth;
     const scrollW = this.containerWidthRef.current.scrollWidth;
+    const thumbW = windowW <= 500 ? 110 : windowW <= 768 ? 150 : 220;
+    const actElCount = Math.floor(containerW / thumbW);
+    const currentElPos = { ...this.state }.currentElPosition;
     const currentPos = { ...this.state }.moveRight;
     switch (direction) {
       case 'right':
         this.setState({
-          moveRight: currentPos + elWidth,
-          containerWidth: elWidth,
+          moveRight: currentPos + containerW,
+          containerWidth: containerW,
           scrollWidth: scrollW,
-          sliceEnd: { ...this.state }.sliceEnd + { ...this.state }.rowCount
+          headerMoveLeft: true,
+          currentElPosition: currentElPos + actElCount
         });
         break;
       case 'left':
         this.setState({
-          moveRight: currentPos - elWidth,
-          actorContainerWidth: elWidth,
+          moveRight: currentPos - containerW,
+          actorContainerWidth: containerW,
           scrollWidth: scrollW,
-          sliceEnd: { ...this.state }.sliceEnd - { ...this.state }.rowCount
+          currentElPosition: currentElPos - actElCount
         });
         break;
       default:
@@ -143,102 +153,53 @@ class BgImages extends Component {
     }
   };
 
-  resizeHandler = () => {
-    const windowW = window.innerWidth;
-    const elWidth = this.containerWidthRef.current.clientWidth;
-    let move = { ...this.state }.moveRight;
-    move = move !== 0 ? elWidth : 0;
-    if (windowW <= 500) {
-      const count = Math.floor(
-        this.containerWidthRef.current.clientWidth / 110
-      );
-      this.setState({
-        sliceEnd:
-          { ...this.state }.sliceEnd === 0
-            ? count * 2
-            : { ...this.state }.sliceEnd,
-        rowCount: count,
-        moveRight: move
-      });
-    } else if (windowW <= 768) {
-      const count = Math.floor(
-        this.containerWidthRef.current.clientWidth / 150
-      );
-      this.setState({
-        sliceEnd:
-          { ...this.state }.sliceEnd === 0
-            ? count * 2
-            : { ...this.state }.sliceEnd,
-        rowCount: count,
-        moveRight: move
-      });
-    } else {
-      const count = Math.floor(
-        this.containerWidthRef.current.clientWidth / 220
-      );
-      this.setState({
-        sliceEnd:
-          { ...this.state }.sliceEnd === 0
-            ? count * 2
-            : { ...this.state }.sliceEnd,
-        rowCount: count,
-        moveRight: move
-      });
-    }
-    if (this.state.images) {
-      this.loadImagesHandler();
-    }
-  };
-
   render() {
     return (
-      <Aux>
-        <div className={classes.List}>
-          <div
-            style={{ display: 'flex', alignItems: 'center', marginLeft: '5px' }}
-          >
-            <div className={classes.Bar} />
-            {this.state.moveRight > 0 && !this.state.showAll ? (
-              <div
-                className={classes.NavLeft}
-                onClick={() => this.navHandler('left')}
-              >
-                <FontAwesomeIcon icon={faChevronLeft} />
-              </div>
-            ) : null}
-            <h2>Desktop</h2>
-            {this.state.sliceEnd < this.state.bgCount && !this.state.showAll ? (
-              <div
-                className={classes.NavRight}
-                onClick={() => this.navHandler('right')}
-              >
-                <FontAwesomeIcon icon={faChevronRight} />
-              </div>
-            ) : null}
-          </div>
-        </div>
+      <div className={classes.List}>
+        <div
+          style={{ display: 'flex', alignItems: 'center', marginLeft: '5px' }}
+        >
+          <div className={classes.Bar} />
+          {this.state.moveRight > 0 ? (
+            <div
+              className={classes.NavLeft}
+              onClick={() => this.navHandler('left')}
+            >
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </div>
+          ) : null}
+          <h2>{this.props.heading}</h2>
 
-        <div className={classes.ImagesContainer}>
+          {this.state.moveRight + this.state.containerWidth <=
+            this.state.scrollWidth && this.state.showNav ? (
+            <div
+              className={classes.NavRight}
+              onClick={() => this.navHandler('right')}
+            >
+              <FontAwesomeIcon icon={faChevronRight} />
+            </div>
+          ) : null}
+        </div>
+        <div style={{ overflow: 'hidden', width: '100%' }}>
           <div
             className={classes.ListItems}
             style={
-              this.state.showAll
-                ? { flexWrap: 'wrap', right: 0 }
-                : this.state.moveRight > 0
-                ? // && !this.state.swiping && !this.state.afterSwipe
-                  { right: this.state.moveRight + 'px' }
-                : // : this.state.swiping
-                  // ? {right: this.state.moveRight + 'px', transition:'none'}
-                  // : !this.state.swiping && this.state.afterSwipe
-                  // ? {right: this.state.moveRight + this.state.afterSwipeLength + 'px', transition: 'right 0.7s ease-out'}
-                  null
+              this.state.moveRight > 0
+                ? { right: this.state.moveRight + 'px' }
+                : this.state.openActorMovies
+                ? { left: '0px' }
+                : null
             }
             ref={this.containerWidthRef}
           >
-            {this.state.movieBgs ? this.state.movieBgs : null}
+            {this.state.list ? (
+              this.state.list
+            ) : (
+              <h2 className={uiClasses.NoResults}>No Results Found</h2>
+            )}
           </div>
         </div>
-      </Aux>
+      </div>
     );
   }
 }

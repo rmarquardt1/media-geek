@@ -1,0 +1,235 @@
+
+.SliderContainer {
+  display:flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.SlideInfo {
+  /* margin-left:50px;
+  margin-right: 50px; */
+  padding-left:50px;
+  padding-right: 50px;
+  height: 100%;
+}
+.SliderImage {
+  min-width: 780px;
+}
+.Title {
+  margin-top: 57px;
+  display: flex;
+  align-items: center;
+}
+.Title h1 {
+  margin: 0 0 20px 0;
+}
+.Caption {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: lighter;
+  font-size: 32px;
+  font-style: italic;
+}
+.CaptionContainer {
+  margin-bottom: 20px;
+}
+.LogoImg img{
+  width: 400px;
+  max-width: 400px;
+  margin-top:20px;
+}
+.Title h1 {
+  font-size: 52px;
+  font-weight: lighter;
+}
+.Overview {
+  overflow-y: auto;
+  font-size:16px;
+  color:#ccc;
+  max-height: 150px;
+  padding-right: 20px;
+}
+.Overview p {
+  margin: 0;
+}
+
+
+
+
+
+@media (max-width: 1700px) {
+  .Title {
+    max-width: 300px;
+  }
+  .Title h1 {
+    font-size: 42px;
+  }
+  .LogoImg img {
+    width:300px;
+  }
+  .Caption {
+    font-size: 28px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 1600px) {
+  .Title {
+    margin-top: 66px;
+  }
+  .SliderImage {
+    min-width: 680px;
+    max-width: 680px;
+  }
+  .Overview {
+    max-height: 130px;
+  }
+}
+
+@media (max-width: 1450px) {
+  .Title {
+    margin-top: 20px;
+  }
+  .SliderImage {
+    min-width: 600px;
+    max-width: 600px;
+  }
+  .LogoImg img {
+    max-width: 250px;
+  }
+  .Overview {
+    max-height: 85px;
+  }
+}
+
+@media (max-width: 1360px) {
+  .Title {
+    margin-top: 20px;
+  }
+  .SliderImage {
+    min-width: 500px;
+    max-width: 500px;
+  }
+  .Overview {
+    max-height: 85px;
+  }
+  .Caption {
+    font-size: 22px;
+  }
+}
+
+
+@media (max-width: 1250px) {
+  .SliderImage {
+    min-width: 450px;
+    max-width: 450px;
+  }
+  .CaptionContainer {
+    margin-bottom: 10px;
+  }
+  .LogoImg img {
+    max-width: 200px;
+  }
+  .Overview {
+    max-height: 64px;
+  }
+  
+
+}
+
+
+@media (max-width: 1090px) {
+  .SliderImage {
+    min-width: 550px;
+    max-width: 550px;
+  }
+}
+
+@media (max-width: 960px) {
+  .SliderImage {
+    min-width: 500px;
+    max-width: 500px;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  .SliderImage {
+    /* min-width: 500px;
+    max-width: 500px; */
+
+    min-width: 100%;
+    max-width:100%;
+  }
+
+  .SlideInfo {
+    position: absolute;
+    max-width: 60%;
+    min-width: 60%;
+    padding-right: 0;
+    background-image: linear-gradient(to right, rgba(0,0,0,1) , rgba(0,0,0,0));
+  }
+
+  .Caption {
+    /* color: #fff; */
+    text-shadow: 2px 2px rgba(0,0,0,0.5);
+  }
+
+  .Overview p {
+    color: #fff;
+    text-shadow: 2px 2px rgba(0,0,0,0.5);
+  }
+
+
+
+}
+
+
+@media (max-width: 500px) {
+  .SliderContainer {
+    height:100%;
+  }
+  .SlideInfo {
+    /* margin-left:50px;
+    margin-right: 50px; */
+    padding-left:10px;
+    width: 90%;
+    min-width: 90%;
+    /* height: 100%; */
+  }
+  .LogoImg img {
+    max-width: 150px;
+  }
+  .SliderImage {
+    display: none;
+  }
+  .Overview {
+    max-height: 68px;
+    overflow: hidden;
+  }
+  .Overview p {
+    font-size: 14px;
+    color:#e6e6e6;
+  }
+  .Title {
+    font-size: 30px;
+  }
+  .Title h1 {
+    font-size: 30px;
+  }
+  .Caption {
+    font-weight: normal;
+    color:#e6e6e6;
+  }
+
+
+
+}

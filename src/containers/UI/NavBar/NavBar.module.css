@@ -5,7 +5,6 @@
   background: #000;
   z-index: 300;
   top: 0;
-  display: flex;
   align-items: center;
   justify-content: center;
   height: 60px;
@@ -16,6 +15,37 @@
 .NavBar h2 {
   margin: 0;
 }
+
+.NavSearch {
+  height: 0;
+  position: relative;
+  top:0;
+  z-index: 10;
+  transition: all 0.3s ;
+  max-width:300px;
+  margin: auto;
+  display: none;
+}
+
+.NavSearchOpen {
+  height:60px;
+  top: 60px;
+}
+
+
+.SearchIcon {
+  color: #fff;
+  position:absolute;
+  right:30px;
+  font-size:24px;
+  cursor:pointer;
+  transition: color 0.3s;
+}
+.SearchIcon:hover {
+  color: #1a8cff;
+  transition: color 0.3s;
+}
+
 .MenuIcon {
   cursor: pointer;
   font-size: 26px;
@@ -71,17 +101,24 @@
   text-decoration: none;
   color: #fff;
 }
-@media (max-width: 1366px) {
+/* @media (max-width: 1366px) {
   .MenuIcon {
     right: 60px;
   }
   .NavBarLeft {
     left: 60px;
   }
-}
+} */
 @media (max-width: 1090px) {
   .NavBar {
     display: flex;
+  }
+  .NavSearch {
+    display: block;
+  }
+  .NavSearchOpen {
+    height:60px;
+    top: 70px;
   }
 }
 @media (max-width: 500px) {
@@ -90,5 +127,9 @@
   }
   .NavBarLeft {
     left: 20px;
+  }
+  .NavSearchOpen {
+    height:60px;
+    top: 60px;
   }
 }

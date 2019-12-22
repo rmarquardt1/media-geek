@@ -37,3 +37,13 @@
   cursor: pointer;
   border: none;
 }
+.AuthError {
+  color:#ffdb00;
+  /* font-weight:bold; */
+
+  /* color: #D4AA03; */
+  margin-bottom:7px;
+  width: 100%;
+  text-align: center;
+  font-style: italic;
+}

@@ -19,8 +19,9 @@ const movieStats = props => {
     'November',
     'December'
   ];
-  console.log(props);
-  const lastAirDate = new Date(props.info.last_episode_to_air.air_date);
+
+  const lastEpisode = props.info.last_episode_to_air;
+  const lastAirDate = lastEpisode ? new Date(lastEpisode.air_date) : null;
   const firstAirDate = new Date(props.info.first_air_date);
 
   let creators = '';
@@ -33,33 +34,119 @@ const movieStats = props => {
     <Aux>
       <div className={classes.MovieStats}>
         <div className={classes.Collection + ' ' + uiClasses.BoxShadow}>
-          <div className={classes.PartOfCollection}>Last Episode to Air:</div>
-          <div className={classes.CollectionName}>
-            {props.info.last_episode_to_air.name}
+          <div className={classes.MobileLastEpisode}>
+            <div className={classes.PartOfCollection}>Last Episode to Air:</div>
+            <div className={classes.CollectionName}>
+              {lastEpisode ? lastEpisode.name : null}
+            </div>
+            <div className={classes.LastEpisodeAirDate}>
+              {lastEpisode
+                ? monthNames[lastAirDate.getMonth()] +
+                  ' ' +
+                  lastAirDate.getDate() +
+                  ', ' +
+                  lastAirDate.getFullYear()
+                : null}
+            </div>
+            <div className={classes.LastEpisodeSeason}>
+              {lastEpisode
+                ? 'Season' +
+                  lastEpisode.season_number +
+                  ', Ep' +
+                  lastEpisode.episode_number
+                : null}
+            </div>
           </div>
-          <div className={classes.LastEpisodeAirDate}>
-            {monthNames[lastAirDate.getMonth()] +
-              ' ' +
-              lastAirDate.getDate() +
-              ', ' +
-              lastAirDate.getFullYear()}
-          </div>
-          <div className={classes.LastEpisodeSeason}>
-            Season {props.info.last_episode_to_air.season_number}, Ep
-            {props.info.last_episode_to_air.episode_number}
-          </div>
-          <div className={classes.PosterContainer}>
+          {props.info.backdrop_path ? (
             <img
-              className={classes.CollectionPoster}
+              className={
+                classes.CollectionPoster + ' ' + classes.CollectionPosterMobile
+              }
               src={
-                'http://image.tmdb.org/t/p/w300/' +
-                props.info.last_episode_to_air.still_path
+                lastEpisode && lastEpisode.still_path
+                  ? 'http://image.tmdb.org/t/p/w300/' + lastEpisode.still_path
+                  : 'http://image.tmdb.org/t/p/w300/' + props.info.backdrop_path
               }
               alt=""
             />
+          ) : null}
+          <div className={classes.LastEpisode}>
+            <div className={classes.PartOfCollection}>Last Episode to Air:</div>
+            <hr />
+            <div className={classes.CollectionName}>
+              {lastEpisode ? lastEpisode.name : null}
+            </div>
+            <div className={classes.LastEpisodeAirDate}>
+              {lastEpisode
+                ? monthNames[lastAirDate.getMonth()] +
+                  ' ' +
+                  lastAirDate.getDate() +
+                  ', ' +
+                  lastAirDate.getFullYear()
+                : null}
+            </div>
+            <div className={classes.LastEpisodeSeason}>
+              {lastEpisode
+                ? 'Season' +
+                  lastEpisode.season_number +
+                  ', Ep' +
+                  lastEpisode.episode_number
+                : null}
+            </div>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'flex-start'
+            }}
+          >
+            {props.info.backdrop_path ? (
+              <img
+                className={classes.CollectionPoster}
+                src={
+                  lastEpisode && lastEpisode.still_path
+                    ? 'http://image.tmdb.org/t/p/w300/' + lastEpisode.still_path
+                    : 'http://image.tmdb.org/t/p/w300/' +
+                      props.info.backdrop_path
+                }
+                alt=""
+              />
+            ) : null}
+            <div className={classes.LastEpisodeTablet}>
+              <div className={classes.PartOfCollection}>
+                Last Episode to Air:
+              </div>
+              <hr />
+              <div className={classes.CollectionName}>
+                {lastEpisode ? lastEpisode.name : null}
+              </div>
+              <div className={classes.LastEpisodeAirDate}>
+                {lastEpisode
+                  ? monthNames[lastAirDate.getMonth()] +
+                    ' ' +
+                    lastAirDate.getDate() +
+                    ', ' +
+                    lastAirDate.getFullYear()
+                  : null}
+              </div>
+              <div className={classes.LastEpisodeSeason}>
+                {lastEpisode
+                  ? 'Season' +
+                    lastEpisode.season_number +
+                    ', Ep' +
+                    lastEpisode.episode_number
+                  : null}
+              </div>
+              <div
+                className={classes.LastEpisodeOverview + ' ' + classes.Tablet}
+              >
+                {lastEpisode ? props.info.last_episode_to_air.overview : null}
+              </div>
+            </div>
           </div>
           <div className={classes.LastEpisodeOverview}>
-            {props.info.last_episode_to_air.overview}
+            {lastEpisode ? props.info.last_episode_to_air.overview : null}
           </div>
         </div>
         <div className={classes.Stats1}>
@@ -83,6 +170,7 @@ const movieStats = props => {
                   href={props.info.homepage}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className={classes.HomePage}
                 >
                   {props.info.homepage}
                 </a>
@@ -114,6 +202,18 @@ const movieStats = props => {
               <div className={classes.Label}>Status:</div>
               <div className={classes.Value}>{props.info.status}</div>
             </div>
+          ) : null}
+        </div>
+        <div>
+          {props.info.networks.length > 0 ? (
+            <img
+              src={
+                'http://image.tmdb.org/t/p/w92' +
+                props.info.networks[0].logo_path
+              }
+              alt=""
+              className={classes.NetworkLogo + ' ' + uiClasses.BoxShadow}
+            />
           ) : null}
         </div>
       </div>

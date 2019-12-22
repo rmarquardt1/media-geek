@@ -2,21 +2,6 @@ import * as actionTypes from './actionTypes';
 import axios from 'axios';
 import ls from 'local-storage';
 
-export const videoResults = videos => {
-  return {
-    type: actionTypes.VIDEO_RESULTS,
-    vidResults: videos
-  };
-};
-
-export const videoSlice = (sliceEnd, pageSize) => {
-  return {
-    type: actionTypes.VIDEO_SLICE,
-    sliceEnd: sliceEnd,
-    pageSize: pageSize
-  };
-};
-
 export const authStart = () => {
   return {
     type: actionTypes.AUTH_START
@@ -37,6 +22,12 @@ export const authFail = error => {
   };
 };
 
+export const clearAuthFail = () => {
+  return {
+    type: actionTypes.CLEAR_AUTH_FAIL
+  };
+};
+
 export const logout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('expirationDate');
@@ -48,7 +39,6 @@ export const logout = () => {
 };
 
 export const storeUserData = uid => {
-  console.log('triggered');
   axios
     .get('https://mediageek-650c6.firebaseio.com/users/' + uid + '/.json')
     .then(response => {
@@ -113,7 +103,6 @@ export const registerUser = (email, password, display) => {
         authData
       )
       .then(response => {
-        console.log(response);
         dispatch(authSuccess());
         dispatch(checkAuthTimeout(response.data.expiresIn));
         const expirationDate = new Date(
@@ -139,7 +128,7 @@ export const registerUser = (email, password, display) => {
             profile
           )
           .then(response => {
-            console.log(response);
+            // console.log(response);
           })
           .catch(error => {
             console.log('error ' + error);
@@ -171,5 +160,19 @@ export const authCheckState = () => {
         );
       }
     }
+  };
+};
+
+export const showSearchSidebar = show => {
+  return {
+    type: actionTypes.SHOW_SEARCH_SIDEBAR,
+    show: show
+  };
+};
+
+export const showSidebarHandler = show => {
+  return {
+    type: actionTypes.SHOW_SIDEBAR,
+    show: show
   };
 };

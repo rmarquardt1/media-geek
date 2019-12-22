@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faHeart,
+  faChevronLeft,
+  faStar
+} from '@fortawesome/free-solid-svg-icons';
 import classes from './Favorites.module.css';
 
 class Favorites extends Component {
@@ -10,6 +17,7 @@ class Favorites extends Component {
   };
 
   componentDidMount() {
+    console.log(this.props);
     if (JSON.parse(localStorage.getItem('userData')).favMovies) {
       if (JSON.parse(localStorage.getItem('userData')).favMovies.length > 0) {
         this.getMovieFavoritesHandler();
@@ -24,7 +32,12 @@ class Favorites extends Component {
 
   getMovieFavoritesHandler = () => {
     const userData = JSON.parse(localStorage.getItem('userData'));
-    const favs = userData.favMovies;
+    const favs =
+      this.props.type === 'favs'
+        ? userData.favMovies
+        : this.props.type === 'watchlist'
+        ? userData.movieWatchlist
+        : null;
     favs.map(fav => {
       axios
         .get('https://api.themoviedb.org/3/movie/' + fav, {
@@ -57,7 +70,12 @@ class Favorites extends Component {
 
   getTvFavoritesHandler = () => {
     const userData = JSON.parse(localStorage.getItem('userData'));
-    const favs = userData.favTv;
+    const favs =
+      this.props.type === 'favs'
+        ? userData.favTv
+        : this.props.type === 'watchlist'
+        ? userData.tvWatchlist
+        : null;
     favs.map(fav => {
       axios
         .get('https://api.themoviedb.org/3/tv/' + fav, {
@@ -94,26 +112,55 @@ class Favorites extends Component {
   render() {
     const stateLength = this.state.userFavorites.length;
     let favorites = null;
-
     if (stateLength !== 0) {
       favorites = this.state.userFavorites.map(fav => {
         const favLink =
           fav.type === 'tv' ? '/Tv/' + fav.id : '/Movies/' + fav.id;
         return (
-          <NavLink to={favLink} key={fav.id}>
-            <li className={classes.Fav} key={fav.id}>
+          <div className={classes.Fav} key={fav.id}>
+            <NavLink to={favLink} key={fav.id}>
               <img src={'http://image.tmdb.org/t/p/w92' + fav.poster} alt="" />
               <div className={classes.FavInfo}>
                 <div className={classes.Title}>{fav.title}</div>
                 <span className={classes.FavRelYear}>{fav.release}</span>
               </div>
-            </li>
-          </NavLink>
+            </NavLink>
+          </div>
         );
       });
     }
 
-    return <Aux>{stateLength !== 0 ? <Aux>{favorites}</Aux> : null}</Aux>;
+    return (
+      <Aux>
+        <div className={classes.FavHeader}>
+          {this.props.type === 'favs' ? (
+            <div className={classes.Header}>
+              <FontAwesomeIcon icon={faHeart} className={classes.FavIcon} />
+              <div>Favorites</div>
+            </div>
+          ) : this.props.type === 'watchlist' ? (
+            <div className={classes.Header}>
+              <FontAwesomeIcon icon={faStar} className={classes.StarIcon} />
+              <div>Watchlist</div>
+            </div>
+          ) : null}
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            className={classes.ChevronLeft}
+            onClick={this.props.click}
+          />
+        </div>
+        <div
+          className={
+            classes.Favorites +
+            ' ' +
+            (this.props.slideIn ? classes.FavSlideIn : '')
+          }
+        >
+          {stateLength !== 0 ? <Aux>{favorites}</Aux> : null}
+        </div>
+      </Aux>
+    );
   }
 }
 

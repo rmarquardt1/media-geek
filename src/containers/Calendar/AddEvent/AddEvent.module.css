@@ -1,0 +1,65 @@
+.AddEventContainer {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.AddEvent {
+  width: 400px;
+  background: #313c4e;
+  margin-left: -200px;
+  z-index: 15;
+  box-sizing: border-box;
+  padding: 20px;
+}
+.Row {
+  margin-bottom: 20px;
+}
+.CloseRow {
+  position: relative;
+  height: 30px;
+  width: 100%;
+}
+.CloseButton {
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+}
+label {
+  display: block;
+  margin-bottom: 10px;
+  color: #e6e6e6;
+}
+input,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border-radius: 5px;
+}
+textarea {
+  height: 200px;
+}
+
+.CreateButton {
+  margin-top: 5px;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  background: #66b3ff;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  border: none;
+}

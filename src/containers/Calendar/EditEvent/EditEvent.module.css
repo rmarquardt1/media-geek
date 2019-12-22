@@ -1,0 +1,42 @@
+label {
+ width:120px;
+ margin: 0;
+}
+textarea {
+  height:initial;
+}
+input, textarea {
+  padding: 5px;
+}
+.Row {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.Row.Description {
+  align-self: flex-start;
+}
+
+
+.UpdateCancel {
+  position: absolute;
+  bottom: 10px;
+  right:0;
+}
+.UpdateCancel span {
+  margin-right:10px;
+}
+.Update, .Cancel {
+  cursor: pointer;
+  display:inline-block;
+}
+.Update {
+  padding-right: 15px;
+  border-right: 2px solid #4d4d4d;
+}
+.Cancel {
+  padding-left: 15px;
+}
+.DoneIcon, .CancelIcon {
+  font-size: 14px;
+}

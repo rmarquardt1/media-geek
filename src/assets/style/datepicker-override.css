@@ -1,0 +1,9 @@
+.react-datepicker-wrapper {
+  width: 100%;
+}
+.react-datepicker {
+  display: flex;
+}
+.EditEventInfo .react-datepicker-wrapper {
+  /* width: initial; */
+}

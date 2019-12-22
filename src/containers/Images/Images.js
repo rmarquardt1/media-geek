@@ -22,10 +22,15 @@ class Images extends Component {
           <h2>Wallpapers</h2>
         </div>
         <div className={classes.Images}>
-          <BgImages imdbId={this.props.imdbId} imgClick={this.props.imgClick} />
+          <BgImages
+            imdbId={this.props.imdbId}
+            imgClick={this.props.imgClick}
+            heading="Desktop"
+          />
           <PosterImages
             imdbId={this.props.imdbId}
             imgClick={this.props.imgClick}
+            heading="Phone / Tablet"
           />
         </div>
       </Aux>

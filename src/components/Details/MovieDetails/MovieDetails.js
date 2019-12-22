@@ -4,7 +4,6 @@ import Scores from '../../../containers/Scores/Scores';
 import classes from './MovieDetails.module.css';
 
 const movieDetails = props => {
-  console.log(props);
   const monthNames = [
     'Jan',
     'Feb',

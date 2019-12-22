@@ -1,0 +1,68 @@
+.Episode {
+  display: flex;
+  width: 23%;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 10px;
+  margin: 40px 10px 0 10px;
+  flex-direction: column;
+  align-items: center;
+}
+.Episode h3 {
+  margin: 10px;
+}
+.EpisodeInfo {
+  color: #ccc;
+  max-height: 100px;
+  overflow-y: auto;
+  font-size: 14px;
+  width: 100%;
+}
+.EpisodeInfo p {
+  margin: 10px 15px 15px 15px;
+}
+.TvEpisodes {
+  display: flex;
+  justify-content: space-between;
+}
+.Thumb {
+  position: relative;
+  text-align: center;
+  padding: 0 15px;
+}
+.Thumb img {
+  width: 100%;
+}
+.Thumb .EpisodeName {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 10px 20px;
+  width: 100%;
+  top: 0;
+  box-sizing: border-box;
+  left: 0;
+}
+.EpisodeNumber {
+  padding: 10px 15px;
+  font-weight: bold;
+}
+.ReadMore {
+  margin-bottom: 0;
+  cursor: pointer;
+  font-weight: bold;
+  color: #66b3ff;
+}
+@media (max-width: 1366px) {
+  .Episode {
+    width: 30%;
+  }
+}
+@media (max-width: 768px) {
+  .Episode {
+    width: 45%;
+  }
+}
+@media (max-width: 500px) {
+  .Episode {
+    width: 100%;
+  }
+}

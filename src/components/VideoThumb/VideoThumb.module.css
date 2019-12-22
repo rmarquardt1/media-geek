@@ -1,37 +1,51 @@
-.VideoThumbContainer {
-  width: 220px;
-  margin: 10px;
-}
-.VideoName {
-  box-sizing: border-box;
-  width: 100%;
-  display: flex;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-weight: bold;
-  font-size: 14px;
-}
 .VideoThumb {
-  background-size: cover;
-  background-repeat: no-repeat;
   cursor: pointer;
+  margin: 15px 0;
 }
-.VideoThumb img {
+.VideoThumb .Poster {
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background-position: center;
+}
+.VideoThumb .Poster img {
   width: 100%;
+  max-height: 100%;
 }
-@media (max-width: 830px) {
-  .VideoThumb {
-    width: 100%;
-  }
-  .VideoThumbContainer {
-    width: 45%;
-    padding-bottom: 30px;
-  }
+.NameChar {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+.CharName {
+  color: #ccc;
+  font-style: italic;
 }
 @media (max-width: 500px) {
-  .VideoThumbContainer {
-    width: 43%;
-    padding-bottom: 0;
+  .VideoThumb .Poster {
+    height: initial;
+    background-size: contain !important;
+  }
+  .NameChar {
+    font-size: 12px;
+    margin-top: 5px;
+    font-weight: normal;
+  }
+  .CharName {
+    display: none;
+  }
+}
+@media (max-width: 410px) {
+  .VideoThumb {
+    width: 100%;
+    height: initial;
+  }
+  .VideoThumb .Poster {
+    height: initial;
+    background-size: contain !important;
   }
 }

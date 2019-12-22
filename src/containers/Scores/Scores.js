@@ -8,6 +8,8 @@ import mcIcon from '../../assets/images/mc-icon.png';
 import classes from './Scores.module.css';
 
 class Scores extends Component {
+  axiosCancel = axios.CancelToken.source();
+
   state = {
     imdbScore: null,
     rtScore: null,
@@ -18,11 +20,16 @@ class Scores extends Component {
     this.getRatingsHandler();
   }
 
+  componentWillUnmount() {
+    this.axiosCancel.cancel('axios scores request cancelled');
+  }
+
   getRatingsHandler = () => {
     axios
       .get('https://www.omdbapi.com/', {
+        cancelToken: this.axiosCancel.token,
         params: {
-          apikey: 'ec2bd2c4',
+          apikey: 'fb18a0b4',
           t: this.props.title,
           type: this.props.type
         }
