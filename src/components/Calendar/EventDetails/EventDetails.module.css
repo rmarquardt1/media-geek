@@ -32,6 +32,7 @@
 }
 .EventInfo {
   margin-top: 0;
+  flex-grow: 1;
 }
 .EventInfo h1 {
   margin-top: 0;
@@ -48,7 +49,7 @@
 .EditDelete span {
   margin-right:10px;
 }
-.Edit, .Remove {
+.Edit, .Remove, .Close {
   cursor: pointer;
   display:inline-block;
 }
@@ -58,8 +59,13 @@
 }
 .Remove {
   padding-left: 15px;
+  padding-right: 15px;
 }
-.PencilIcon, .RemoveIcon {
+.Close {
+  padding-left: 15px;
+  border-left: 2px solid #4d4d4d;
+}
+.PencilIcon, .RemoveIcon, .CloseIcon {
   font-size: 14px;
 }
 

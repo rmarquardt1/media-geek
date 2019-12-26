@@ -1,35 +1,42 @@
 import React, { useState } from 'react';
 import EditEvent from '../../../containers/Calendar/EditEvent/EditEvent';
+import RemoveEvent from '../RemoveEvent/RemoveEvent';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPencilAlt,
-  faCalendarTimes
+  faCalendarTimes,
+  faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 import classes from './EventDetails.module.css';
 
 const EventDetails = props => {
   const [editEvent, showEditEvent] = useState(false);
-
+  const [removeEvent, showRemoveEvent] = useState(false);
   const [description, setDescription] = useState(props.description);
   const [title, setTitle] = useState(props.title);
   const [startDate, setStartDate] = useState(props.startDate);
-
-  
+  let eventDetailsRef = React.createRef();
 
   window.addEventListener('click', event => {
     if (event.target.id === 'eventDetailsContainer') {
-      event.target.classList.add(classes.EventDetailsFadeOut);
-      props.close();
+      closeWindow();
     }
   });
+
+  const closeWindow = () => {
+    if (eventDetailsRef.current) {
+      eventDetailsRef.current.classList.add(classes.EventDetailsFadeOut);
+    }
+    props.close();
+  }
 
   const formatAMPM = date => {
     let hours = date.getHours();
     let minutes = date.getMinutes();
     const ampm = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
+    hours = hours ? hours : 12; // the hour '0' should be '12'l.
     minutes = minutes < 10 ? '0' + minutes : minutes;
     const strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
@@ -50,7 +57,6 @@ const EventDetails = props => {
       'November',
       'December'
     ];
-
     const dayNames = [
       'Sunday',
       'Monday',
@@ -60,7 +66,6 @@ const EventDetails = props => {
       'Friday',
       'Saturday'
     ];
-
     const month = monthNames[date.getMonth()];
     const weekday = dayNames[date.getDay()];
     const day = date.getDate();
@@ -69,26 +74,27 @@ const EventDetails = props => {
     return weekday + ' ' + month + ' ' + day + ', ' + year + ' - ' + time;
   };
 
-
-  const eventOnUpdate = (desc) => {
-
+  const eventOnUpdate = (title, desc, start) => {
+    setTitle(title);
     setDescription(desc);
-
-  }
+    setStartDate(start);
+  };
 
   return (
-    <div className={classes.EventDetailsContainer} id="eventDetailsContainer">
+    <div className={classes.EventDetailsContainer} id="eventDetailsContainer" ref={eventDetailsRef}>
       <div className={classes.EventDetails}>
         {props.poster ? (
           <img className={classes.PosterImage} src={props.poster} alt="" />
         ) : null}
 
         <div className={classes.EventInfo}>
-          <h1>{title}</h1>
+          {!removeEvent ? <h1>{title}</h1> : null}
+          {!editEvent && !removeEvent
+          ? <React.Fragment>
           <h3>{getEventDateTime(startDate)}</h3>
-          {/* <p>{props.description}</p> */}
           <p>{description}</p>
-
+          </React.Fragment>
+          : null}
           {editEvent ? (
             <EditEvent
               eventDate={startDate}
@@ -99,7 +105,19 @@ const EventDetails = props => {
               reloadCalendar={props.reloadCalendar}
               update={eventOnUpdate}
             />
-          ) : (
+          ) 
+          : removeEvent ? (
+            <RemoveEvent
+              eventDate={getEventDateTime(startDate)}
+              title={title}
+              description={description}
+              id={props.id}
+              cancel={() => showRemoveEvent(false)}
+              close={closeWindow}
+              reloadCalendar={props.reloadCalendar}
+              update={eventOnUpdate}
+            />
+          ): (
             <div className={classes.EditDelete}>
               <div className={classes.Edit} onClick={() => showEditEvent(true)}>
                 <span>Edit</span>
@@ -108,11 +126,18 @@ const EventDetails = props => {
                   className={classes.PencilIcon}
                 />
               </div>
-              <div className={classes.Remove}>
+              <div className={classes.Remove} onClick={() => showRemoveEvent(true)} >
                 <span>Remove</span>
                 <FontAwesomeIcon
                   icon={faCalendarTimes}
                   className={classes.RemoveIcon}
+                />
+              </div>
+              <div className={classes.Close} onClick={closeWindow}>
+                <span>Close</span>
+                <FontAwesomeIcon
+                  icon={faTimesCircle}
+                  className={classes.CloseIcon}
                 />
               </div>
             </div>

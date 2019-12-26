@@ -20,25 +20,42 @@ class EditEvent extends Component {
     description: this.props.description
   };
 
+  inputHandler = event => {
+    if (event.target.id === "EventTitle") {
+      this.setState({ title: event.target.value });
+    }
+    if (event.target.id === "EventDescription") {
+      this.setState({ description: event.target.value });
+    }
+  };
+
   
 
   eventUpdateHandler = () => {
     const uid = localStorage.getItem('userId');
 
     axios
-      .patch(
-        'https://mediageek-650c6.firebaseio.com/users/' +
-          uid +
-          '/events/' + this.props.id + '.json', {
-            desc: 'This is a new description'
-
-          }
-          
-      )
+    .patch(
+      "https://mediageek-650c6.firebaseio.com/users/" +
+        uid +
+        "/events/" +
+        this.props.id +
+        ".json",
+      {
+        title: this.state.title,
+        desc: this.state.description,
+        start: this.state.startDate,
+        end: this.state.startDate
+      }
+    )
       .then(() => {
-        this.setState({description: 'This is a new description'});
         this.props.reloadCalendar();
-        this.props.update('This is a new description');
+        this.props.update(
+          this.state.title,
+          this.state.description,
+          this.state.startDate
+        );
+        this.props.cancel();
       })
       .catch(error => {
         console.log('error ' + error);
@@ -54,12 +71,12 @@ class EditEvent extends Component {
 
   render() {
     return (
-      <div className={classes.EditEventInfo} class="EditEventInfo">
+      <div className={classes.EditEventInfo}>
         <div className={classes.Row}>
           <label>Date/Time</label>
           <DatePicker
             selected={this.state.startDate}
-            // onChange={date => this.setState({ startDate: date })}
+            onChange={date => this.setState({ startDate: date })}
             showTimeSelect
             timeFormat="HH:mm"
             timeIntervals={15}
@@ -74,7 +91,7 @@ class EditEvent extends Component {
           <input
             type="text"
             id="EventTitle"
-            // onChange={this.inputHandler}
+            onChange={this.inputHandler}
             value={this.state.title ? this.state.title : ''}
           />
         </div>
@@ -83,7 +100,7 @@ class EditEvent extends Component {
           <label>Description</label>
           <textarea
             id="EventDescription"
-            // onChange={this.inputHandler}
+            onChange={this.inputHandler}
             value={this.state.description ? this.state.description : ''}
           ></textarea>
         </div>

@@ -1,11 +1,17 @@
+.EditEventInfo {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 label {
- width:120px;
- margin: 0;
+  width: 120px;
+  margin: 0;
 }
 textarea {
-  height:initial;
+  height: 100%;
 }
-input, textarea {
+input,
+textarea {
   padding: 5px;
 }
 .Row {
@@ -14,21 +20,22 @@ input, textarea {
   align-items: center;
 }
 .Row.Description {
-  align-self: flex-start;
+  align-items: flex-start;
+  flex-grow: 1;
+  margin-bottom: 50px;
 }
-
-
 .UpdateCancel {
   position: absolute;
   bottom: 10px;
-  right:0;
+  right: 0;
 }
 .UpdateCancel span {
-  margin-right:10px;
+  margin-right: 10px;
 }
-.Update, .Cancel {
+.Update,
+.Cancel {
   cursor: pointer;
-  display:inline-block;
+  display: inline-block;
 }
 .Update {
   padding-right: 15px;
@@ -37,6 +44,7 @@ input, textarea {
 .Cancel {
   padding-left: 15px;
 }
-.DoneIcon, .CancelIcon {
+.DoneIcon,
+.CancelIcon {
   font-size: 14px;
 }

@@ -1,0 +1,62 @@
+/* label {
+  width:120px;
+  margin: 0;
+ }
+ textarea {
+   height:initial;
+ }
+ input, textarea {
+   padding: 5px;
+ }
+ .Row {
+   display: flex;
+   margin-bottom: 10px;
+   align-items: center;
+ }
+ .Row.Description {
+   align-self: flex-start;
+ } */
+ 
+ .RemoveEvent h2 {
+   font-weight:lighter;
+    font-size: 26px;
+    margin-top: 0;
+ }
+ .EventInfo {
+   color: #e6e6e6;
+
+ }
+ .Title {
+   font-weight: bold;
+   font-size:20px;
+ }
+ .Date {
+   font-style: italic;
+ }
+ .Proceed {
+   font-style: italic;
+   color: #ffdb00;
+ }
+ 
+ .RemoveCancel {
+   position: absolute;
+   bottom: 10px;
+   right:0;
+ }
+ .RemoveCancel span {
+   margin-right:10px;
+ }
+ .Remove, .Cancel {
+   cursor: pointer;
+   display:inline-block;
+ }
+ .Remove {
+   padding-right: 15px;
+   border-right: 2px solid #4d4d4d;
+ }
+ .Cancel {
+   padding-left: 15px;
+ }
+ .RemoveIcon, .CancelIcon {
+   font-size: 14px;
+ }
