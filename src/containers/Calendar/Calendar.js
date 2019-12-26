@@ -37,7 +37,8 @@ class Calendar extends Component {
     eventStartDate: null,
     eventDate: null,
     eventPoster: null,
-    eventId: null
+    eventId: null,
+    eventMediaId: null
   };
 
   constructor(props) {
@@ -131,7 +132,8 @@ class Calendar extends Component {
         eventDescription: null,
         eventStartDate: null,
         eventPoster: null,
-        eventId: null
+        eventId: null,
+        eventMediaId: null
       });
     }, 300);
   };
@@ -143,7 +145,8 @@ class Calendar extends Component {
       eventDescription: event.desc,
       eventStartDate: event.start,
       eventPoster: event.poster,
-      eventId: event.id
+      eventId: event.id,
+      eventMediaId: event.mediaId
     });
   };
 
@@ -185,6 +188,7 @@ class Calendar extends Component {
               poster={this.state.eventPoster}
               id={this.state.eventId}
               reloadCalendar={this.loadEventsHandler}
+              mediaId={this.state.eventMediaId}
             />
           ) : null}
 

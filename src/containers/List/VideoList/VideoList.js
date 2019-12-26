@@ -115,6 +115,7 @@ class VideoList extends Component {
 
   showNavRightHandler = (navLeftClicked, scrollLeft) => {
     this.showNavRightTimeout = setTimeout(() => {
+      if (this.containerWidthRef.current) {
       const scrollPosition = this.containerWidthRef.current.scrollLeft;
       const scrollMax =
         this.containerWidthRef.current.scrollWidth -
@@ -123,6 +124,7 @@ class VideoList extends Component {
         showNavRight: scrollPosition <= (scrollMax - 50) ? true : navLeftClicked ? true : false,
         scrollPos: scrollPosition
       });
+      }
     }, 700)
   };
 

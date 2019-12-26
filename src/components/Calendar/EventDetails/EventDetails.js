@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import EditEvent from '../../../containers/Calendar/EditEvent/EditEvent';
 import RemoveEvent from '../RemoveEvent/RemoveEvent';
 
@@ -24,11 +25,16 @@ const EventDetails = props => {
     }
   });
 
+  console.log(props);
+
   const closeWindow = () => {
     if (eventDetailsRef.current) {
       eventDetailsRef.current.classList.add(classes.EventDetailsFadeOut);
     }
-    props.close();
+    //if (props.close) {
+      props.close();
+    //}
+    
   }
 
   const formatAMPM = date => {
@@ -84,7 +90,14 @@ const EventDetails = props => {
     <div className={classes.EventDetailsContainer} id="eventDetailsContainer" ref={eventDetailsRef}>
       <div className={classes.EventDetails}>
         {props.poster ? (
+          <NavLink
+          style={{ color: '#fff', textDecoration: 'none', height: '100%' }}
+          to={'/Movies/' + props.mediaId}
+        >
+          <div className={classes.PosterContainer}>
           <img className={classes.PosterImage} src={props.poster} alt="" />
+          </div>
+         </NavLink>
         ) : null}
 
         <div className={classes.EventInfo}>

@@ -17,7 +17,6 @@ class Favorites extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props);
     if (JSON.parse(localStorage.getItem('userData')).favMovies) {
       if (JSON.parse(localStorage.getItem('userData')).favMovies.length > 0) {
         this.getMovieFavoritesHandler();

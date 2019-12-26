@@ -49,7 +49,10 @@ class EditEvent extends Component {
       }
     )
       .then(() => {
-        this.props.reloadCalendar();
+        if (this.props.reloadCalendar) {
+          this.props.reloadCalendar();
+        }
+        
         this.props.update(
           this.state.title,
           this.state.description,

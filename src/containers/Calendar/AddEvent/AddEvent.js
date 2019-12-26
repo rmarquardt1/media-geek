@@ -40,14 +40,12 @@ class AddEvent extends Component {
 
     // console.log("description: " + this.state.description);
 
-    const dt = this.state.startDate;
-    console.log(dt);
-    const y = dt.getFullYear();
-    const m = dt.getMonth();
-    const d = dt.getDay();
-    const h = dt.getHours();
-    const mm = dt.getMinutes();
-    console.log(dt.getMinutes());
+    // const dt = this.state.startDate;
+    // const y = dt.getFullYear();
+    // const m = dt.getMonth();
+    // const d = dt.getDay();
+    // const h = dt.getHours();
+    // const mm = dt.getMinutes();
 
     await axios
       .post(

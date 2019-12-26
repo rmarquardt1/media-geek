@@ -16,9 +16,10 @@ import FullSizeImage from '../../../components/FullSizeImage/FullSizeImage';
 import Loader from '../../../components/UI/Loader/Loader';
 import NavSearch from '../../Search/NavSearch/NavSearch';
 import AddEvent from '../../Calendar/AddEvent/AddEvent';
+import EventDetails from '../../../components/Calendar/EventDetails/EventDetails';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faStar, faSearch, faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faStar, faSearch, faCalendarPlus, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import classes from './OpenMovie.module.css';
 import uiClasses from '../../../components/UI/Layout/Layout.module.css';
 
@@ -44,10 +45,14 @@ class OpenMovie extends Component {
     movieInfo: null,
     movieId: null,
     movieCollection: null,
-    showAddEvent: false
+    showAddEvent: false,
+    showEventDetails: false,
+    eventDetails: null,
+    onCalendar: false
   };
 
   componentDidUpdate(prevProps, prevState) {
+   // console.log(this.state.showEventDetails);
     if (prevState.movieId !== this.props.match.params.id) {
       this.getMovieHandler();
       this.setState({ movieId: this.props.match.params.id });
@@ -57,6 +62,9 @@ class OpenMovie extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     this.getMovieHandler();
+
+    this.checkEventsHandler();
+
     if (localStorage.getItem('userData')) {
       const userData = JSON.parse(localStorage.getItem('userData'));
       const favorited = userData.favMovies
@@ -254,6 +262,67 @@ class OpenMovie extends Component {
     this.setState({ showAddEvent: !this.state.showAddEvent });
   };
 
+  showEventDetailsHandler =() => {
+    
+      this.setState({showEventDetails: true});
+  }
+
+  closeEventDetailsHandler = () => {
+    setTimeout(() => {
+      this.setState({showEventDetails: false});
+    }, 300)
+  //  this.checkEventsHandler();
+  }
+
+
+
+
+  checkEventsHandler = () => {
+  
+  console.log('triggered');
+    axios
+      .get(
+        "https://mediageek-650c6.firebaseio.com/users/" +
+          localStorage.getItem("userId") +
+          "/events.json"
+      )
+      .then(response => {
+        Object.keys(response.data).map(key => {
+          if (response.data[key].mediaId === this.props.match.params.id) {
+            
+              const evDetails = {
+                id: key,
+                title: response.data[key].title,
+                desc: response.data[key].desc,
+                start: new Date(response.data[key].start),
+                end: new Date(response.data[key].end),
+                mediaId: response.data[key].mediaId,
+                poster: response.data[key].poster
+              };
+              this.setState({ eventDetails: evDetails, onCalendar: true });
+          } else {
+            this.setState({ eventDetails: null, onCalendar: false, showEventDetails: false });
+          }
+
+        });
+        
+
+      })
+      .catch(error => {
+        console.log("error " + error);
+      });
+      
+  }
+
+
+
+
+
+
+
+
+
+
   render() {
     let reviews = null;
     let collection = null;
@@ -344,6 +413,19 @@ class OpenMovie extends Component {
                 <div className={classes.OpenMovieOverlay} />
                 <div className={classes.OpenMovieContent}>
 
+                {this.state.showEventDetails ? (
+                  <EventDetails
+                    title={this.state.eventDetails.title}
+                    description={this.state.eventDetails.desc}
+                    startDate={this.state.eventDetails.start}
+                    close={this.closeEventDetailsHandler}
+                    poster={this.state.eventDetails.poster}
+                    id={this.state.eventDetails.id}
+                    reloadCalendar={this.checkEventsHandler}
+                    mediaId={this.state.eventDetails.mediaId}
+                  />
+                ) : null}
+
                 {this.state.showAddEvent ? (
                       <AddEvent 
                         close={this.addEventClickHandler} 
@@ -351,6 +433,7 @@ class OpenMovie extends Component {
                         description={this.state.movieInfo.overview}
                         mediaId={this.props.match.params.id}
                         poster={'http://image.tmdb.org/t/p/w500/' + this.state.movieInfo.poster_path}
+                        reloadCalendar={this.checkEventsHandler}
                       />
                   ) : null}
 
@@ -393,13 +476,20 @@ class OpenMovie extends Component {
                         {this.props.isAuth ? (
                           <Aux>
                             <FontAwesomeIcon
-                              icon={faCalendarPlus}
+                              icon={
+                                this.state.onCalendar
+                                  ? faCalendarAlt
+                                  : faCalendarPlus
+                                }
                               className={
-                                this.state.calendar
+                                this.state.onCalendar
                                   ? classes.CalendarSelectedIcon
                                   : classes.CalendarIcon
                               }
-                              onClick={this.addEventClickHandler}
+                              onClick={
+                                this.state.onCalendar
+                                ? this.showEventDetailsHandler
+                                : this.addEventClickHandler}
                             />
                             <FontAwesomeIcon
                               icon={faStar}

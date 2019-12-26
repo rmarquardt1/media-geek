@@ -37,6 +37,9 @@
 .EventInfo h1 {
   margin-top: 0;
 }
+.PosterContainer {
+  height:100%;
+}
 .PosterImage {
   height: 100%;
   box-sizing: border-box;
