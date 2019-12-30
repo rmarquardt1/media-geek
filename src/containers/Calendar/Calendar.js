@@ -1,37 +1,34 @@
-import React, { Component } from "react";
-import axios from "axios";
-import BigCalendar from "react-big-calendar/lib";
-import moment from "moment";
-import SideBar from "../UI/SideBar/SideBar";
-import AddEvent from "./AddEvent/AddEvent";
-import EventDetails from "../../components/Calendar/EventDetails/EventDetails";
+import React, { Component } from 'react';
+import axios from 'axios';
+import BigCalendar from 'react-big-calendar/lib';
+import moment from 'moment';
+import SideBar from '../UI/SideBar/SideBar';
+import AddEvent from './AddEvent/AddEvent';
+import EventDetails from '../../components/Calendar/EventDetails/EventDetails';
+import AllEvents from '../../components/Calendar/AllEvents/AllEvents';
 
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import "../../assets/style/calendar-style-override.css";
-import classes from "./Calendar.module.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import '../../assets/style/calendar-style-override.css';
+import uiClasses from '../../components/UI/Layout/Layout.module.css';
+import classes from './Calendar.module.css';
 
-moment.locale("en");
+moment.locale('en');
 BigCalendar.momentLocalizer(moment);
 
 // const allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]);
 
-const allViews = ["month", "week", "day"];
+const allViews = ['month', 'week', 'day'];
 
 class Calendar extends Component {
-  // state = {
-  //   view: "month",
-  //   date: new Date(),
-  //   events: [],
-  //   showAddEvent: false,
-  //   eventDate: null
-  // };
-
   state = {
-    view: "month",
+    view: 'month',
     date: new Date(),
     events: [],
     showAddEvent: false,
     showEventDetails: false,
+    showAllEvents: false,
     eventTitle: null,
     eventDescription: null,
     eventStartDate: null,
@@ -48,6 +45,14 @@ class Calendar extends Component {
 
   componentDidMount() {
     this.loadEventsHandler();
+
+    if (window.innerWidth <= 500) {
+      this.setState({ showAllEvents: true });
+    }
+
+    //console.log(document.getElementsByTagName('span'));
+
+    // console.log(document.getElementsByClassName('rbc-toolbar-label'));
   }
 
   componentWillUnmount() {
@@ -82,12 +87,12 @@ class Calendar extends Component {
     let eventArr = [];
     axios
       .get(
-        "https://mediageek-650c6.firebaseio.com/users/" +
-          localStorage.getItem("userId") +
-          "/events.json"
+        'https://mediageek-650c6.firebaseio.com/users/' +
+          localStorage.getItem('userId') +
+          '/events.json'
       )
       .then(response => {
-      //  console.log(response.data);
+        //  console.log(response.data);
         Object.keys(response.data).map(key => {
           eventArr.push({
             id: key,
@@ -106,11 +111,11 @@ class Calendar extends Component {
         this.setState({ events: eventArr });
       })
       .catch(error => {
-        console.log("error " + error);
+        console.log('error ' + error);
       });
   };
 
-  showAddEventHandler = (currentDate) => {
+  showAddEventHandler = currentDate => {
     this.setState({
       showAddEvent: true,
       eventDate: currentDate
@@ -150,6 +155,10 @@ class Calendar extends Component {
     });
   };
 
+  showAllEventsHandler = () => {
+    this.setState({showAllEvents: !this.state.showAllEvents})
+  }
+
   // addEventHandler = async () => {
   //   await axios
   //     .post(
@@ -176,10 +185,27 @@ class Calendar extends Component {
   render() {
     return (
       <React.Fragment>
-        <SideBar isAuth={this.props.isAuth} />
+        {/* <SideBar isAuth={this.props.isAuth} /> */}
 
         <div className={classes.CalendarContainer}>
-        {this.state.showEventDetails ? (
+          {this.state.events && this.state.showAllEvents ? (
+            <React.Fragment>
+              <div
+                className={uiClasses.SectionHeader + ' ' + uiClasses.PageHeader}
+              >
+                <div className={uiClasses.PageTitle}>
+                  <FontAwesomeIcon icon={faCalendarAlt} />
+                  <h2 style={{ left: '46px' }}>Movies</h2>
+                </div>
+              </div>
+
+              <AllEvents
+                events={this.state.events}
+                showDetails={this.showEventDetailsHandler}
+              />
+            </React.Fragment>
+          ) : null}
+          {this.state.showEventDetails ? (
             <EventDetails
               title={this.state.eventTitle}
               description={this.state.eventDescription}
@@ -192,16 +218,15 @@ class Calendar extends Component {
             />
           ) : null}
 
-
           {this.state.showAddEvent ? (
             // <div className={classes.CalendarOverlay}>
-              <AddEvent
-                eventDate={this.state.eventDate}
-                close={this.closeAddEventHandler}
-                reloadCalendar={this.loadEventsHandler}
-              />
-            // </div>
-          ) : null}
+            <AddEvent
+              eventDate={this.state.eventDate}
+              close={this.closeAddEventHandler}
+              reloadCalendar={this.loadEventsHandler}
+            />
+          ) : // </div>
+          null}
 
           {/* <button onClick={this.addEventHandler}>Add Event</button> */}
 
@@ -211,58 +236,27 @@ class Calendar extends Component {
           </button> */}
 
           {this.props.isAuth ? (
-            this.state.events ? (
-              // <BigCalendar
-              //   selectable={"ignoreEvents"}
-              //   popup={true}
-              //   events={this.state.events}
-              //   step={60}
-              //   views={allViews}
-              //   defaultDate={moment().toDate()}
-              //   onSelectEvent={() => {
-              //     console.log("clicked");
-              //   }}
-              //   onSelectSlot={slot => this.showAddEventHandler(slot.start)}
-              //   onSelecting={false}
+            this.state.events && !this.state.showAllEvents ? (
+              <React.Fragment>
+                <BigCalendar
+                  selectable={'ignoreEvents'}
+                  popup={true}
+                  events={this.state.events}
+                  step={60}
+                  views={allViews}
+                  defaultDate={moment().toDate()}
+                  onSelectEvent={event => {
+                    this.showEventDetailsHandler(event);
+                  }}
+                  onSelectSlot={slot => this.showAddEventHandler(slot.start)}
+                />
 
-              //   //view={this.state.view}
-
-              //   //drilldownView="day"
-              //   //toolbar={false}
-              //   //onView={() => {}}
-              //   //date={new Date()}
-
-              //   //onNavigate={date => this.setState({ date: date })}
-
-              //   //onDrillDown={date => this.setState({ date: date, view: "day" })}
-              // />
-
-              <BigCalendar
-                selectable={"ignoreEvents"}
-                popup={true}
-                events={this.state.events}
-                step={60}
-                views={allViews}
-                defaultDate={moment().toDate()}
-                onSelectEvent={event => {
-                  this.showEventDetailsHandler(event);
-                }}
-                onSelectSlot={slot => this.showAddEventHandler(slot.start)}
-                //onSelecting={false}
-
-                //view={this.state.view}
-
-                //drilldownView="day"
-                //toolbar={false}
-                //onView={() => {}}
-                //date={new Date()}
-
-                //onNavigate={date => this.setState({ date: date })}
-
-                //onDrillDown={date => this.setState({ date: date, view: "day" })}
-              />
-
-
+                <div className={classes.CalendarFooter}>
+                  <div className={classes.ViewUpcomingEvents} onClick={this.showAllEventsHandler}>
+                    Upcoming Events
+                  </div>
+                </div>
+              </React.Fragment>
             ) : null
           ) : (
             <p>Not Logged In</p>
@@ -274,6 +268,3 @@ class Calendar extends Component {
 }
 
 export default Calendar;
-
-// const rootElement = document.getElementById("root");
-// ReactDOM.render(<App />, rootElement);

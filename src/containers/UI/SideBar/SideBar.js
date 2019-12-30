@@ -299,7 +299,13 @@ class SideBar extends Component {
               </li>
             </NavLink>
 
-            <NavLink to="/Calendar">
+            
+
+            {this.props.isAuth && localStorage.getItem('userData') ? (
+              <Aux>
+
+
+<NavLink to="/Calendar">
               <li
                 className={classes.FlexCenter + ' ' + classes.Hover}
                 onClick={this.showMenuHandler}
@@ -311,8 +317,13 @@ class SideBar extends Component {
               </li>
             </NavLink>
 
-            {this.props.isAuth && localStorage.getItem('userData') ? (
-              <Aux>
+
+
+
+
+
+
+
                 <li
                   className={
                     this.state.favShowLinks

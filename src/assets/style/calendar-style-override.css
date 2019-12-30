@@ -1,9 +1,16 @@
 .rbc-calendar {
   color: #ccc;
-  margin: auto;
-  width: 90%;
-  height: 80vh;
+  margin-top: 0;
+  /* margin-left: auto;
+  margin-right: auto; */
+  /* width: 90%; */
+  width: 100%;
+  height: 85vh;
 }
+/* .rbc-calendar {
+  
+  height: 85vh;
+} */
 .rbc-header {
   padding: 10px;
   font-family: 'Segoe UI';
@@ -194,10 +201,7 @@ button.rbc-active {
   border-top: 0;
 }
 
-.rbc-calendar {
-  margin-top: 0;
-  height: 85vh;
-}
+
 
 .rbc-allday-cell {
   display: none;
@@ -258,12 +262,14 @@ button.rbc-active {
   .rbc-btn-group:first-child {
     position: absolute;
     top: 7px;
-    right: 20px;
+    right: 0;
   }
   .rbc-toolbar .rbc-btn-group:first-child button {
     background: none;
     /* border: none; */
   }
+
+  
 
   .rbc-toolbar .rbc-btn-group:first-child button:first-child {
     border-color: #262f3d;
@@ -292,7 +298,7 @@ button.rbc-active {
     width: 100%;
   }
   .rbc-btn-group:last-child button {
-    width: 25%;
+    width: 33.3333%;
   }
   .rbc-toolbar .rbc-toolbar-label {
     font-size: 24px;
