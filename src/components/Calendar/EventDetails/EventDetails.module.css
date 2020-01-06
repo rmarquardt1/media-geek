@@ -9,6 +9,7 @@
   background: rgba(0, 0, 0, 0.5);
   z-index: 10;
   animation: fadeIn 0.3s;
+  margin-left: -100px;
 }
 .EventDetails {
   height: 400px;
@@ -24,11 +25,10 @@
   transition: opacity 0.3s;
 }
 .EventInfo {
-  /* margin-left: 20px; */
   margin: 0 10px 0 20px;
   display: flex;
   flex-direction: column;
-  position:relative;
+  position: relative;
 }
 .EventInfo {
   margin-top: 0;
@@ -38,7 +38,7 @@
   margin-top: 0;
 }
 .PosterContainer {
-  height:100%;
+  height: 100%;
 }
 .PosterImage {
   height: 100%;
@@ -47,14 +47,16 @@
 .EditDelete {
   position: absolute;
   bottom: 10px;
-  right:0;
+  right: 0;
 }
 .EditDelete span {
-  margin-right:10px;
+  margin-right: 10px;
 }
-.Edit, .Remove, .Close {
+.Edit,
+.Remove,
+.Close {
   cursor: pointer;
-  display:inline-block;
+  display: inline-block;
 }
 .Edit {
   padding-right: 15px;
@@ -68,18 +70,23 @@
   padding-left: 15px;
   border-left: 2px solid #4d4d4d;
 }
-.PencilIcon, .RemoveIcon, .CloseIcon {
+.PencilIcon,
+.RemoveIcon,
+.CloseIcon {
   font-size: 14px;
 }
-
-
-
 h3 {
   margin: 0;
 }
+
+@media (max-width: 1366px) {
+  .EventDetailsContainer {
+    margin-left: -50px;
+  }
+}
+
 @media (max-width: 1090px) {
   .EventDetails {
-    width: initial;
     margin: 0 50px;
   }
 }
@@ -108,5 +115,3 @@ h3 {
     opacity: 0;
   }
 }
-
-

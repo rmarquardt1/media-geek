@@ -1,14 +1,14 @@
 .AllEvents {
   width: 100%;
   color: #ccc;
-  padding: 0 100px;
+  /* padding: 0 100px; */
 }
 .Overlay {
-  height:100%;
-  width:100%;
-  background:rgba(0,0,0,0.4);
-  position:absolute;
-  box-sizing:border-box;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  box-sizing: border-box;
   left: 0;
 }
 .PosterContainer {
@@ -16,19 +16,19 @@
   /* max-width: 90px; */
   width: 50px;
   margin: 0 20px;
-  position:relative;
+  position: relative;
 }
 .PosterContainerNoImage {
   min-width: 90px;
-  height:135px;
+  height: 135px;
   width: 50px;
   margin: 0 20px;
   background: #000;
-  padding:10px;
+  padding: 10px;
   box-sizing: border-box;
-  display:flex;
-  align-items:center;
-  position:relative;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 .PosterImage {
   /* max-width: 90px; */
@@ -58,7 +58,7 @@
   font-style: italic; */
   color: #66b3ff;
   /* color: #ffdb00; */
-  
+
   margin-bottom: 10px;
 }
 .Date {
@@ -69,8 +69,9 @@
 
 @media (max-width: 500px) {
   .AllEvents {
-    padding: 0 10px;
+    padding: 0;
     font-size: 14px;
+    box-sizing: border-box;
   }
   .Title {
     /* font-size: 16px; */
@@ -94,3 +95,92 @@
     max-height: 81px;
   }
 }
+
+
+
+
+
+
+/* .AllEvents {
+  width: 100%;
+  color: #ccc;
+  padding: 0 100px;
+}
+.Overlay {
+  height:100%;
+  width:100%;
+  background:rgba(0,0,0,0.4);
+  position:absolute;
+  box-sizing:border-box;
+  left: 0;
+}
+.PosterContainer {
+  min-width: 90px;
+  width: 50px;
+  margin: 0 20px;
+  position:relative;
+}
+.PosterContainerNoImage {
+  min-width: 90px;
+  height:135px;
+  width: 50px;
+  margin: 0 20px;
+  background: #000;
+  padding:10px;
+  box-sizing: border-box;
+  display:flex;
+  align-items:center;
+  position:relative;
+}
+.PosterImage {
+  width: 100%;
+}
+.EventInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.Event {
+  border-bottom: 1px solid #262f3d;
+  padding: 15px 0;
+  display: flex;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.3s;
+}
+.Event:hover {
+  background: #262f3d;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.Title {
+  font-weight: bold;
+  color: #66b3ff;
+  margin-bottom: 10px;
+}
+.Date {
+  font-size: 24px;
+  font-weight: lighter;
+}
+
+@media (max-width: 500px) {
+  .AllEvents {
+    padding: 0 10px;
+    font-size: 14px;
+  }
+  .Title {
+    margin-bottom: 10px;
+    letter-spacing: normal;
+    font-weight: bold;
+  }
+  .Date {
+    font-size: 16px;
+    margin-bottom: 3px;
+    color: #e6e6e6;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+  .Description {
+    overflow: hidden;
+    max-height: 81px;
+  }
+} */

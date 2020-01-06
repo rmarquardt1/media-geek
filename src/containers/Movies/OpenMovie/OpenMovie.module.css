@@ -176,10 +176,6 @@
   color: #fd7e14;
   transition: color 0.3s;
 }
-
-
-
-
 .CalendarSelectedIcon {
   position: absolute;
   top: 30px;
@@ -188,10 +184,6 @@
   color: #fd7e14;
   cursor: pointer;
 }
-
-
-
-
 .NavRight {
   float: right;
   display: flex;
@@ -262,7 +254,7 @@
     padding: 0 25px;
   }
   .SearchIcon {
-    display:none;
+    display: none;
   }
 }
 @media (max-width: 768px) {

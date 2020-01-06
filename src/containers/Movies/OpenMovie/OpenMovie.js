@@ -204,9 +204,9 @@ class OpenMovie extends Component {
       });
   };
 
-  showSearchHandler = () => {
-    this.setState({ showSearch: !this.state.showSearch });
-  };
+  // showSearchHandler = () => {
+  //   this.setState({ showSearch: !this.state.showSearch });
+  // };
 
   imageClickHandler = (url, imgArr, imgId) => {
     this.setState({
@@ -263,7 +263,6 @@ class OpenMovie extends Component {
   };
 
   showEventDetailsHandler =() => {
-    
       this.setState({showEventDetails: true});
   }
 
@@ -271,15 +270,9 @@ class OpenMovie extends Component {
     setTimeout(() => {
       this.setState({showEventDetails: false});
     }, 300)
-  //  this.checkEventsHandler();
   }
 
-
-
-
   checkEventsHandler = () => {
-  
-  console.log('triggered');
     axios
       .get(
         "https://mediageek-650c6.firebaseio.com/users/" +
@@ -289,7 +282,6 @@ class OpenMovie extends Component {
       .then(response => {
         Object.keys(response.data).map(key => {
           if (response.data[key].mediaId === this.props.match.params.id) {
-            
               const evDetails = {
                 id: key,
                 title: response.data[key].title,
@@ -303,15 +295,11 @@ class OpenMovie extends Component {
           } else {
             this.setState({ eventDetails: null, onCalendar: false, showEventDetails: false });
           }
-
         });
-        
-
       })
       .catch(error => {
         console.log("error " + error);
-      });
-      
+      });  
   }
 
 
@@ -439,12 +427,17 @@ class OpenMovie extends Component {
 
 
                   <div
-                    className={
-                      this.state.showSearch
-                        ? classes.OpenMovieInfo + ' ' + classes.ShowSearch
-                        : classes.OpenMovieInfo
-                    }
+                  className={classes.OpenMovieInfo}
+                    // className={
+                    //   this.state.showSearch
+                    //     ? classes.OpenMovieInfo + ' ' + classes.ShowSearch
+                    //     : classes.OpenMovieInfo
+                    // }
                   >
+
+
+
+
                     <div
                       className={
                         this.state.showSearch
@@ -459,6 +452,13 @@ class OpenMovie extends Component {
                         placeholder="Search Movies"
                       />
                     </div>
+
+
+
+
+
+
+
                     <div className={classes.MobileDescription}>
                       <div className={classes.OpenMoviePoster}>
                         <img
@@ -511,7 +511,7 @@ class OpenMovie extends Component {
                             />
                           </Aux>
                         ) : null}
-                        <FontAwesomeIcon
+                        {/* <FontAwesomeIcon
                           icon={faSearch}
                           className={
                             this.state.showSearch
@@ -520,7 +520,7 @@ class OpenMovie extends Component {
                           }
                           style={!this.props.isAuth ? { right: '30px' } : null}
                           onClick={this.showSearchHandler}
-                        />
+                        /> */}
                         <div className={classes.OpenMovieMobile}>
                           <div className={classes.OpenMoviePosterMobile}>
                             <img

@@ -31,28 +31,36 @@ class BgImages extends Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.resizeHandler);
-    this.getMoviesHandler();
+    this.getImagesHandler();
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeHandler);
   }
 
-  getMoviesHandler = async () => {
+  getImagesHandler = async () => {
     let listDataResponse = null;
+    let url = null;
+    if (this.props.tvdbId) {
+      url = 'http://webservice.fanart.tv/v3/tv/' + this.props.tvdbId;
+    } else {
+      url = 'http://webservice.fanart.tv/v3/movies/' + this.props.imdbId;
+    }
     await axios
-      .get('http://webservice.fanart.tv/v3/movies/' + this.props.imdbId, {
+      .get(url, {
         params: {
           api_key: 'c3f4fba1e26da407177b194566ca2d3f'
         }
       })
       .then(response => {
-        listDataResponse = response.data.moviebackground;
+        listDataResponse = this.props.tvdbId
+          ? response.data.showbackground
+          : response.data.moviebackground;
       })
       .catch(error => {
         console.log('error ' + error);
         if (this.state.requestAttempt < 4) {
-          this.getMoviesHandler();
+          this.getImagesHandler();
           this.setState({ requestAttempt: this.state.requestAttempt + 1 });
         }
       });

@@ -24,11 +24,13 @@ class Images extends Component {
         <div className={classes.Images}>
           <BgImages
             imdbId={this.props.imdbId}
+            tvdbId={this.props.tvdbId}
             imgClick={this.props.imgClick}
             heading="Desktop"
           />
           <PosterImages
             imdbId={this.props.imdbId}
+            tvdbId={this.props.tvdbId}
             imgClick={this.props.imgClick}
             heading="Phone / Tablet"
           />

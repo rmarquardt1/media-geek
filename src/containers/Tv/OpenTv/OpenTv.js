@@ -5,21 +5,30 @@ import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import axios from 'axios';
 import VideoList from '../../List/VideoList/VideoList';
 import ActorList from '../../List/ActorList/ActorList';
-
 import SeasonList from '../../List/SeasonList/SeasonList';
-
-
 import Review from '../../Review/Review';
 import VideoModal from '../../../components/UI/VideoModal/VideoModal';
-import TvSeasons from '../TvSeasons/TvSeasons';
+import FullSizeImage from '../../../components/FullSizeImage/FullSizeImage';
+
+import Images from '../../Images/Images';
+
+// import TvSeasons from '../TvSeasons/TvSeasons';
 import Scores from '../../Scores/Scores';
 import TvStats from '../../../components/Tv/TvStats/TvStats';
 import Loader from '../../../components/UI/Loader/Loader';
 import { configureAnchors } from 'react-scrollable-anchor';
 import NavSearch from '../../Search/NavSearch/NavSearch';
+import AddEvent from '../../Calendar/AddEvent/AddEvent';
+import EventDetails from '../../../components/Calendar/EventDetails/EventDetails';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faStar, faSearch } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHeart,
+  faStar,
+  faSearch,
+  faCalendarPlus,
+  faCalendarAlt
+} from '@fortawesome/free-solid-svg-icons';
 import classes from './OpenTv.module.css';
 import uiClasses from '../../../components/UI/Layout/Layout.module.css';
 
@@ -39,12 +48,21 @@ class OpenTv extends Component {
     watchlist: false,
     showSearch: false,
     imdbId: null,
+    fullSizeImgUrl: null,
+    fullSizeImgArr: null,
+    fullSizeImgId: null,
+    fullSizeFadeOut: false,
+    fullSizeFadeIn: false,
     loading: false,
     imdbScore: null,
     rtScore: null,
     mcScore: null,
     tvInfo: null,
-    tvId: null
+    tvId: null,
+    showAddEvent: false,
+    showEventDetails: false,
+    eventDetails: null,
+    onCalendar: false
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -57,6 +75,7 @@ class OpenTv extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     this.getTvHandler();
+    this.checkEventsHandler();
     if (localStorage.getItem('userData')) {
       const userData = JSON.parse(localStorage.getItem('userData'));
       const favorited = userData.favTv
@@ -83,11 +102,11 @@ class OpenTv extends Component {
       .get(url, {
         params: {
           api_key: '4c7294000365c14a8e42109c863ff772',
-          append_to_response: 'credits,videos,reviews,release_dates'
+          append_to_response:
+            'credits,videos,reviews,release_dates,external_ids'
         }
       })
       .then(response => {
-        console.log(response.data);
         const firstAir = new Date(response.data.first_air_date);
         const lastAir = new Date(response.data.last_air_date);
         const airSpan =
@@ -239,8 +258,106 @@ class OpenTv extends Component {
       });
   };
 
-  showSearchHandler = () => {
-    this.setState({ showSearch: !this.state.showSearch });
+  // showSearchHandler = () => {
+  //   this.setState({ showSearch: !this.state.showSearch });
+  // };
+
+  imageClickHandler = (url, imgArr, imgId) => {
+    this.setState({
+      fullSizeImgUrl: url,
+      fullSizeImgArr: imgArr,
+      fullSizeImgId: imgId
+    });
+  };
+
+  imageNavHandler = direction => {
+    this.setState({ fullSizeFadeOut: true });
+    setTimeout(() => {
+      this.setState({ fullSizeImgUrl: null });
+      const imgArr = this.state.fullSizeImgArr;
+      let x = null;
+      switch (direction) {
+        case 'next':
+          x = 1;
+          break;
+        case 'prev':
+          x = -1;
+          break;
+        default:
+          x = null;
+          break;
+      }
+      let newPos =
+        imgArr.findIndex(el => {
+          return el.id === this.state.fullSizeImgId;
+        }) + x;
+      newPos =
+        newPos < 0
+          ? imgArr.length - 1
+          : newPos > imgArr.length - 1
+          ? 0
+          : newPos;
+      const newUrl = imgArr[newPos].url;
+      const newId = imgArr[newPos].id;
+      this.setState({
+        fullSizeImgUrl: newUrl,
+        fullSizeImgId: newId,
+        fullSizeFadeIn: true,
+        fullSizeFadeOut: false
+      });
+    }, 300);
+  };
+
+  imageCloseHandler = () => {
+    this.setState({ fullSizeImgUrl: null, fullSizeImgId: null });
+  };
+
+  addEventClickHandler = () => {
+    this.setState({ showAddEvent: !this.state.showAddEvent });
+  };
+
+  showEventDetailsHandler = () => {
+    this.setState({ showEventDetails: true });
+  };
+
+  closeEventDetailsHandler = () => {
+    setTimeout(() => {
+      this.setState({ showEventDetails: false });
+    }, 300);
+  };
+
+  checkEventsHandler = () => {
+    axios
+      .get(
+        'https://mediageek-650c6.firebaseio.com/users/' +
+          localStorage.getItem('userId') +
+          '/events.json'
+      )
+      .then(response => {
+        Object.keys(response.data).map(key => {
+          if (response.data[key].mediaId === this.props.match.params.id) {
+            const evDetails = {
+              id: key,
+              title: response.data[key].title,
+              desc: response.data[key].desc,
+              start: new Date(response.data[key].start),
+              end: new Date(response.data[key].end),
+              mediaId: response.data[key].mediaId,
+              poster: response.data[key].poster
+            };
+            this.setState({ eventDetails: evDetails, onCalendar: true });
+          } else {
+            this.setState({
+              eventDetails: null,
+              onCalendar: false,
+              showEventDetails: false
+            });
+          }
+        });
+      })
+      .catch(error => {
+        console.log('error ' + error);
+      });
   };
 
   render() {
@@ -260,6 +377,15 @@ class OpenTv extends Component {
     }
     return (
       <Aux>
+        {this.state.fullSizeImgUrl ? (
+          <FullSizeImage
+            url={this.state.fullSizeImgUrl}
+            navClick={this.imageNavHandler}
+            closeClick={this.imageCloseHandler}
+            fadeOut={this.state.fullSizeFadeOut}
+            fadeIn={this.state.fullSizeFadeIn}
+          />
+        ) : null}
         {this.state.tvInfo ? (
           <Aux>
             {this.state.playVideo ? (
@@ -283,12 +409,40 @@ class OpenTv extends Component {
                 />
                 <div className={classes.OpenTvOverlay} />
                 <div className={classes.OpenTvContent}>
+                  {this.state.showEventDetails ? (
+                    <EventDetails
+                      title={this.state.eventDetails.title}
+                      description={this.state.eventDetails.desc}
+                      startDate={this.state.eventDetails.start}
+                      close={this.closeEventDetailsHandler}
+                      poster={this.state.eventDetails.poster}
+                      id={this.state.eventDetails.id}
+                      reloadCalendar={this.checkEventsHandler}
+                      mediaId={this.state.eventDetails.mediaId}
+                    />
+                  ) : null}
+
+                  {this.state.showAddEvent ? (
+                    <AddEvent
+                      close={this.addEventClickHandler}
+                      title={this.state.tvInfo.name}
+                      description={this.state.tvInfo.overview}
+                      mediaId={this.props.match.params.id}
+                      poster={
+                        'http://image.tmdb.org/t/p/w500/' +
+                        this.state.tvInfo.poster_path
+                      }
+                      reloadCalendar={this.checkEventsHandler}
+                    />
+                  ) : null}
+
                   <div
-                    className={
-                      this.state.showSearch
-                        ? classes.OpenTvInfo + ' ' + classes.ShowSearch
-                        : classes.OpenTvInfo
-                    }
+                    // className={
+                    //   this.state.showSearch
+                    //     ? classes.OpenTvInfo + ' ' + classes.ShowSearch
+                    //     : classes.OpenTvInfo
+                    // }
+                    className={classes.OpenTvInfo}
                   >
                     <div
                       className={
@@ -302,8 +456,8 @@ class OpenTv extends Component {
                       <NavSearch
                         searchType="tv"
                         placeholder="Search Television"
-                      />
-                    </div>
+                      /> 
+                    </div>  
                     <div className={classes.MobileDescription}>
                       {this.state.tvInfo.poster_path ? (
                         <div className={classes.OpenTvPoster}>
@@ -324,6 +478,23 @@ class OpenTv extends Component {
                         {this.props.isAuth ? (
                           <Aux>
                             <FontAwesomeIcon
+                              icon={
+                                this.state.onCalendar
+                                  ? faCalendarAlt
+                                  : faCalendarPlus
+                              }
+                              className={
+                                this.state.onCalendar
+                                  ? classes.CalendarSelectedIcon
+                                  : classes.CalendarIcon
+                              }
+                              onClick={
+                                this.state.onCalendar
+                                  ? this.showEventDetailsHandler
+                                  : this.addEventClickHandler
+                              }
+                            />
+                            <FontAwesomeIcon
                               icon={faHeart}
                               className={
                                 this.state.favorite
@@ -343,7 +514,7 @@ class OpenTv extends Component {
                             />
                           </Aux>
                         ) : null}
-                        <FontAwesomeIcon
+                        {/* <FontAwesomeIcon
                           icon={faSearch}
                           className={
                             this.state.showSearch
@@ -352,7 +523,7 @@ class OpenTv extends Component {
                           }
                           style={!this.props.isAuth ? { right: '30px' } : null}
                           onClick={this.showSearchHandler}
-                        />
+                        /> */}
 
                         <div className={classes.OpenTvMobile}>
                           {this.state.tvInfo.poster_path ? (
@@ -421,7 +592,6 @@ class OpenTv extends Component {
                         genres={this.state.genres}
                       />
                     </div>
-
                     {this.state.actorResults.length > 0 ? (
                       <ActorList
                         movieId={this.state.movieId}
@@ -438,8 +608,6 @@ class OpenTv extends Component {
                       />
                     ) : null}
 
-
-
                     {this.state.seasonResults.length > 0 ? (
                       <SeasonList
                         seasons={this.state.seasonResults}
@@ -448,21 +616,10 @@ class OpenTv extends Component {
                         tvBackdrop={this.state.tvInfo.backdrop_path}
                       />
                     ) : null}
-
-
-
-                    {/* {this.state.seasonResults.length > 0 ? (
-                      <TvSeasons
-                        seasons={this.state.seasonResults}
-                        tvId={this.state.tvId}
-                        tvPoster={this.state.tvInfo.poster_path}
-                      />
-                    ) : null} */}
-
-
-
-
-
+                    <Images
+                      tvdbId={this.state.tvInfo.external_ids.tvdb_id}
+                      imgClick={this.imageClickHandler}
+                    />
                     {this.state.reviewResults.length > 0 ? (
                       <Aux>
                         <div className={uiClasses.SectionHeader}>

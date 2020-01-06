@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import BigCalendar from 'react-big-calendar/lib';
 import moment from 'moment';
-import SideBar from '../UI/SideBar/SideBar';
 import AddEvent from './AddEvent/AddEvent';
 import EventDetails from '../../components/Calendar/EventDetails/EventDetails';
 import AllEvents from '../../components/Calendar/AllEvents/AllEvents';
@@ -17,13 +16,10 @@ import classes from './Calendar.module.css';
 moment.locale('en');
 BigCalendar.momentLocalizer(moment);
 
-// const allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]);
-
-const allViews = ['month', 'week', 'day'];
-
 class Calendar extends Component {
   state = {
     view: 'month',
+    views: ['month', 'week', 'day'],
     date: new Date(),
     events: [],
     showAddEvent: false,
@@ -45,43 +41,24 @@ class Calendar extends Component {
 
   componentDidMount() {
     this.loadEventsHandler();
-
+    window.addEventListener('resize', this.changeViewHandlerButtonHandler);
     if (window.innerWidth <= 500) {
-      this.setState({ showAllEvents: true });
+      this.setState({ showAllEvents: true, views: ['month', 'day'] });
     }
-
-    //console.log(document.getElementsByTagName('span'));
-
-    // console.log(document.getElementsByClassName('rbc-toolbar-label'));
   }
 
   componentWillUnmount() {
     clearTimeout(this.closeDetailsTimeout);
   }
 
-  // addEventHandler = async () => {
-  //   await axios
-  //     .post(
-  //       // "https://mediageek-650c6.firebaseio.com/users/pHjVkIvYBoac9lI7UMX10aecb5T2/events.json",
-  //       "https://mediageek-650c6.firebaseio.com/users/" +
-  //         this.state.uid +
-  //         "/events.json",
-  //       {
-  //         title: "Another Test Event",
-  //         start: new Date(2019, 11, 13, 11, 0, 0, 0),
-  //         end: new Date(2019, 11, 13, 12, 0, 0, 0),
-  //         desc: "This is another test event."
-  //       }
-  //     )
-  //     .then(response => {
-  //       console.log(response);
-  //     })
-  //     .catch(error => {
-  //       console.log("error " + error);
-  //     });
-
-  //   this.loadEventsHandler();
-  // };
+  changeViewHandlerButtonHandler = () => {
+    const w = window.innerWidth;
+    if (w <= 500) {
+      this.setState({ views: ['month', 'day'], view: 'month' });
+    } else {
+      this.setState({ views: ['month', 'week', 'day'] });
+    }
+  };
 
   loadEventsHandler = () => {
     let eventArr = [];
@@ -156,31 +133,38 @@ class Calendar extends Component {
   };
 
   showAllEventsHandler = () => {
-    this.setState({showAllEvents: !this.state.showAllEvents})
-  }
+    this.setState({ showAllEvents: !this.state.showAllEvents });
+  };
 
-  // addEventHandler = async () => {
-  //   await axios
-  //     .post(
-  //       "https://mediageek-650c6.firebaseio.com/users/" +
-  //         this.state.uid +
-  //         "/events.json",
-  //       {
-  //         title: "Another Test Event",
-  //         start: new Date(2019, 11, 13, 11, 0, 0, 0),
-  //         end: new Date(2019, 11, 13, 12, 0, 0, 0),
-  //         desc: "This is another test event."
-  //       }
-  //     )
-  //     .then(response => {
-  //       console.log(response);
-  //     })
-  //     .catch(error => {
-  //       console.log("error " + error);
-  //     });
+  changeViewHandler = view => {
+    this.setState({ view: view });
+    this.formatViewHandler();
+  };
 
-  //   this.loadEventsHandler();
-  // };
+  formatViewHandler = () => {
+    setTimeout(() => {
+      let day = [];
+      const dayEvents = document.getElementsByClassName('rbc-event');
+      for (let i = 0; i < dayEvents.length; i++) {
+        day.push(dayEvents[i]);
+      }
+      function compare(a, b) {
+        const posA = a.offsetLeft;
+        const posB = b.offsetLeft;
+        let comparison = 0;
+        if (posA > posB) {
+          comparison = 1;
+        } else if (posA < posB) {
+          comparison = -1;
+        }
+        return comparison;
+      }
+      day.sort(compare);
+      for (let i = 0; i < day.length; i++) {
+        day[i].style.zIndex = i + 1;
+      }
+    }, 0);
+  };
 
   render() {
     return (
@@ -188,17 +172,33 @@ class Calendar extends Component {
         {/* <SideBar isAuth={this.props.isAuth} /> */}
 
         <div className={classes.CalendarContainer}>
+          <div className={uiClasses.SectionHeader + ' ' + uiClasses.PageHeader}>
+            <div className={uiClasses.PageTitle}>
+              <FontAwesomeIcon
+                icon={faCalendarAlt}
+                className={classes.CalendarIcon}
+              />
+              <h2 style={{ left: '46px' }}>
+                {this.state.events && this.state.showAllEvents
+                  ? 'Upcoming Events'
+                  : 'Calendar'}
+              </h2>
+            </div>
+          </div>
+
+          <div className={classes.CalendarFooter}>
+            <div
+              className={classes.ViewUpcomingEvents}
+              onClick={this.showAllEventsHandler}
+            >
+              {this.state.events && this.state.showAllEvents
+                ? 'Calendar'
+                : 'Upcoming Events'}
+            </div>
+          </div>
+
           {this.state.events && this.state.showAllEvents ? (
             <React.Fragment>
-              <div
-                className={uiClasses.SectionHeader + ' ' + uiClasses.PageHeader}
-              >
-                <div className={uiClasses.PageTitle}>
-                  <FontAwesomeIcon icon={faCalendarAlt} />
-                  <h2 style={{ left: '46px' }}>Movies</h2>
-                </div>
-              </div>
-
               <AllEvents
                 events={this.state.events}
                 showDetails={this.showEventDetailsHandler}
@@ -206,35 +206,27 @@ class Calendar extends Component {
             </React.Fragment>
           ) : null}
           {this.state.showEventDetails ? (
-            <EventDetails
-              title={this.state.eventTitle}
-              description={this.state.eventDescription}
-              startDate={this.state.eventStartDate}
-              close={this.closeEventDetailsHandler}
-              poster={this.state.eventPoster}
-              id={this.state.eventId}
-              reloadCalendar={this.loadEventsHandler}
-              mediaId={this.state.eventMediaId}
-            />
+            <React.Fragment>
+              <EventDetails
+                title={this.state.eventTitle}
+                description={this.state.eventDescription}
+                startDate={this.state.eventStartDate}
+                close={this.closeEventDetailsHandler}
+                poster={this.state.eventPoster}
+                id={this.state.eventId}
+                reloadCalendar={this.loadEventsHandler}
+                mediaId={this.state.eventMediaId}
+              />
+            </React.Fragment>
           ) : null}
 
           {this.state.showAddEvent ? (
-            // <div className={classes.CalendarOverlay}>
             <AddEvent
               eventDate={this.state.eventDate}
               close={this.closeAddEventHandler}
               reloadCalendar={this.loadEventsHandler}
             />
-          ) : // </div>
-          null}
-
-          {/* <button onClick={this.addEventHandler}>Add Event</button> */}
-
-          {/* <button onClick={() => this.setState({ view: "day" })}>Day</button>
-          <button onClick={() => this.setState({ view: "month" })}>
-            Month
-          </button> */}
-
+          ) : null}
           {this.props.isAuth ? (
             this.state.events && !this.state.showAllEvents ? (
               <React.Fragment>
@@ -243,19 +235,17 @@ class Calendar extends Component {
                   popup={true}
                   events={this.state.events}
                   step={60}
-                  views={allViews}
+                  view={this.state.view}
+                  views={this.state.views}
                   defaultDate={moment().toDate()}
                   onSelectEvent={event => {
                     this.showEventDetailsHandler(event);
                   }}
                   onSelectSlot={slot => this.showAddEventHandler(slot.start)}
+                  longPressThreshhold={1}
+                  onView={view => this.changeViewHandler(view)}
+                  onNavigate={this.formatViewHandler}
                 />
-
-                <div className={classes.CalendarFooter}>
-                  <div className={classes.ViewUpcomingEvents} onClick={this.showAllEventsHandler}>
-                    Upcoming Events
-                  </div>
-                </div>
               </React.Fragment>
             ) : null
           ) : (

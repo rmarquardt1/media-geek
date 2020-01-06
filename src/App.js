@@ -23,6 +23,7 @@ import Home from './components/Home/Home';
 import Logout from './containers/Auth/Logout/Logout';
 import * as actions from './store/actions/auth';
 import UserRegistration from './containers/UserRegistration/UserRegistration';
+import Account from './containers/Account/Account';
 
 ReactGA.initialize('UA-147154395-1');
 ReactGA.pageview(window.location.pathname + window.location.search);
@@ -139,6 +140,13 @@ class App extends Component {
           exact
           render={props => (
             <UserRegistration {...props} isAuth={this.props.isAuthenticated} />
+          )}
+        />
+        <Route
+          path="/Account"
+          exact
+          render={props => (
+            <Account {...props} isAuth={this.props.isAuthenticated} />
           )}
         />
         <Route path="/logout" exact component={Logout} />

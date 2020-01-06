@@ -25,17 +25,12 @@ const EventDetails = props => {
     }
   });
 
-  console.log(props);
-
   const closeWindow = () => {
     if (eventDetailsRef.current) {
       eventDetailsRef.current.classList.add(classes.EventDetailsFadeOut);
     }
-    //if (props.close) {
-      props.close();
-    //}
-    
-  }
+    props.close();
+  };
 
   const formatAMPM = date => {
     let hours = date.getHours();
@@ -87,27 +82,32 @@ const EventDetails = props => {
   };
 
   return (
-    <div className={classes.EventDetailsContainer} id="eventDetailsContainer" ref={eventDetailsRef}>
+    <div
+      className={classes.EventDetailsContainer}
+      id="eventDetailsContainer"
+      ref={eventDetailsRef}
+      style={props.style ? props.style : null}
+    >
       <div className={classes.EventDetails}>
         {props.poster ? (
           <NavLink
-          style={{ color: '#fff', textDecoration: 'none', height: '100%' }}
-          to={'/Movies/' + props.mediaId}
-        >
-          <div className={classes.PosterContainer}>
-          <img className={classes.PosterImage} src={props.poster} alt="" />
-          </div>
-         </NavLink>
+            style={{ color: '#fff', textDecoration: 'none', height: '100%' }}
+            to={'/Movies/' + props.mediaId}
+          >
+            <div className={classes.PosterContainer}>
+              <img className={classes.PosterImage} src={props.poster} alt="" />
+            </div>
+          </NavLink>
         ) : null}
 
         <div className={classes.EventInfo}>
           {!removeEvent ? <h1>{title}</h1> : null}
-          {!editEvent && !removeEvent
-          ? <React.Fragment>
-          <h3>{getEventDateTime(startDate)}</h3>
-          <p>{description}</p>
-          </React.Fragment>
-          : null}
+          {!editEvent && !removeEvent ? (
+            <React.Fragment>
+              <h3>{getEventDateTime(startDate)}</h3>
+              <p>{description}</p>
+            </React.Fragment>
+          ) : null}
           {editEvent ? (
             <EditEvent
               eventDate={startDate}
@@ -118,8 +118,7 @@ const EventDetails = props => {
               reloadCalendar={props.reloadCalendar}
               update={eventOnUpdate}
             />
-          ) 
-          : removeEvent ? (
+          ) : removeEvent ? (
             <RemoveEvent
               eventDate={getEventDateTime(startDate)}
               title={title}
@@ -130,7 +129,7 @@ const EventDetails = props => {
               reloadCalendar={props.reloadCalendar}
               update={eventOnUpdate}
             />
-          ): (
+          ) : (
             <div className={classes.EditDelete}>
               <div className={classes.Edit} onClick={() => showEditEvent(true)}>
                 <span>Edit</span>
@@ -139,7 +138,10 @@ const EventDetails = props => {
                   className={classes.PencilIcon}
                 />
               </div>
-              <div className={classes.Remove} onClick={() => showRemoveEvent(true)} >
+              <div
+                className={classes.Remove}
+                onClick={() => showRemoveEvent(true)}
+              >
                 <span>Remove</span>
                 <FontAwesomeIcon
                   icon={faCalendarTimes}

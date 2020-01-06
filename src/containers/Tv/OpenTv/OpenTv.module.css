@@ -39,7 +39,7 @@
   font-size: 18px;
 }
 .OpenTvPoster {
-  margin-right:50px;
+  margin-right: 50px;
 }
 .OpenTvPoster .PosterImage {
   width: 200px;
@@ -59,9 +59,8 @@
   font-size: 26px;
   display: flex;
   flex-direction: column;
-  /* margin-left: 50px; */
   position: relative;
-  width:100%;
+  width: 100%;
 }
 .GenRelMobile {
   display: none;
@@ -134,7 +133,7 @@
 .FavoriteIcon {
   position: absolute;
   top: 30px;
-  right: 90px;
+  right: 150px;
   font-size: 32px;
   color: #ccc;
   cursor: pointer;
@@ -147,7 +146,7 @@
 .FavoritedIcon {
   position: absolute;
   top: 30px;
-  right: 90px;
+  right: 150px;
   font-size: 32px;
   color: #ff1a66;
   cursor: pointer;
@@ -155,7 +154,7 @@
 .WatchlistIcon {
   position: absolute;
   top: 30px;
-  right: 30px;
+  right: 90px;
   font-size: 32px;
   color: #ccc;
   cursor: pointer;
@@ -168,7 +167,7 @@
 .WatchlistSelectedIcon {
   position: absolute;
   top: 30px;
-  right: 30px;
+  right: 90px;
   font-size: 32px;
   color: #ffcc00;
   cursor: pointer;
@@ -176,7 +175,7 @@
 .SearchIcon {
   position: absolute;
   top: 30px;
-  right: 150px;
+  right: 210px;
   font-size: 32px;
   color: #ccc;
   cursor: pointer;
@@ -189,11 +188,31 @@
 .SearchIconSelected {
   position: absolute;
   top: 30px;
-  right: 150px;
+  right: 210px;
   font-size: 32px;
   color: #1a8cff;
   cursor: pointer;
   transition: color 0.3s;
+}
+.CalendarIcon {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  font-size: 32px;
+  color: #ccc;
+  cursor: pointer;
+}
+.CalendarIcon:hover {
+  color: #fd7e14;
+  transition: color 0.3s;
+}
+.CalendarSelectedIcon {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  font-size: 32px;
+  color: #fd7e14;
+  cursor: pointer;
 }
 .NavRight {
   float: right;
@@ -262,7 +281,7 @@
     padding: 0 25px;
   }
   .SearchIcon {
-    display:none;
+    display: none;
   }
 }
 @media (max-width: 768px) {
@@ -278,12 +297,6 @@
     right: 30px;
     font-size: 26px;
   }
-  /* .SearchIcon,
-  .SearchIconSelected {
-    top: 5px;
-    right: 130px;
-    font-size: 26px;
-  } */
   .Seasons {
     margin: 30px 10px 10px 10px;
   }

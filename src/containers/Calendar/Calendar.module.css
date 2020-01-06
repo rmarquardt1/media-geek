@@ -4,6 +4,89 @@
   margin-top: 60px;
   position: relative;
   height: 85vh;
+}
+.CalendarOverlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.CalendarFooter {
+  width: 100%;
+  /* margin: 10px auto auto auto; */
+  /* position: relative; */
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ViewUpcomingEvents {
+  color: #e6e6e6;
+  position: absolute;
+  display: inline-block;
+  right: 10px;
+  top: 10px;
+  z-index: 2;
+  padding: 7px 15px;
+  background: #1a8cff;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.15s background;
+}
+.ViewUpcomingEvents:hover {
+  background: #0059b3;
+  transition: 0.15s background;
+}
+.CalendarIcon {
+  margin-left: 10px;
+  margin-top: 2px;
+  font-size: 20px;
+}
+
+@media (max-width: 1366px) {
+  .CalendarContainer {
+    margin-left: 300px;
+    margin-right: 50px;
+  }
+}
+
+@media (max-width: 1090px) {
+  .CalendarContainer {
+    margin-left: 50px;
+    margin-top: 70px;
+    /* height:85vh; */
+  }
+}
+@media (max-width: 500px) {
+  .CalendarContainer {
+    /* margin-left: 20px;
+    margin-right: 20px; */
+    margin: 60px 0 0 0;
+  }
+  .ViewUpcomingEvents {
+    top: 5px;
+  }
+  /* .CalendarFooter {
+    position: static;
+  } */
+}
+
+
+
+
+
+
+/* .CalendarContainer {
+  margin-left: 350px;
+  margin-right: 100px;
+  margin-top: 60px;
+  position: relative;
+  height: 85vh;
   display: flex;
   flex-direction: column;
 }
@@ -55,7 +138,6 @@
   .CalendarContainer {
     margin-left: 50px;
     margin-top: 70px;
-    /* height:85vh; */
   }
 }
 @media (max-width: 500px) {
@@ -63,4 +145,4 @@
     margin-left: 20px;
     margin-right: 20px;
   }
-}
+} */
