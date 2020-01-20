@@ -1,14 +1,16 @@
-import * as actionTypes from '../store/actions/actionTypes';
-import { updateObject } from '../store/utility';
+import * as actionTypes from "../store/actions/actionTypes";
+import { updateObject } from "../store/utility";
 
 const initialState = {
   token: null,
   userId: null,
   displayName: null,
+  profilePic: null,
+  email: null,
+  userData: null,
   error: null,
   loading: false,
   createAccount: false,
-  userData: false,
   playVideo: false,
   playVideoUrl: null,
   videoResults: null,
@@ -19,7 +21,8 @@ const initialState = {
   videoCurrentPage: 1,
   videoShowAll: false,
   showSidebar: false,
-  showSearchSidebar: false
+  showSearchSidebar: false,
+  showExtendedMenu: false
 };
 
 const authStart = (state, action) => {
@@ -59,7 +62,17 @@ const reducer = (state = initialState, action) => {
     case actionTypes.STORE_DISPLAYNAME:
       return {
         ...state,
-        displayName: action.display
+        displayName: action.displayName
+      };
+    case actionTypes.STORE_PROFILEPIC:
+      return {
+        ...state,
+        profilePic: action.profilePicUrl
+      };
+    case actionTypes.STORE_EMAIL:
+      return {
+        ...state,
+        email: action.email
       };
     case actionTypes.STORE_TOKEN:
       return {
@@ -72,9 +85,10 @@ const reducer = (state = initialState, action) => {
         userId: action.userId
       };
     case actionTypes.STORE_USERDATA:
-      return updateObject(state, {
-        userData: action.loaded
-      });
+      return {
+        ...state,
+        userData: action.userData
+      };
     case actionTypes.CLEAR_AUTH_FAIL:
       return {
         ...state,
@@ -90,6 +104,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         showSidebar: action.show
+      };
+    case actionTypes.SHOW_EXTENDEDMENU:
+      return {
+        ...state,
+        showExtendedMenu: action.show
       };
     default:
       return state;

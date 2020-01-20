@@ -1,19 +1,20 @@
-import React, { Component } from 'react';
-import Movie from '../Movies/Movie/Movie';
-import TvSeries from '../Tv/TvSeries/TvSeries';
-import listUrl from '../../references/listUrl';
-import listAxiosParams from '../../references/listAxiosParams';
-import { NavLink } from 'react-router-dom';
-import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import Movie from "../Movies/Movie/Movie";
+import TvSeries from "../Tv/TvSeries/TvSeries";
+import listUrl from "../../references/listUrl";
+import listAxiosParams from "../../references/listAxiosParams";
+import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
   faChevronDown,
   faChevronUp
-} from '@fortawesome/free-solid-svg-icons';
-import uiClasses from '../../components/UI/Layout/Layout.module.css';
-import classes from './List.module.css';
+} from "@fortawesome/free-solid-svg-icons";
+import uiClasses from "../../components/UI/Layout/Layout.module.css";
+import classes from "./List.module.css";
 
 class List extends Component {
   axiosCancel = axios.CancelToken.source();
@@ -52,17 +53,17 @@ class List extends Component {
   }
 
   componentDidMount() {
+    // console.log(JSON.parse(this.props.userData));
     this.setState({
       containerWidth: this.containerWidthRef.current.clientWidth
     });
-    window.addEventListener('resize', this.resizeHandler);
+    window.addEventListener("resize", this.resizeHandler);
     this.getListHandler();
-    
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeHandler);
-    this.axiosCancel.cancel('axios list request cancelled');
+    window.removeEventListener("resize", this.resizeHandler);
+    this.axiosCancel.cancel("axios list request cancelled");
     if (this.tryAgainTimer) {
       clearTimeout(this.tryAgainTimer);
     }
@@ -94,7 +95,7 @@ class List extends Component {
           // } else {
           //   console.log('error: ' + error);
           // }
-          console.log('error: ' + error);
+          console.log("error: " + error);
         });
     }
     if (page[1] && page[2] && page[3]) {
@@ -104,7 +105,7 @@ class List extends Component {
     } else if (page[1]) {
       this.setState({ listData: [...page[1]] });
     }
-    if (typeof page[1] !== 'undefined') {
+    if (typeof page[1] !== "undefined") {
       if (page[1].length === 0) {
         this.setState({ noResults: true });
       }
@@ -123,31 +124,31 @@ class List extends Component {
     const movieDimensions =
       windowW <= 500
         ? {
-            width: '90px',
+            width: "90px",
             lazyW: 90,
-            height: '135px',
-            movieHeight: '160px',
-            fontSize: '12px'
+            height: "135px",
+            movieHeight: "160px",
+            fontSize: "12px"
           }
         : {
-            width: '195px',
+            width: "195px",
             lazyW: 195,
-            height: '293px',
+            height: "293px",
             // movieHeight: '350px',
-            fontSize: '14px'
+            fontSize: "14px"
           };
 
     const releases = this.state.listData
       ? this.state.listData.map((result, index) => {
-          if (this.props.mediaType === 'movies') {
+          if (this.props.mediaType === "movies") {
             return (
               <NavLink
-                style={{ color: '#fff', textDecoration: 'none' }}
-                to={'/Movies/' + result.id}
+                style={{ color: "#fff", textDecoration: "none" }}
+                to={"/Movies/" + result.id}
                 key={index}
               >
                 <Movie
-                  marg={marg + 'px'}
+                  marg={marg + "px"}
                   lazyWidth={marg * 2 + movieDimensions.lazyW}
                   id={result.id}
                   poster={result.poster_path}
@@ -158,15 +159,15 @@ class List extends Component {
               </NavLink>
             );
           }
-          if (this.props.mediaType === 'tv' && result.poster_path) {
+          if (this.props.mediaType === "tv" && result.poster_path) {
             return (
               <NavLink
-                style={{ color: '#fff', textDecoration: 'none' }}
-                to={'/Tv/' + result.id}
+                style={{ color: "#fff", textDecoration: "none" }}
+                to={"/Tv/" + result.id}
                 key={index}
               >
                 <TvSeries
-                  marg={marg + 'px'}
+                  marg={marg + "px"}
                   lazyWidth={marg * 2 + movieDimensions.lazyW}
                   id={result.id}
                   backdrop={result.backdrop_path}
@@ -215,7 +216,7 @@ class List extends Component {
       //     ? elPos * (thumbW - 20 + marg * 2)
       //     : this.state.currentElPosition * (thumbW - 20 + marg * 2);
       const move =
-        typeof elPos === 'number'
+        typeof elPos === "number"
           ? elPos * (thumbW + marg * 2)
           : this.state.currentElPosition * (thumbW + marg * 2);
 
@@ -227,7 +228,7 @@ class List extends Component {
       this.containerWidthRef.current.scrollTo({
         left: move,
         top: 0,
-        behavior: 'smooth'
+        behavior: "smooth"
       });
     }
   };
@@ -241,7 +242,7 @@ class List extends Component {
     const currentElPos = { ...this.state }.currentElPosition;
 
     switch (direction) {
-      case 'right':
+      case "right":
         this.setState({
           moveRight: containerW + { ...this.state }.containerWidth,
           containerWidth: containerW + { ...this.state }.containerWidth,
@@ -251,7 +252,7 @@ class List extends Component {
         });
         this.resizeHandler(currentElPos + actElCount, false);
         break;
-      case 'left':
+      case "left":
         this.setState({
           moveRight: containerW - { ...this.state }.containerWidth,
           containerWidth: containerW - { ...this.state }.containerWidth,
@@ -285,36 +286,36 @@ class List extends Component {
     return (
       <div className={classes.List}>
         <div
-          style={{ display: 'flex', alignItems: 'center', marginLeft: '5px' }}
+          style={{ display: "flex", alignItems: "center", marginLeft: "5px" }}
         >
           <div className={classes.Bar} />
           {this.state.currentElPosition > 0 ? (
             <div
               className={classes.NavLeft}
-              onClick={() => this.navHandler('left')}
+              onClick={() => this.navHandler("left")}
             >
               <FontAwesomeIcon icon={faChevronLeft} />
             </div>
           ) : null}
 
-          {this.props.listType === 'netflix' ? (
+          {this.props.listType === "netflix" ? (
             <React.Fragment>
-              <div className={classes.NetworkLogo + ' ' + classes.Netflix} />
+              <div className={classes.NetworkLogo + " " + classes.Netflix} />
               <h2 style={{ marginLeft: 0 }}>{this.props.heading}</h2>
             </React.Fragment>
-          ) : this.props.listType === 'amazon' ? (
+          ) : this.props.listType === "amazon" ? (
             <React.Fragment>
-              <div className={classes.NetworkLogo + ' ' + classes.Amazon} />
+              <div className={classes.NetworkLogo + " " + classes.Amazon} />
               <h2 style={{ marginLeft: 0 }}>{this.props.heading}</h2>
             </React.Fragment>
-          ) : this.props.listType === 'hulu' ? (
+          ) : this.props.listType === "hulu" ? (
             <React.Fragment>
-              <div className={classes.NetworkLogo + ' ' + classes.Hulu} />
+              <div className={classes.NetworkLogo + " " + classes.Hulu} />
               <h2 style={{ marginLeft: 0 }}>{this.props.heading}</h2>
             </React.Fragment>
-          ) : this.props.listType === 'disneyPlus' ? (
+          ) : this.props.listType === "disneyPlus" ? (
             <React.Fragment>
-              <div className={classes.NetworkLogo + ' ' + classes.DisneyPlus} />
+              <div className={classes.NetworkLogo + " " + classes.DisneyPlus} />
               <h2 style={{ marginLeft: 0 }}>{this.props.heading}</h2>
             </React.Fragment>
           ) : (
@@ -328,14 +329,14 @@ class List extends Component {
                   icon={this.state.showAll ? faChevronUp : faChevronDown}
                   className={classes.ShowChevronDown}
                 />
-                {this.state.showAll ? 'Show Less' : 'Show All'}
+                {this.state.showAll ? "Show Less" : "Show All"}
               </div>
             ) : null}
             {this.state.showNavRight && !this.state.showAll ? (
               <FontAwesomeIcon
                 icon={faChevronRight}
                 className={classes.chevronArrow}
-                onClick={() => this.navHandler('right')}
+                onClick={() => this.navHandler("right")}
               />
             ) : null}
           </div>
@@ -362,4 +363,12 @@ class List extends Component {
   }
 }
 
-export default List;
+// export default List;
+
+const mapStateToProps = state => {
+  return {
+    userData: state.userData
+  };
+};
+
+export default connect(mapStateToProps)(List);

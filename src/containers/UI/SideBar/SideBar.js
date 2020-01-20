@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
-import * as actions from '../../../store/actions/auth';
-import axios from 'axios';
-import Auth from '../../Auth/Auth';
-import Aux from '../../../hoc/Auxiliary/Auxiliary';
-import Favorites from '../../Favorites/Favorites';
-import SearchAll from '../../Search/SearchAll/SearchAll';
-import mgLogo from '../../../assets/images/mg-icon.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import * as actions from "../../../store/actions/auth";
+import axios from "axios";
+import Auth from "../../Auth/Auth";
+import Aux from "../../../hoc/Auxiliary/Auxiliary";
+import Favorites from "../../Favorites/Favorites";
+import SearchAll from "../../Search/SearchAll/SearchAll";
+import mgLogo from "../../../assets/images/mg-icon.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronDown,
   faUserCircle,
@@ -20,10 +20,10 @@ import {
   faHeart,
   faStar,
   faCalendarAlt
-} from '@fortawesome/free-solid-svg-icons';
-import faMixcloud from '../../../assets/images/mixcloud-brands.svg';
-import uiClasses from '../../../components/UI/Layout/Layout.module.css';
-import classes from './SideBar.module.css';
+} from "@fortawesome/free-solid-svg-icons";
+import faMixcloud from "../../../assets/images/mixcloud-brands.svg";
+import uiClasses from "../../../components/UI/Layout/Layout.module.css";
+import classes from "./SideBar.module.css";
 
 class SideBar extends Component {
   state = {
@@ -32,40 +32,52 @@ class SideBar extends Component {
     showFavorites: false,
     showWatchlist: false,
     watchShowLinks: false,
-    favShowLinks: false
+    favShowLinks: false,
+    profilePic: null
   };
 
+  // componentDidUpdate() {
+  //   console.log(this.props);
+  // }
+
   componentDidMount() {
-    document.addEventListener('click', this.hideMenuHandler);
-    if (
-      this.props.isAuth &&
-      localStorage.getItem('userData') &&
-      JSON.parse(localStorage.getItem('userData')).favMovies.length > 0
-    ) {
-      this.getFavoritesHandler();
-    }
+    document.addEventListener("click", this.hideMenuHandler);
+    // if (
+    //   this.props.isAuth &&
+    //   localStorage.getItem("userData") &&
+    //   JSON.parse(localStorage.getItem("userData")).favMovies.length > 0
+    // ) {
+    //   this.getFavoritesHandler();
+    // }
     if (this.props.authError) {
       this.props.clearAuthError();
     }
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this.hideMenuHandler);
+    document.removeEventListener("click", this.hideMenuHandler);
   }
 
   menuHandler = event => {
     if (this.props.authError) {
       this.props.clearAuthError();
     }
-    if (event.target.id === 'signIn') {
+    if (event.target.id === "signIn") {
       this.setState({ showSignIn: !this.state.showSignIn });
     }
   };
 
   hideMenuHandler = event => {
     if (!this.node.contains(event.target)) {
+      this.setState({ favShowLinks: false });
+      this.setState({ watchShowLinks: false });
       this.props.showSidebarHandler(false);
     }
+  };
+
+  hideFavsHandler = () => {
+    this.setState({ favShowLinks: false });
+    this.setState({ watchShowLinks: false });
   };
 
   favoritesMenuHandler = () => {
@@ -105,49 +117,54 @@ class SideBar extends Component {
     this.props.showSearchSidebar(!this.props.showSearch);
   };
 
-  getFavoritesHandler = () => {
-    const userData = JSON.parse(localStorage.getItem('userData'));
-    const favs = userData.favMovies;
-    favs.map(fav => {
-      axios
-        .get('https://api.themoviedb.org/3/movie/' + fav, {
-          params: {
-            api_key: '4c7294000365c14a8e42109c863ff772',
-            language: 'en-US'
-          }
-        })
-        .then(response => {
-          this.setState(prevState => ({
-            userFavorites: [
-              ...prevState.userFavorites,
-              {
-                title: response.data.title,
-                id: response.data.id,
-                poster: response.data.poster_path,
-                release: response.data.release_date
-              }
-            ]
-          }));
-        })
-        .catch(error => {
-          console.log('error ' + error);
-        });
-      return null;
-    });
-  };
+  // getFavoritesHandler = () => {
+  //   // const userData = JSON.parse(localStorage.getItem("userData"));
+
+  //   // const favs = userData.favMovies;
+
+  //   const favs = this.props.userData.favMovies;
+  //   console.log(favs);
+  //   favs.map(fav => {
+  //     axios
+  //       .get("https://api.themoviedb.org/3/movie/" + fav, {
+  //         params: {
+  //           api_key: "4c7294000365c14a8e42109c863ff772",
+  //           language: "en-US"
+  //         }
+  //       })
+  //       .then(response => {
+  //         this.setState(prevState => ({
+  //           userFavorites: [
+  //             ...prevState.userFavorites,
+  //             {
+  //               title: response.data.title,
+  //               id: response.data.id,
+  //               poster: response.data.poster_path,
+  //               release: response.data.release_date
+  //             }
+  //           ]
+  //         }));
+  //       })
+  //       .catch(error => {
+  //         console.log("error " + error);
+  //       });
+  //     return null;
+  //   });
+  // };
 
   render() {
-    const userData = localStorage.getItem('userData')
-      ? JSON.parse(localStorage.getItem('userData'))
-      : null;
-    const displayName = userData ? userData.displayName : null;
+    // const userData = localStorage.getItem("userData")
+    //   ? JSON.parse(localStorage.getItem("userData"))
+    //   : null;
+    // const displayName = userData ? userData.displayName : null;
+    // const displayName = this.props.displayName;
     const sideBarClass = this.props.showSidebar
       ? classes.SideBar +
-        ' ' +
+        " " +
         uiClasses.BoxShadow +
-        ' ' +
+        " " +
         classes.SideBarSlideIn
-      : classes.SideBar + ' ' + uiClasses.BoxShadow;
+      : classes.SideBar + " " + uiClasses.BoxShadow;
     return (
       <div ref={node => (this.node = node)}>
         <FontAwesomeIcon
@@ -158,12 +175,24 @@ class SideBar extends Component {
         <div className={sideBarClass}>
           <ul>
             <NavLink to="/">
-              <li onClick={this.showMenuHandler}>
+              <li onClick={this.showMenuHandler} className={classes.ListLogo}>
                 <div className={classes.LogoContainer}>
-                  <img className={classes.Logo} src={mgLogo} alt="" />
-                  <div className={classes.LogoText}>
-                    <span style={{ fontWeight: '200' }}>media</span>
-                    <span style={{ fontWeight: '600' }}>Geek</span>
+                  {/* <img className={classes.Logo} src={mgLogo} alt="" /> */}
+                  <img
+                    className={classes.Logo}
+                    src="https://github.com/rmarquardt1/media-geek/blob/master/src/assets/images/mg-icon.png?raw=true"
+                    alt=""
+                  />
+                  <div>
+                    <div className={classes.LogoText}>
+                      <span style={{ fontWeight: "200" }}>media</span>
+                      <span style={{ fontWeight: "600" }}>Geek</span>
+                    </div>
+                    {this.props.isAuth ? (
+                      <div className={classes.LogoutLink}>
+                        <NavLink to="/logout">logout</NavLink>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               </li>
@@ -177,7 +206,7 @@ class SideBar extends Component {
                       icon={faChevronDown}
                       className={
                         this.state.showSignIn
-                          ? classes.Arrow + ' ' + classes.ArrowDown
+                          ? classes.Arrow + " " + classes.ArrowDown
                           : classes.Arrow
                       }
                     />
@@ -185,41 +214,83 @@ class SideBar extends Component {
                   <div
                     className={
                       this.state.showSignIn
-                        ? classes.SignIn + ' ' + classes.SignInOpen
+                        ? classes.SignIn + " " + classes.SignInOpen
                         : classes.SignIn
                     }
-                    style={this.props.authError ? { height: '175px' } : null}
+                    style={this.props.authError ? { height: "175px" } : null}
                   >
                     <Auth />
                   </div>
                 </li>
                 <NavLink to="/registration">
-                  <li className={classes.CreateAccount + ' ' + classes.Hover}>
+                  <li className={classes.CreateAccount + " " + classes.Hover}>
                     <div>Create Account</div>
                   </li>
                 </NavLink>
               </Aux>
             ) : (
-              <li className={classes.Account}>
-                <div className={classes.FlexCenter}>
-                  <div className={classes.ListIcon}>
-                    <FontAwesomeIcon
-                      icon={faUserCircle}
-                      className={classes.UserIcon}
-                    />
-                  </div>
-                  <div>
-                    <div style={{ display: 'block' }}>{displayName}</div>
-                    <div className={classes.LogoutLink}>
+              <NavLink to="/Account">
+                <li
+                  className={
+                    // localStorage.getItem("profilePic")
+                    this.props.profilePic ? classes.AccountProfileImage : null
+                  }
+                >
+                  <div
+                    className={classes.FlexCenter}
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      alignItems: "center"
+                    }}
+                  >
+                    {this.props.profilePic ? (
+                      <div
+                        className={classes.ProfilePic}
+                        style={{
+                          backgroundImage: "url(" + this.props.profilePic + ")"
+                        }}
+                      />
+                    ) : (
+                      <div className={classes.ListIcon}>
+                        <FontAwesomeIcon
+                          icon={faUserCircle}
+                          className={classes.UserIcon}
+                        />
+                      </div>
+                    )}
+
+                    <div
+                      className={classes.DisplayName}
+                      style={
+                        this.props.profilePic
+                          ? {
+                              backgroundImage:
+                                "url(" + this.props.profilePic + ")"
+                            }
+                          : null
+                      }
+                    >
+                      <div>
+                      {this.props.profilePic ? (
+                        <div className={classes.DisplayNameOverlay} />
+                      ) : null}
+                        <span className={classes.DisplayNameText}>
+                          {/* {displayName} */}
+                          {this.props.displayName}
+                        </span>
+                      </div>
+                      {/* <div className={classes.LogoutLink}>
                       <NavLink to="/logout">logout</NavLink>
+                    </div> */}
                     </div>
                   </div>
-                </div>
-              </li>
+                </li>
+              </NavLink>
             )}
             <li>
               <div
-                className={classes.SearchHeading + ' ' + classes.FlexCenter}
+                className={classes.SearchHeading + " " + classes.FlexCenter}
                 onClick={this.showSearchHandler}
               >
                 <div className={classes.ListIcon}>
@@ -234,19 +305,19 @@ class SideBar extends Component {
                   className={
                     this.props.showSearch
                       ? classes.SearchChevron +
-                        ' ' +
+                        " " +
                         classes.Arrow +
-                        ' ' +
+                        " " +
                         classes.ArrowDown
-                      : classes.SearchChevron + ' ' + classes.Arrow
+                      : classes.SearchChevron + " " + classes.Arrow
                   }
                 />
               </div>
               <div
                 className={
                   this.props.showSearch
-                    ? classes.Search + ' ' + classes.SearchOpen
-                    : classes.Search + ' ' + classes.Hover
+                    ? classes.Search + " " + classes.SearchOpen
+                    : classes.Search + " " + classes.Hover
                 }
               >
                 {this.props.showSearch ? (
@@ -256,7 +327,7 @@ class SideBar extends Component {
             </li>
             <NavLink to="/">
               <li
-                className={classes.FlexCenter + ' ' + classes.Hover}
+                className={classes.FlexCenter + " " + classes.Hover}
                 onClick={this.showMenuHandler}
               >
                 <div className={classes.ListIcon}>
@@ -267,7 +338,7 @@ class SideBar extends Component {
             </NavLink>
             <NavLink to="/Movies">
               <li
-                className={classes.FlexCenter + ' ' + classes.Hover}
+                className={classes.FlexCenter + " " + classes.Hover}
                 onClick={this.showMenuHandler}
               >
                 <div className={classes.ListIcon}>
@@ -278,7 +349,7 @@ class SideBar extends Component {
             </NavLink>
             <NavLink to="/Tv">
               <li
-                className={classes.FlexCenter + ' ' + classes.Hover}
+                className={classes.FlexCenter + " " + classes.Hover}
                 onClick={this.showMenuHandler}
               >
                 <div className={classes.ListIcon}>
@@ -289,7 +360,7 @@ class SideBar extends Component {
             </NavLink>
             <NavLink to="/Streaming">
               <li
-                className={classes.FlexCenter + ' ' + classes.Hover}
+                className={classes.FlexCenter + " " + classes.Hover}
                 onClick={this.showMenuHandler}
               >
                 <div className={classes.ListIcon}>
@@ -299,36 +370,29 @@ class SideBar extends Component {
               </li>
             </NavLink>
 
-            
-
-            {this.props.isAuth && localStorage.getItem('userData') ? (
+            {/* {this.props.isAuth && localStorage.getItem("userData") ? ( */}
+            {this.props.isAuth ? (
               <Aux>
-
-
-<NavLink to="/Calendar">
-              <li
-                className={classes.FlexCenter + ' ' + classes.Hover}
-                onClick={this.showMenuHandler}
-              >
-                <div className={classes.ListIcon}>
-                <FontAwesomeIcon icon={faCalendarAlt} className={classes.CalendarIcon} />
-                </div>
-                Calendar
-              </li>
-            </NavLink>
-
-
-
-
-
-
-
+                <NavLink to="/Calendar">
+                  <li
+                    className={classes.FlexCenter + " " + classes.Hover}
+                    onClick={this.showMenuHandler}
+                  >
+                    <div className={classes.ListIcon}>
+                      <FontAwesomeIcon
+                        icon={faCalendarAlt}
+                        className={classes.CalendarIcon}
+                      />
+                    </div>
+                    Calendar
+                  </li>
+                </NavLink>
 
                 <li
                   className={
                     this.state.favShowLinks
-                      ? classes.FavWatchlist + ' ' + classes.Selected
-                      : classes.FavWatchlist + ' ' + classes.Hover
+                      ? classes.FavWatchlist + " " + classes.Selected
+                      : classes.FavWatchlist + " " + classes.Hover
                   }
                 >
                   <div
@@ -348,18 +412,26 @@ class SideBar extends Component {
                         className={
                           this.state.showFavorites
                             ? classes.FavWatchChevron +
-                              ' ' +
+                              " " +
                               classes.Arrow +
-                              ' ' +
+                              " " +
                               classes.ArrowRight
-                            : classes.FavWatchChevron + ' ' + classes.Arrow
+                            : classes.FavWatchChevron + " " + classes.Arrow
                         }
                       />
                     </div>
                   </div>
                 </li>
 
-                <li className={classes.FavWatchlist + ' ' + classes.Hover}>
+                <li
+                  // className={classes.FavWatchlist + " " + classes.Hover}
+
+                  className={
+                    this.state.watchShowLinks
+                      ? classes.FavWatchlist + " " + classes.Selected
+                      : classes.FavWatchlist + " " + classes.Hover
+                  }
+                >
                   <div
                     className={classes.FavWatchHeading}
                     onClick={this.watchlistMenuHandler}
@@ -377,11 +449,11 @@ class SideBar extends Component {
                         className={
                           this.state.showWatchlist
                             ? classes.FavWatchChevron +
-                              ' ' +
+                              " " +
                               classes.Arrow +
-                              ' ' +
+                              " " +
                               classes.ArrowRight
-                            : classes.FavWatchChevron + ' ' + classes.Arrow
+                            : classes.FavWatchChevron + " " + classes.Arrow
                         }
                       />
                     </div>
@@ -391,33 +463,42 @@ class SideBar extends Component {
             ) : null}
           </ul>
         </div>
-        {this.props.isAuth && localStorage.getItem('userData') ? (
+        {/* {this.props.isAuth && localStorage.getItem("userData") ? ( */}
+        {this.props.isAuth ? (
           <Aux>
             <div
               className={
                 !this.state.watchShowLinks
                   ? classes.Favs
                   : classes.Favs +
-                    ' ' +
+                    " " +
                     uiClasses.BoxShadow +
-                    ' ' +
+                    " " +
                     classes.FavsShow
               }
             >
-              <Favorites click={this.watchlistMenuHandler} type="watchlist" />
+              <Favorites
+                click={this.watchlistMenuHandler}
+                type="watchlist"
+                hideMenu={this.hideFavsHandler}
+              />
             </div>
             <div
               className={
                 !this.state.favShowLinks
                   ? classes.Favs
                   : classes.Favs +
-                    ' ' +
+                    " " +
                     uiClasses.BoxShadow +
-                    ' ' +
+                    " " +
                     classes.FavsShow
               }
             >
-              <Favorites click={this.favoritesMenuHandler} type="favs" />
+              <Favorites
+                click={this.favoritesMenuHandler}
+                type="favs"
+                hideMenu={this.hideFavsHandler}
+              />
             </div>
           </Aux>
         ) : null}
@@ -430,7 +511,10 @@ const mapStateToProps = state => {
   return {
     authError: state.error,
     showSearch: state.showSearchSidebar,
-    showSidebar: state.showSidebar
+    showSidebar: state.showSidebar,
+    profilePic: state.profilePic,
+    displayName: state.displayName
+    // userData: state.userData
   };
 };
 
@@ -442,4 +526,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SideBar);

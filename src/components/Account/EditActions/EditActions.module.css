@@ -1,0 +1,35 @@
+.EditActions {
+  display: flex;
+  font-size: 24px;
+  justify-content: space-between;
+  box-sizing:order-box;
+  /* max-width:400px; */
+}
+.ActionButtons {
+  display:flex;
+}
+.Confirm,
+.Cancel,
+.Edit {
+  padding-left: 30px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 3px;
+}
+
+.Confirm,
+.Cancel {
+  display: none;
+}
+.ClearInput {
+  background: rgba(0, 0, 0, 0);
+  color: #ccc;
+  font-size: 24px;
+  border: none;
+  padding: 0;
+  width: initial;
+  border-radius: 0;
+}
+.ClearInput:focus {
+  outline-width: 0;
+}

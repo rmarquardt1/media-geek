@@ -1,27 +1,33 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../../../store/actions/auth';
-import Aux from '../../../hoc/Auxiliary/Auxiliary';
-import axios from 'axios';
-import Images from '../../Images/Images';
-import List from '../../List/List';
-import VideoList from '../../List/VideoList/VideoList';
-import ActorList from '../../List/ActorList/ActorList';
-import Review from '../../Review/Review';
-import VideoModal from '../../../components/UI/VideoModal/VideoModal';
-import Scores from '../../Scores/Scores';
-import MovieCollection from '../MovieCollection/MovieCollection';
-import MovieStats from '../../../components/Movie/MovieStats/MovieStats';
-import FullSizeImage from '../../../components/FullSizeImage/FullSizeImage';
-import Loader from '../../../components/UI/Loader/Loader';
-import NavSearch from '../../Search/NavSearch/NavSearch';
-import AddEvent from '../../Calendar/AddEvent/AddEvent';
-import EventDetails from '../../../components/Calendar/EventDetails/EventDetails';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actions from "../../../store/actions/auth";
+import Aux from "../../../hoc/Auxiliary/Auxiliary";
+import axios from "axios";
+import Images from "../../Images/Images";
+import List from "../../List/List";
+import VideoList from "../../List/VideoList/VideoList";
+import ActorList from "../../List/ActorList/ActorList";
+import Review from "../../Review/Review";
+import VideoModal from "../../../components/UI/VideoModal/VideoModal";
+import Scores from "../../Scores/Scores";
+import MovieCollection from "../MovieCollection/MovieCollection";
+import MovieStats from "../../../components/Movie/MovieStats/MovieStats";
+import FullSizeImage from "../../../components/FullSizeImage/FullSizeImage";
+import Loader from "../../../components/UI/Loader/Loader";
+import NavSearch from "../../Search/NavSearch/NavSearch";
+import AddEvent from "../../Calendar/AddEvent/AddEvent";
+import EventDetails from "../../../components/Calendar/EventDetails/EventDetails";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faStar, faSearch, faCalendarPlus, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
-import classes from './OpenMovie.module.css';
-import uiClasses from '../../../components/UI/Layout/Layout.module.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHeart,
+  faStar,
+  faSearch,
+  faCalendarPlus,
+  faCalendarAlt
+} from "@fortawesome/free-solid-svg-icons";
+import classes from "./OpenMovie.module.css";
+import uiClasses from "../../../components/UI/Layout/Layout.module.css";
 
 class OpenMovie extends Component {
   state = {
@@ -52,7 +58,6 @@ class OpenMovie extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-   // console.log(this.state.showEventDetails);
     if (prevState.movieId !== this.props.match.params.id) {
       this.getMovieHandler();
       this.setState({ movieId: this.props.match.params.id });
@@ -62,11 +67,9 @@ class OpenMovie extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     this.getMovieHandler();
-
     this.checkEventsHandler();
-
-    if (localStorage.getItem('userData')) {
-      const userData = JSON.parse(localStorage.getItem('userData'));
+    if (this.props.userData) {
+      const userData = this.props.userData;
       const favorited = userData.favMovies
         ? userData.favMovies.includes(this.props.match.params.id)
         : false;
@@ -85,21 +88,21 @@ class OpenMovie extends Component {
   getMovieHandler = movieId => {
     this.setState({ loading: true });
     const url = movieId
-      ? 'https://api.themoviedb.org/3/movie/' + movieId
-      : 'https://api.themoviedb.org/3/movie/' + this.props.match.params.id;
+      ? "https://api.themoviedb.org/3/movie/" + movieId
+      : "https://api.themoviedb.org/3/movie/" + this.props.match.params.id;
     axios
       .get(url, {
         params: {
-          api_key: '4c7294000365c14a8e42109c863ff772',
-          append_to_response: 'credits,videos,reviews,release_dates,collection'
+          api_key: "4c7294000365c14a8e42109c863ff772",
+          append_to_response: "credits,videos,reviews,release_dates,collection"
         }
       })
       .then(response => {
         const movieRating = response.data.release_dates.results.find(
-          rating => rating.iso_3166_1 === 'US'
+          rating => rating.iso_3166_1 === "US"
         )
           ? response.data.release_dates.results.find(
-              rating => rating.iso_3166_1 === 'US'
+              rating => rating.iso_3166_1 === "US"
             ).release_dates[0].certification
           : null;
         this.setState({
@@ -117,17 +120,17 @@ class OpenMovie extends Component {
           .map(genre => {
             return genre.name;
           })
-          .join('\xa0/\xa0');
+          .join("\xa0/\xa0");
         this.setState({ genres: gen });
       })
       .catch(error => {
         if (error.response && error.response.status === 429) {
           const timeOut = parseInt(
-            error.response.headers['retry-after'] + '000'
+            error.response.headers["retry-after"] + "000"
           );
           this.getMovieTryAgainHandler(timeOut);
         } else {
-          console.log('error: ' + error);
+          console.log("error: " + error);
         }
       });
   };
@@ -147,8 +150,8 @@ class OpenMovie extends Component {
   };
 
   favoriteClickHandler = () => {
-    const userData = JSON.parse(localStorage.getItem('userData'));
-    const uid = localStorage.getItem('userId');
+    const userData = this.props.userData;
+    const uid = localStorage.getItem("userId");
     let favs = null;
     if (!this.state.favorite) {
       favs = userData.favMovies
@@ -161,23 +164,23 @@ class OpenMovie extends Component {
     }
     axios
       .put(
-        'https://mediageek-650c6.firebaseio.com/users/' +
+        "https://mediageek-650c6.firebaseio.com/users/" +
           uid +
-          '/favMovies.json',
+          "/favMovies.json",
         favs
       )
       .then(response => {
-        this.setState({ favorite: true });
+        this.setState({ favorite: !this.state.favorite });
         this.props.updateStorage(uid);
       })
       .catch(error => {
-        console.log('error ' + error);
+        console.log("error " + error);
       });
   };
 
   watchlistClickHandler = () => {
-    const userData = JSON.parse(localStorage.getItem('userData'));
-    const uid = localStorage.getItem('userId');
+    const userData = this.props.userData;
+    const uid = localStorage.getItem("userId");
     let watch = null;
     if (!this.state.watchlist) {
       watch = userData.movieWatchlist
@@ -190,17 +193,17 @@ class OpenMovie extends Component {
     }
     axios
       .put(
-        'https://mediageek-650c6.firebaseio.com/users/' +
+        "https://mediageek-650c6.firebaseio.com/users/" +
           uid +
-          '/movieWatchlist.json',
+          "/movieWatchlist.json",
         watch
       )
       .then(response => {
-        this.setState({ watchlist: true });
+        this.setState({ watchlist: !this.state.watchlist });
         this.props.updateStorage(uid);
       })
       .catch(error => {
-        console.log('error ' + error);
+        console.log("error " + error);
       });
   };
 
@@ -223,10 +226,10 @@ class OpenMovie extends Component {
       const imgArr = this.state.fullSizeImgArr;
       let x = null;
       switch (direction) {
-        case 'next':
+        case "next":
           x = 1;
           break;
-        case 'prev':
+        case "prev":
           x = -1;
           break;
         default:
@@ -262,15 +265,15 @@ class OpenMovie extends Component {
     this.setState({ showAddEvent: !this.state.showAddEvent });
   };
 
-  showEventDetailsHandler =() => {
-      this.setState({showEventDetails: true});
-  }
+  showEventDetailsHandler = () => {
+    this.setState({ showEventDetails: true });
+  };
 
   closeEventDetailsHandler = () => {
     setTimeout(() => {
-      this.setState({showEventDetails: false});
-    }, 300)
-  }
+      this.setState({ showEventDetails: false });
+    }, 300);
+  };
 
   checkEventsHandler = () => {
     axios
@@ -282,34 +285,29 @@ class OpenMovie extends Component {
       .then(response => {
         Object.keys(response.data).map(key => {
           if (response.data[key].mediaId === this.props.match.params.id) {
-              const evDetails = {
-                id: key,
-                title: response.data[key].title,
-                desc: response.data[key].desc,
-                start: new Date(response.data[key].start),
-                end: new Date(response.data[key].end),
-                mediaId: response.data[key].mediaId,
-                poster: response.data[key].poster
-              };
-              this.setState({ eventDetails: evDetails, onCalendar: true });
+            const evDetails = {
+              id: key,
+              title: response.data[key].title,
+              desc: response.data[key].desc,
+              start: new Date(response.data[key].start),
+              end: new Date(response.data[key].end),
+              mediaId: response.data[key].mediaId,
+              poster: response.data[key].poster
+            };
+            this.setState({ eventDetails: evDetails, onCalendar: true });
           } else {
-            this.setState({ eventDetails: null, onCalendar: false, showEventDetails: false });
+            this.setState({
+              eventDetails: null,
+              onCalendar: false,
+              showEventDetails: false
+            });
           }
         });
       })
       .catch(error => {
         console.log("error " + error);
-      });  
-  }
-
-
-
-
-
-
-
-
-
+      });
+  };
 
   render() {
     let reviews = null;
@@ -334,7 +332,7 @@ class OpenMovie extends Component {
             <MovieCollection
               key={movie.id}
               id={movie.id}
-              poster={'http://image.tmdb.org/t/p/w185' + movie.poster_path}
+              poster={"http://image.tmdb.org/t/p/w185" + movie.poster_path}
               title={movie.title}
             />
           );
@@ -348,11 +346,11 @@ class OpenMovie extends Component {
               key={step}
               style={{
                 content: '""',
-                flex: 'auto',
-                width: '170px',
-                maxWidth: '170px'
+                flex: "auto",
+                width: "170px",
+                maxWidth: "170px"
               }}
-            ></div>
+            />
           );
         }
       }
@@ -391,58 +389,55 @@ class OpenMovie extends Component {
                   className={classes.OpenMovieBackdrop}
                   style={{
                     backgroundImage:
-                      'url(http://image.tmdb.org/t/p/original/' +
+                      "url(http://image.tmdb.org/t/p/original/" +
                       (this.state.movieInfo.backdrop_path
                         ? this.state.movieInfo.backdrop_path
                         : this.state.movieInfo.poster_path) +
-                      ')'
+                      ")"
                   }}
                 />
                 <div className={classes.OpenMovieOverlay} />
                 <div className={classes.OpenMovieContent}>
-
-                {this.state.showEventDetails ? (
-                  <EventDetails
-                    title={this.state.eventDetails.title}
-                    description={this.state.eventDetails.desc}
-                    startDate={this.state.eventDetails.start}
-                    close={this.closeEventDetailsHandler}
-                    poster={this.state.eventDetails.poster}
-                    id={this.state.eventDetails.id}
-                    reloadCalendar={this.checkEventsHandler}
-                    mediaId={this.state.eventDetails.mediaId}
-                  />
-                ) : null}
-
-                {this.state.showAddEvent ? (
-                      <AddEvent 
-                        close={this.addEventClickHandler} 
-                        title={this.state.movieInfo.title}
-                        description={this.state.movieInfo.overview}
-                        mediaId={this.props.match.params.id}
-                        poster={'http://image.tmdb.org/t/p/w500/' + this.state.movieInfo.poster_path}
-                        reloadCalendar={this.checkEventsHandler}
-                      />
+                  {this.state.showEventDetails ? (
+                    <EventDetails
+                      title={this.state.eventDetails.title}
+                      description={this.state.eventDetails.desc}
+                      startDate={this.state.eventDetails.start}
+                      close={this.closeEventDetailsHandler}
+                      poster={this.state.eventDetails.poster}
+                      id={this.state.eventDetails.id}
+                      reloadCalendar={this.checkEventsHandler}
+                      mediaId={this.state.eventDetails.mediaId}
+                    />
                   ) : null}
 
+                  {this.state.showAddEvent ? (
+                    <AddEvent
+                      close={this.addEventClickHandler}
+                      title={this.state.movieInfo.title}
+                      description={this.state.movieInfo.overview}
+                      mediaId={this.props.match.params.id}
+                      poster={
+                        "http://image.tmdb.org/t/p/w500/" +
+                        this.state.movieInfo.poster_path
+                      }
+                      reloadCalendar={this.checkEventsHandler}
+                    />
+                  ) : null}
 
                   <div
-                  className={classes.OpenMovieInfo}
+                    className={classes.OpenMovieInfo}
                     // className={
                     //   this.state.showSearch
                     //     ? classes.OpenMovieInfo + ' ' + classes.ShowSearch
                     //     : classes.OpenMovieInfo
                     // }
                   >
-
-
-
-
                     <div
                       className={
                         this.state.showSearch
                           ? uiClasses.SearchResultsSearch +
-                            ' ' +
+                            " " +
                             classes.ShowSearch
                           : uiClasses.SearchResultsSearch
                       }
@@ -453,20 +448,14 @@ class OpenMovie extends Component {
                       />
                     </div>
 
-
-
-
-
-
-
                     <div className={classes.MobileDescription}>
                       <div className={classes.OpenMoviePoster}>
                         <img
                           className={
-                            classes.PosterImage + ' ' + uiClasses.BoxShadow
+                            classes.PosterImage + " " + uiClasses.BoxShadow
                           }
                           src={
-                            'http://image.tmdb.org/t/p/w500/' +
+                            "http://image.tmdb.org/t/p/w500/" +
                             this.state.movieInfo.poster_path
                           }
                           alt=""
@@ -480,7 +469,7 @@ class OpenMovie extends Component {
                                 this.state.onCalendar
                                   ? faCalendarAlt
                                   : faCalendarPlus
-                                }
+                              }
                               className={
                                 this.state.onCalendar
                                   ? classes.CalendarSelectedIcon
@@ -488,8 +477,9 @@ class OpenMovie extends Component {
                               }
                               onClick={
                                 this.state.onCalendar
-                                ? this.showEventDetailsHandler
-                                : this.addEventClickHandler}
+                                  ? this.showEventDetailsHandler
+                                  : this.addEventClickHandler
+                              }
                             />
                             <FontAwesomeIcon
                               icon={faStar}
@@ -525,7 +515,7 @@ class OpenMovie extends Component {
                           <div className={classes.OpenMoviePosterMobile}>
                             <img
                               src={
-                                'http://image.tmdb.org/t/p/w500/' +
+                                "http://image.tmdb.org/t/p/w500/" +
                                 this.state.movieInfo.poster_path
                               }
                               alt=""
@@ -536,7 +526,7 @@ class OpenMovie extends Component {
                             <div
                               className={
                                 classes.OpenMovieGenRel +
-                                ' ' +
+                                " " +
                                 classes.GenRelMobile
                               }
                             >
@@ -546,7 +536,7 @@ class OpenMovie extends Component {
                               <div className={classes.RelRating}>
                                 {relYear}
                                 {this.state.rating !== null
-                                  ? '(' + this.state.rating + ')'
+                                  ? "(" + this.state.rating + ")"
                                   : null}
                               </div>
                             </div>
@@ -554,7 +544,7 @@ class OpenMovie extends Component {
                         </div>
                         <div
                           className={
-                            classes.OpenMovieGenRel + ' ' + classes.GenRelShow
+                            classes.OpenMovieGenRel + " " + classes.GenRelShow
                           }
                         >
                           <div className={classes.OpenMovieGenres}>
@@ -563,12 +553,12 @@ class OpenMovie extends Component {
                         </div>
                         <div
                           className={
-                            classes.RelRating + ' ' + classes.RelRatingShow
+                            classes.RelRating + " " + classes.RelRatingShow
                           }
                         >
-                          {relYear}{' '}
+                          {relYear}{" "}
                           {this.state.rating !== null
-                            ? '(' + this.state.rating + ')'
+                            ? "(" + this.state.rating + ")"
                             : null}
                         </div>
                         <Scores
@@ -644,10 +634,19 @@ class OpenMovie extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    userData: state.userData
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     updateStorage: uid => dispatch(actions.storeUserData(uid))
   };
 };
 
-export default connect(null, mapDispatchToProps)(OpenMovie);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OpenMovie);

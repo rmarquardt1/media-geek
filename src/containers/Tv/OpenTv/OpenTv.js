@@ -1,36 +1,36 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../../../store/actions/auth';
-import Aux from '../../../hoc/Auxiliary/Auxiliary';
-import axios from 'axios';
-import VideoList from '../../List/VideoList/VideoList';
-import ActorList from '../../List/ActorList/ActorList';
-import SeasonList from '../../List/SeasonList/SeasonList';
-import Review from '../../Review/Review';
-import VideoModal from '../../../components/UI/VideoModal/VideoModal';
-import FullSizeImage from '../../../components/FullSizeImage/FullSizeImage';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actions from "../../../store/actions/auth";
+import Aux from "../../../hoc/Auxiliary/Auxiliary";
+import axios from "axios";
+import VideoList from "../../List/VideoList/VideoList";
+import ActorList from "../../List/ActorList/ActorList";
+import SeasonList from "../../List/SeasonList/SeasonList";
+import Review from "../../Review/Review";
+import VideoModal from "../../../components/UI/VideoModal/VideoModal";
+import FullSizeImage from "../../../components/FullSizeImage/FullSizeImage";
 
-import Images from '../../Images/Images';
+import Images from "../../Images/Images";
 
 // import TvSeasons from '../TvSeasons/TvSeasons';
-import Scores from '../../Scores/Scores';
-import TvStats from '../../../components/Tv/TvStats/TvStats';
-import Loader from '../../../components/UI/Loader/Loader';
-import { configureAnchors } from 'react-scrollable-anchor';
-import NavSearch from '../../Search/NavSearch/NavSearch';
-import AddEvent from '../../Calendar/AddEvent/AddEvent';
-import EventDetails from '../../../components/Calendar/EventDetails/EventDetails';
+import Scores from "../../Scores/Scores";
+import TvStats from "../../../components/Tv/TvStats/TvStats";
+import Loader from "../../../components/UI/Loader/Loader";
+import { configureAnchors } from "react-scrollable-anchor";
+import NavSearch from "../../Search/NavSearch/NavSearch";
+import AddEvent from "../../Calendar/AddEvent/AddEvent";
+import EventDetails from "../../../components/Calendar/EventDetails/EventDetails";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeart,
   faStar,
   faSearch,
   faCalendarPlus,
   faCalendarAlt
-} from '@fortawesome/free-solid-svg-icons';
-import classes from './OpenTv.module.css';
-import uiClasses from '../../../components/UI/Layout/Layout.module.css';
+} from "@fortawesome/free-solid-svg-icons";
+import classes from "./OpenTv.module.css";
+import uiClasses from "../../../components/UI/Layout/Layout.module.css";
 
 configureAnchors({ offset: -60 });
 
@@ -76,8 +76,8 @@ class OpenTv extends Component {
     window.scrollTo(0, 0);
     this.getTvHandler();
     this.checkEventsHandler();
-    if (localStorage.getItem('userData')) {
-      const userData = JSON.parse(localStorage.getItem('userData'));
+    if (localStorage.getItem("userData")) {
+      const userData = JSON.parse(localStorage.getItem("userData"));
       const favorited = userData.favTv
         ? userData.favTv.includes(this.props.match.params.id)
         : false;
@@ -96,14 +96,14 @@ class OpenTv extends Component {
   getTvHandler = tvId => {
     this.setState({ loading: true });
     const url = tvId
-      ? 'https://api.themoviedb.org/3/tv/' + tvId
-      : 'https://api.themoviedb.org/3/tv/' + this.props.match.params.id;
+      ? "https://api.themoviedb.org/3/tv/" + tvId
+      : "https://api.themoviedb.org/3/tv/" + this.props.match.params.id;
     axios
       .get(url, {
         params: {
-          api_key: '4c7294000365c14a8e42109c863ff772',
+          api_key: "4c7294000365c14a8e42109c863ff772",
           append_to_response:
-            'credits,videos,reviews,release_dates,external_ids'
+            "credits,videos,reviews,release_dates,external_ids"
         }
       })
       .then(response => {
@@ -111,7 +111,7 @@ class OpenTv extends Component {
         const lastAir = new Date(response.data.last_air_date);
         const airSpan =
           firstAir.getFullYear() !== lastAir.getFullYear()
-            ? firstAir.getFullYear() + '-' + lastAir.getFullYear()
+            ? firstAir.getFullYear() + "-" + lastAir.getFullYear()
             : firstAir.getFullYear();
         this.setState({
           tvInfo: response.data,
@@ -129,7 +129,7 @@ class OpenTv extends Component {
           .map(genre => {
             return genre.name;
           })
-          .join('\xa0/\xa0');
+          .join("\xa0/\xa0");
         this.setState({ genres: gen });
         this.getImdbIdHandler();
         this.getRatingsHandler();
@@ -137,11 +137,11 @@ class OpenTv extends Component {
       .catch(error => {
         if (error.response && error.response.status === 429) {
           const timeOut = parseInt(
-            error.response.headers['retry-after'] + '000'
+            error.response.headers["retry-after"] + "000"
           );
           this.getTvTryAgainHandler(timeOut);
         } else {
-          console.log('error: ' + error);
+          console.log("error: " + error);
         }
       });
   };
@@ -155,42 +155,42 @@ class OpenTv extends Component {
   getRatingsHandler = () => {
     axios
       .get(
-        'https://api.themoviedb.org/3/tv/' +
+        "https://api.themoviedb.org/3/tv/" +
           this.state.tvId +
-          '/content_ratings',
+          "/content_ratings",
         {
           params: {
-            api_key: '4c7294000365c14a8e42109c863ff772',
-            language: 'en-US'
+            api_key: "4c7294000365c14a8e42109c863ff772",
+            language: "en-US"
           }
         }
       )
       .then(response => {
         this.setState({
           rating: response.data.results.find(
-            rating => rating.iso_3166_1 === 'US'
+            rating => rating.iso_3166_1 === "US"
           ).rating
         });
       })
       .catch(error => {
-        console.log('error ' + error);
+        console.log("error " + error);
       });
   };
 
   getImdbIdHandler = () => {
     axios
-      .get('https://www.omdbapi.com/', {
+      .get("https://www.omdbapi.com/", {
         params: {
-          apikey: 'ec2bd2c4',
+          apikey: "ec2bd2c4",
           t: this.state.tvInfo.name,
-          type: 'series'
+          type: "series"
         }
       })
       .then(response => {
         this.setState({ imdbId: response.data.imdbID });
       })
       .catch(error => {
-        console.log('error ' + error);
+        console.log("error " + error);
       });
   };
 
@@ -203,8 +203,8 @@ class OpenTv extends Component {
   };
 
   favoriteClickHandler = () => {
-    const userData = JSON.parse(localStorage.getItem('userData'));
-    const uid = localStorage.getItem('userId');
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const uid = localStorage.getItem("userId");
     let favs = null;
     if (!this.state.favorite) {
       favs = userData.favTv
@@ -217,21 +217,21 @@ class OpenTv extends Component {
     }
     axios
       .put(
-        'https://mediageek-650c6.firebaseio.com/users/' + uid + '/favTv.json',
+        "https://mediageek-650c6.firebaseio.com/users/" + uid + "/favTv.json",
         favs
       )
       .then(response => {
-        this.setState({ favorite: true });
+        this.setState({ favorite: !this.state.favorite });
         this.props.updateStorage(uid);
       })
       .catch(error => {
-        console.log('error ' + error);
+        console.log("error " + error);
       });
   };
 
   watchlistClickHandler = () => {
-    const userData = JSON.parse(localStorage.getItem('userData'));
-    const uid = localStorage.getItem('userId');
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const uid = localStorage.getItem("userId");
     let watch = null;
     if (!this.state.watchlist) {
       watch = userData.tvWatchlist
@@ -244,17 +244,17 @@ class OpenTv extends Component {
     }
     axios
       .put(
-        'https://mediageek-650c6.firebaseio.com/users/' +
+        "https://mediageek-650c6.firebaseio.com/users/" +
           uid +
-          '/tvWatchlist.json',
+          "/tvWatchlist.json",
         watch
       )
       .then(response => {
-        this.setState({ watchlist: true });
+        this.setState({ watchlist: !this.state.watchlist });
         this.props.updateStorage(uid);
       })
       .catch(error => {
-        console.log('error ' + error);
+        console.log("error " + error);
       });
   };
 
@@ -277,10 +277,10 @@ class OpenTv extends Component {
       const imgArr = this.state.fullSizeImgArr;
       let x = null;
       switch (direction) {
-        case 'next':
+        case "next":
           x = 1;
           break;
-        case 'prev':
+        case "prev":
           x = -1;
           break;
         default:
@@ -329,9 +329,9 @@ class OpenTv extends Component {
   checkEventsHandler = () => {
     axios
       .get(
-        'https://mediageek-650c6.firebaseio.com/users/' +
-          localStorage.getItem('userId') +
-          '/events.json'
+        "https://mediageek-650c6.firebaseio.com/users/" +
+          localStorage.getItem("userId") +
+          "/events.json"
       )
       .then(response => {
         Object.keys(response.data).map(key => {
@@ -356,7 +356,7 @@ class OpenTv extends Component {
         });
       })
       .catch(error => {
-        console.log('error ' + error);
+        console.log("error " + error);
       });
   };
 
@@ -402,9 +402,9 @@ class OpenTv extends Component {
                   className={classes.OpenTvBackdrop}
                   style={{
                     backgroundImage:
-                      'url(http://image.tmdb.org/t/p/original/' +
+                      "url(http://image.tmdb.org/t/p/original/" +
                       this.state.tvInfo.backdrop_path +
-                      ')'
+                      ")"
                   }}
                 />
                 <div className={classes.OpenTvOverlay} />
@@ -429,7 +429,7 @@ class OpenTv extends Component {
                       description={this.state.tvInfo.overview}
                       mediaId={this.props.match.params.id}
                       poster={
-                        'http://image.tmdb.org/t/p/w500/' +
+                        "http://image.tmdb.org/t/p/w500/" +
                         this.state.tvInfo.poster_path
                       }
                       reloadCalendar={this.checkEventsHandler}
@@ -448,7 +448,7 @@ class OpenTv extends Component {
                       className={
                         this.state.showSearch
                           ? uiClasses.SearchResultsSearch +
-                            ' ' +
+                            " " +
                             classes.ShowSearch
                           : uiClasses.SearchResultsSearch
                       }
@@ -456,17 +456,17 @@ class OpenTv extends Component {
                       <NavSearch
                         searchType="tv"
                         placeholder="Search Television"
-                      /> 
-                    </div>  
+                      />
+                    </div>
                     <div className={classes.MobileDescription}>
                       {this.state.tvInfo.poster_path ? (
                         <div className={classes.OpenTvPoster}>
                           <img
                             className={
-                              classes.PosterImage + ' ' + uiClasses.BoxShadow
+                              classes.PosterImage + " " + uiClasses.BoxShadow
                             }
                             src={
-                              'http://image.tmdb.org/t/p/w500/' +
+                              "http://image.tmdb.org/t/p/w500/" +
                               this.state.tvInfo.poster_path
                             }
                             alt=""
@@ -530,7 +530,7 @@ class OpenTv extends Component {
                             <div className={classes.OpenTvPosterMobile}>
                               <img
                                 src={
-                                  'http://image.tmdb.org/t/p/w500/' +
+                                  "http://image.tmdb.org/t/p/w500/" +
                                   this.state.tvInfo.poster_path
                                 }
                                 alt=""
@@ -542,7 +542,7 @@ class OpenTv extends Component {
                             <div
                               className={
                                 classes.OpenTvGenRel +
-                                ' ' +
+                                " " +
                                 classes.GenRelMobile
                               }
                             >
@@ -552,7 +552,7 @@ class OpenTv extends Component {
                               <div className={classes.RelRating}>
                                 {this.state.airDate}
                                 {this.state.rating
-                                  ? ' (' + this.state.rating + ')'
+                                  ? " (" + this.state.rating + ")"
                                   : null}
                               </div>
                             </div>
@@ -560,7 +560,7 @@ class OpenTv extends Component {
                         </div>
                         <div
                           className={
-                            classes.OpenTvGenRel + ' ' + classes.GenRelShow
+                            classes.OpenTvGenRel + " " + classes.GenRelShow
                           }
                         >
                           <div className={classes.OpenTvGenres}>
@@ -569,12 +569,12 @@ class OpenTv extends Component {
                         </div>
                         <div
                           className={
-                            classes.RelRating + ' ' + classes.RelRatingShow
+                            classes.RelRating + " " + classes.RelRatingShow
                           }
                         >
                           {this.state.airDate}
                           {this.state.rating
-                            ? ' (' + this.state.rating + ')'
+                            ? " (" + this.state.rating + ")"
                             : null}
                         </div>
                         <Scores title={this.state.tvInfo.name} type="series" />
@@ -645,4 +645,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(OpenTv);
+export default connect(
+  null,
+  mapDispatchToProps
+)(OpenTv);

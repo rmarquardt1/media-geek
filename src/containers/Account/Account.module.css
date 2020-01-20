@@ -1,6 +1,49 @@
 .Account {
   margin: 70px 100px 100px 350px;
 }
+.Account h1 {
+  font-weight: lighter;
+  font-size: 52px;
+  margin-top: 0;
+  color: #e6e6e6;
+
+  margin-bottom: 0;
+  /* margin-bottom: 0; */
+}
+.AccountContainer {
+  display: flex;
+  /* justify-content: center; */
+}
+.ImagePreview {
+  height: 200px;
+  width: 200px;
+  background-size: cover;
+  background-position: top;
+}
+
+.AccountIcon {
+  margin-left: 10px;
+  margin-top: 2px;
+  font-size: 26px;
+}
+
+.Title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  position: relative;
+  top: -15px;
+  margin-right: 10px;
+}
+
+.NewPassword {
+  background: #ff0000;
+}
+input[type="file"] {
+  display: none;
+}
+
 @media (max-width: 1600px) {
   .Account {
     margin: 70px 50px 100px 300px;

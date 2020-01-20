@@ -8,6 +8,9 @@
   box-sizing: border-box;
   z-index: 100;
 }
+.ListLogo {
+  padding: 10px 10px !important;
+}
 .LogoContainer {
   display: flex;
   align-items: center;
@@ -16,8 +19,8 @@
   margin: 0;
 }
 .Logo {
-  height: 26px;
-  margin-right: 14px;
+  height: 42px;
+  margin-right: 20px;
 }
 .LogoText {
   font-size: 20px;
@@ -46,6 +49,44 @@
 .SideBar ul li {
   border-bottom: 1px solid #4d4d4d;
   padding: 20px;
+}
+.SideBar ul li.AccountProfileImage {
+  padding: 0;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background-position: center;
+  background-size: cover;
+}
+.ProfilePic {
+  height: 100%;
+  min-width: 62px;
+  /* margin-right: 10px; */
+  background-size: cover;
+  background-position: center;
+}
+.DisplayName {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding-left: 10px;
+  background-size: cover;
+  background-position: center;
+}
+.DisplayNameOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.75);
+}
+.DisplayNameText {
+  position: relative;
+  z-index: 10;
 }
 .Arrow {
   transform: rotate(0);
@@ -80,7 +121,8 @@
 .LogoutLink {
   font-style: italic;
   font-size: 12px;
-  margin-top: 3px;
+  /* margin-top: 3px; */
+  /* position: absolute; */
 }
 .LogoutLink a {
   color: #a6a6a6;
@@ -97,6 +139,9 @@
 .ListIcon {
   width: 40px;
   min-width: 40px;
+}
+.ListIconAccount {
+  min-height: 40px;
 }
 .CreateAccount {
   cursor: pointer;

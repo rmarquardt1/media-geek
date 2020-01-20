@@ -1,0 +1,52 @@
+.ImagePreview {
+  height: 200px;
+  width: 200px;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.UpdateImageButton {
+  width: 100%;
+}
+.ProfileIcon {
+  width: 90% !important;
+  height: 90%;
+  color: #1a8cff;
+}
+.ProfileImageContainer {
+  position: relative;
+}
+.ProfileImageOverlay {
+  position: absolute;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0);
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  transition: 0.3s all;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ProfileImageOverlay:hover {
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 1;
+  transition: 0.3s all;
+}
+.Edit {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  border-top-left-radius: 5px;
+  /* z-index: 3; */
+}
+.EditIcon {
+  font-size: 20px;
+  padding: 10px;
+}

@@ -31,6 +31,13 @@ ReactGA.pageview(window.location.pathname + window.location.search);
 class App extends Component {
   componentDidMount() {
     this.props.onTryAutoSignup();
+
+    if (localStorage.getItem('profilePic')) {
+      console.log(localStorage.getItem('profilePic'));
+      this.props.setProfilePic(localStorage.getItem('profilePic'));
+    }
+
+
   }
 
   render() {
@@ -164,7 +171,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onTryAutoSignup: () => dispatch(actions.authCheckState())
+    onTryAutoSignup: () => dispatch(actions.authCheckState()),
+    setProfilePic: url => dispatch(actions.setProfilePic(url))
   };
 };
 
