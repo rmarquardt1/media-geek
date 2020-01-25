@@ -2,11 +2,11 @@
   display: flex;
   font-size: 24px;
   justify-content: space-between;
-  box-sizing:order-box;
+  box-sizing: order-box;
   /* max-width:400px; */
 }
 .ActionButtons {
-  display:flex;
+  display: flex;
 }
 .Confirm,
 .Cancel,
@@ -16,7 +16,6 @@
   cursor: pointer;
   margin-top: 3px;
 }
-
 .Confirm,
 .Cancel {
   display: none;
@@ -32,4 +31,9 @@
 }
 .ClearInput:focus {
   outline-width: 0;
+}
+.DisplayEl {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

@@ -11,6 +11,7 @@ import uiClasses from "../../components/UI/Layout/Layout.module.css";
 import classes from "./Home.module.css";
 
 const Home = props => {
+  console.log(props.emailId);
   return (
     <Aux>
       <div className={classes.Home}>
@@ -80,7 +81,8 @@ const Home = props => {
 
 const mapStateToProps = state => {
   return {
-    userData: state.userData
+    userData: state.userData,
+    emailId: state.email
   };
 };
 

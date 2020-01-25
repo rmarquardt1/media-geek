@@ -70,6 +70,7 @@ const reducer = (state = initialState, action) => {
         profilePic: action.profilePicUrl
       };
     case actionTypes.STORE_EMAIL:
+      console.log("triggered: " + action.email);
       return {
         ...state,
         email: action.email

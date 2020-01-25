@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 import EditActions from "../../../components/Account/EditActions/EditActions";
 // import * as firebase from "firebase";
 // import axios from "axios";
@@ -15,12 +15,11 @@ class AccountInfo extends Component {
   changePasswordHandler = () => {
     this.setState({ showChangePw: !this.state.showChangePw });
   };
+
   render() {
     return (
       <React.Fragment>
         <div className={classes.AccountInfo}>
-
-
           <div className={classes.row}>
             <label>Display Name</label>
             <EditActions
@@ -38,10 +37,6 @@ class AccountInfo extends Component {
               initialVal={this.props.email}
             />
           </div>
-
-
-
-
 
           <div className={classes.row}>
             <div
@@ -101,6 +96,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps
-)(AccountInfo);
+export default connect(mapStateToProps)(AccountInfo);

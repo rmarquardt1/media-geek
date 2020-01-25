@@ -13,51 +13,41 @@ const EditActions = props => {
 
   const showInputHandler = () => {
     displayEl.current.style.display = "none";
-    inputEl.current.type = 'text';
+    inputEl.current.type = "text";
 
-    inputEl.current.style.borderBottom = '1px solid #ccc';
+    inputEl.current.style.borderBottom = "1px solid #ccc";
 
     inputEl.current.focus();
-    editEl.current.style.display = 'none';
-    confirmEl.current.style.display = 'block';
-    cancelEl.current.style.display = 'block';
+    editEl.current.style.display = "none";
+    confirmEl.current.style.display = "block";
+    cancelEl.current.style.display = "block";
   };
 
   const cancelInput = () => {
     displayEl.current.style.display = "block";
-    inputEl.current.type = 'hidden';
+    inputEl.current.type = "hidden";
 
-    inputEl.current.style.borderBottom = 'none';
+    inputEl.current.style.borderBottom = "none";
 
-    editEl.current.style.display = 'block';
-    confirmEl.current.style.display = 'none';
-    cancelEl.current.style.display = 'none';
-  }
+    editEl.current.style.display = "block";
+    confirmEl.current.style.display = "none";
+    cancelEl.current.style.display = "none";
+  };
 
   const confirmInput = () => {
     displayEl.current.style.display = "block";
     displayEl.current.innerHTML = inputEl.current.value;
 
-
-    inputEl.current.type = 'hidden';
-    inputEl.current.style.borderBottom = 'none';
-    editEl.current.style.display = 'block';
-    confirmEl.current.style.display = 'none';
-    cancelEl.current.style.display = 'none';
-
-
-
-  }
-
-
-
+    inputEl.current.type = "hidden";
+    inputEl.current.style.borderBottom = "none";
+    editEl.current.style.display = "block";
+    confirmEl.current.style.display = "none";
+    cancelEl.current.style.display = "none";
+  };
 
   return (
     <div className={classes.EditActions}>
-      
-      <div
-        ref={displayEl}
-      >
+      <div ref={displayEl} className={classes.DisplayEl}>
         {props.initialVal}
       </div>
       <input
@@ -70,36 +60,35 @@ const EditActions = props => {
         onChange={event => props.onInputChange(event)}
       />
 
-
       <div className={classes.ActionButtons}>
-      <div
-        ref={editEl}
-        className={classes.Edit}
-        id="edit"
-        // onClick={event => showInputHandler(event, props.inputType)}
-        onClick={showInputHandler}
-        style={{ cursor: "pointer" }}
-      >
-        <FontAwesomeIcon icon={faPencilAlt} className={classes.EditIcon} />
-      </div>
-      <div
-        ref={confirmEl}
-        id="confirm"
-        className={classes.Confirm}
-        onClick={confirmInput}
-        style={{ cursor: "pointer" }}
-      >
-        <FontAwesomeIcon icon={faCheck} className={classes.EditIcon} />
-      </div>
-      <div
-        ref={cancelEl}
-        id="cancel"
-        className={classes.Cancel}
-        onClick={cancelInput}
-        style={{ cursor: "pointer" }}
-      >
-        <FontAwesomeIcon icon={faBan} className={classes.EditIcon} />
-      </div>
+        <div
+          ref={editEl}
+          className={classes.Edit}
+          id="edit"
+          // onClick={event => showInputHandler(event, props.inputType)}
+          onClick={showInputHandler}
+          style={{ cursor: "pointer" }}
+        >
+          <FontAwesomeIcon icon={faPencilAlt} className={classes.EditIcon} />
+        </div>
+        <div
+          ref={confirmEl}
+          id="confirm"
+          className={classes.Confirm}
+          onClick={confirmInput}
+          style={{ cursor: "pointer" }}
+        >
+          <FontAwesomeIcon icon={faCheck} className={classes.EditIcon} />
+        </div>
+        <div
+          ref={cancelEl}
+          id="cancel"
+          className={classes.Cancel}
+          onClick={cancelInput}
+          style={{ cursor: "pointer" }}
+        >
+          <FontAwesomeIcon icon={faBan} className={classes.EditIcon} />
+        </div>
       </div>
     </div>
   );

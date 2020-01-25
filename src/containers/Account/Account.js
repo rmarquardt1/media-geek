@@ -5,6 +5,7 @@ import * as firebase from "firebase";
 import axios from "axios";
 import ProfileImage from "./ProfileImage/ProfileImage";
 import AccountInfo from "./AccountInfo/AccountInfo";
+import AccountFavList from "./AccountFavList/AccountFavList";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
@@ -159,7 +160,10 @@ class Account extends Component {
   inputChangeHandler = event => {
     switch (event.target.id) {
       case "displayName":
-        this.setState({ displayName: event.target.value, newDisplayName: true });
+        this.setState({
+          displayName: event.target.value,
+          newDisplayName: true
+        });
         event.target.style.width =
           (event.target.value.length + 1) * 12.5 + "px";
         break;
@@ -182,7 +186,10 @@ class Account extends Component {
   cancelChangeHandler = event => {
     switch (event.target.id) {
       case "displayName":
-        this.setState({ displayName: this.props.displayName, newDisplayName: false });
+        this.setState({
+          displayName: this.props.displayName,
+          newDisplayName: false
+        });
         event.target.style.width =
           (event.target.value.length + 1) * 12.5 + "px";
         break;
@@ -198,7 +205,7 @@ class Account extends Component {
       default:
         return null;
     }
-  }
+  };
 
   saveChangesHandler = () => {
     if (this.state.newProfileImg) {
@@ -211,7 +218,7 @@ class Account extends Component {
             localStorage.getItem("token") +
             "&email=" +
             this.state.email
-            // this.props.email
+          // this.props.email
         )
         .then(response => {
           console.log(response);
@@ -221,41 +228,24 @@ class Account extends Component {
         });
     }
 
-
-
     if (this.state.newDisplayName) {
-
-
-
       axios
-      .put(
-        "https://mediageek-650c6.firebaseio.com/users/" +
-          localStorage.getItem('userId') +
-          "/displayName.json", {
+        .put(
+          "https://mediageek-650c6.firebaseio.com/users/" +
+            localStorage.getItem("userId") +
+            "/displayName.json",
+          {
             displayName: this.state.displayName
           }
-        
-      )
-      .then(response => {
-        // this.setState({ favorite: !this.state.favorite });
-        // this.props.updateStorage(uid);
-      })
-      .catch(error => {
-        console.log("error " + error);
-      });
-
-
-
-
-
-
+        )
+        .then(response => {
+          // this.setState({ favorite: !this.state.favorite });
+          // this.props.updateStorage(uid);
+        })
+        .catch(error => {
+          console.log("error " + error);
+        });
     }
-
-
-
-
-
-
 
     // this.setState({ reloadPage: true });
   };
@@ -325,16 +315,15 @@ class Account extends Component {
 
   render() {
     // const userData = JSON.parse(localStorage.getItem("userData"));
-    const userData = this.props.userData;
+    // const userData = this.props.userData;
 
     return (
       <div className={classes.Account}>
         {/* {this.props.isAuth && userData ? ( */}
-          {this.props.isAuth ? (
+        {this.props.isAuth ? (
           <React.Fragment>
             <div
               className={uiClasses.SectionHeader + " " + uiClasses.PageHeader}
-              style={{ marginBottom: "30px" }}
             >
               <div className={uiClasses.PageTitle}>
                 <FontAwesomeIcon
@@ -355,6 +344,8 @@ class Account extends Component {
               </button>
             </div>
 
+            <hr />
+
             <div className={classes.AccountContainer}>
               <ProfileImage
                 selectImage={this.imageFileHandler}
@@ -367,6 +358,7 @@ class Account extends Component {
                 // email={this.props.email}
                 // displayName={userData.displayName}
               />
+              <AccountFavList />
             </div>
           </React.Fragment>
         ) : (

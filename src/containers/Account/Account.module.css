@@ -12,6 +12,7 @@
 }
 .AccountContainer {
   display: flex;
+  margin-top: 30px;
   /* justify-content: center; */
 }
 .ImagePreview {
@@ -31,9 +32,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
-  position: relative;
-  top: -15px;
+  margin-bottom: 0;
+  /* position: relative;
+  top: -15px; */
   margin-right: 10px;
 }
 

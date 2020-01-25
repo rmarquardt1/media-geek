@@ -42,7 +42,7 @@ export const logout = () => {
   };
 };
 
-export const storeUserData = (uid) => {
+export const storeUserData = uid => {
   return dispatch => {
     axios
       .get("https://mediageek-650c6.firebaseio.com/users/" + uid + "/.json")
@@ -97,7 +97,6 @@ export const setDisplayName = displayName => {
 };
 
 export const setEmailAddress = email => {
-  console.log('triggered: ' + email);
   return {
     type: actionTypes.STORE_EMAIL,
     email: email
@@ -185,6 +184,7 @@ export const registerUser = (email, password, display) => {
         localStorage.setItem("token", response.data.idToken);
         localStorage.setItem("expirationDate", expirationDate);
         localStorage.setItem("userId", response.data.localId);
+        localStorage.setItem("emailId", response.data.email);
         const uid = response.data.localId;
         const profile = {
           displayName: display,
