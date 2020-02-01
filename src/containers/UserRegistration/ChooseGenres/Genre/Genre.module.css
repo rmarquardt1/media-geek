@@ -14,6 +14,7 @@
   border: 1px solid #66b3ff;
   border-radius: 30px;
   text-align: center;
+  box-sizing: border-box;
 }
 @media (max-width: 1090px) {
   .Genre {

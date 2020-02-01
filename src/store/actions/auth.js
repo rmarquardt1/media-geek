@@ -76,6 +76,7 @@ export const getProfileImage = profileImgUrl => {
     }
     const storage = firebase.storage();
     const storageRef = storage.ref();
+
     storageRef
       .child(profileImgUrl)
       .getDownloadURL()

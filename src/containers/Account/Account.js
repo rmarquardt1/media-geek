@@ -5,7 +5,10 @@ import * as firebase from "firebase";
 import axios from "axios";
 import ProfileImage from "./ProfileImage/ProfileImage";
 import AccountInfo from "./AccountInfo/AccountInfo";
-import AccountFavList from "./AccountFavList/AccountFavList";
+import ChooseNetworks from "../UserRegistration/ChooseNetworks/ChooseNetworks";
+import ChooseMovieGenres from "../UserRegistration/ChooseGenres/ChooseMovieGenres/ChooseMovieGenres";
+
+import Favorites from "../Favorites/Favorites";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
@@ -358,7 +361,13 @@ class Account extends Component {
                 // email={this.props.email}
                 // displayName={userData.displayName}
               />
-              <AccountFavList />
+              {/* <AccountFavList /> */}
+              <div className={uiClasses.Spacer} />
+
+              <div class={classes.AccountPreferences}>
+                <ChooseNetworks page="account" />
+                <ChooseMovieGenres page="account" />
+              </div>
             </div>
           </React.Fragment>
         ) : (
