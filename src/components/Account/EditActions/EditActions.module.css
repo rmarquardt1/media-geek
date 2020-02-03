@@ -1,7 +1,6 @@
 .EditActions {
   display: flex;
   font-size: 24px;
-  justify-content: space-between;
   box-sizing: order-box;
   /* max-width:400px; */
 }
@@ -14,7 +13,7 @@
   padding-left: 30px;
   font-size: 14px;
   cursor: pointer;
-  margin-top: 3px;
+  margin-top: 8px;
 }
 .Confirm,
 .Cancel {

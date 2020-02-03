@@ -103,9 +103,9 @@ class ChooseNetworks extends Component {
     favNetworks: null
   };
 
-  componentDidUpdate() {
-    console.log(this.state.selectedNetworks);
-  }
+  // componentDidUpdate() {
+  //   console.log(this.state.selectedNetworks);
+  // }
 
   componentDidMount() {
     if (this.props.page === "account") {

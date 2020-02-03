@@ -40,6 +40,26 @@
   cursor: pointer;
   border: 1px solid #4d0019;
 }
+
+
+.Confirm,
+.Edit {
+  padding-left: 30px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+.Confirm {
+  display: none;
+}
+
+
+
+
+
+
+
+
 @media (max-width: 1090px) {
   .ChooseMovieGenres {
     padding-left: 0;

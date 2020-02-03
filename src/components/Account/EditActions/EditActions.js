@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faCheck, faBan } from "@fortawesome/free-solid-svg-icons";
 import classes from "./EditActions.module.css";
@@ -94,13 +93,6 @@ const EditActions = props => {
   );
 };
 
-// export default EditActions;
+export default EditActions;
 
-const mapStateToProps = state => {
-  return {
-    displayName: state.displayName,
-    emailId: state.email
-  };
-};
 
-export default connect(mapStateToProps)(EditActions);

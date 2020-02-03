@@ -1,131 +1,203 @@
-import React, { Component } from "react";
-import Genre from "../Genre/Genre";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import Genre from '../Genre/Genre';
+import axios from 'axios';
 
-import classes from "./ChooseMovieGenres.module.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencilAlt, faCheck } from '@fortawesome/free-solid-svg-icons';
+import classes from './ChooseMovieGenres.module.css';
 
-class ChooseMovieGenres extends Component {
-  state = {
-    selectedGenres: [],
-    genreList: null
-  };
+const ChooseMovieGenres = props => {
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [genreList, setGenreList] = useState(null);
+  const [showAll, setShowAll] = useState(false);
 
-  componentDidMount() {
-    this.getGenresHandler();
-  }
+  useEffect(() => {
+    getGenresHandler();
+  }, []);
 
-  getGenresHandler = () => {
+  let genresRef = React.createRef();
+  let editRef = React.createRef();
+  let confirmRef = React.createRef();
+
+  const getGenresHandler = () => {
     axios
-      .get("https://api.themoviedb.org/3/genre/movie/list", {
+      .get('https://api.themoviedb.org/3/genre/movie/list', {
         params: {
-          api_key: "4c7294000365c14a8e42109c863ff772",
-          language: "en-US"
+          api_key: '4c7294000365c14a8e42109c863ff772',
+          language: 'en-US'
         }
       })
       .then(response => {
-        this.setState({ genreList: response.data.genres });
+        setGenreList(response.data.genres);
       })
       .catch(error => {
-        console.log("error: " + error);
+        console.log('error: ' + error);
       });
   };
 
-  genreClickHandler = id => {
+  const showHideGenresHandler = event => {
+    const genres = genresRef.current.querySelectorAll('div[favorite=false]');
+
+    if (event.currentTarget.id === 'edit') {
+      editRef.current.style.display = 'none';
+      confirmRef.current.style.display = 'block';
+    }
+    if (event.currentTarget.id === 'confirm') {
+      editRef.current.style.display = 'block';
+      confirmRef.current.style.display = 'none';
+    }
+    if (!showAll) {
+      for (let i = 0; i < genres.length; i++) {
+        genres[i].style.display = 'flex';
+      }
+      setShowAll(!showAll);
+    } else {
+      for (let i = 0; i < genres.length; i++) {
+        genres[i].style.display = 'none';
+      }
+      setShowAll(!showAll);
+    }
+  };
+
+  const genreClickHandler = id => {
     let newGenres = null;
-    const genresCopy = [...this.state.selectedGenres];
+    const genresCopy = [...selectedGenres];
     const exists = genresCopy.some(el => {
       return el === id;
     });
     if (exists) {
       newGenres = genresCopy.filter(genreId => genreId !== id);
     } else {
-      newGenres = this.state.selectedGenres.concat(id);
+      newGenres = selectedGenres.concat(id);
     }
-    this.setState({ selectedGenres: newGenres });
+    setSelectedGenres(newGenres);
   };
 
-  render() {
-    let genres = null;
-    if (this.state.genreList) {
-      genres = this.state.genreList.map(gen => {
-        return (
-          <Genre
-            key={gen.id}
-            name={gen.name}
-            id={gen.id}
-            click={this.genreClickHandler}
-            page={this.props.page}
-          />
-        );
-      });
-    }
+  let genres = null;
 
-    return (
+  if (genreList) {
+    genres = genreList.map(gen => {
+      return (
+        <Genre
+          key={gen.id}
+          name={gen.name}
+          id={gen.id}
+          showAll={showAll}
+          click={
+            props.page === 'account' && showAll
+              ? () => props.updateGenres(gen.id)
+              : genreClickHandler
+          }
+          page={props.page}
+          favorite={
+            JSON.parse(
+              localStorage.getItem('userData')
+            ).favMovieGenres.includes(gen.id)
+              ? true
+              : false
+          }
+        />
+      );
+    });
+  }
+
+  return (
+    <div
+      className={classes.ChooseMovieGenres}
+      style={
+        props.page === 'account'
+          ? {
+              paddingLeft: 0,
+              paddingTop: 0,
+              justifyContent: 'flex-start'
+            }
+          : null
+      }
+    >
       <div
-        className={classes.ChooseMovieGenres}
+        className={classes.InnerContainer}
         style={
-          this.props.page === "account"
+          props.page === 'account'
             ? {
-                paddingLeft: 0,
-                paddingTop: 0
+                alignItems: 'flex-start'
               }
             : null
         }
       >
+        {props.page === 'account' ? (
+          <div style={{ display: 'flex', width: '100%' }}>
+            <h1
+              style={
+                props.page === 'account'
+                  ? {
+                      fontSize: '24px',
+                      fontWeight: 'normal',
+                      marginBottom: '10px'
+                    }
+                  : null
+              }
+            >
+              {props.page === 'account'
+                ? 'Favorite Movie Genres'
+                : 'Choose your favorite movie genres'}
+            </h1>
+            {props.page === 'account' ? (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  flexGrow: '1'
+                }}
+              >
+                <div
+                  onClick={event => showHideGenresHandler(event)}
+                  className={classes.Edit}
+                  id="edit"
+                  ref={editRef}
+                >
+                  <FontAwesomeIcon icon={faPencilAlt} />
+                </div>
+                <div
+                  onClick={event => showHideGenresHandler(event)}
+                  className={classes.Confirm}
+                  id="confirm"
+                  ref={confirmRef}
+                >
+                  <FontAwesomeIcon icon={faCheck} />
+                </div>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
         <div
-          className={classes.InnerContainer}
+          ref={genresRef}
+          className={classes.MovieGenresList}
           style={
-            this.props.page === "account"
+            props.page === 'account'
               ? {
-                  alignItems: "flex-start"
+                  justifyContent: 'flex-start'
                 }
               : null
           }
         >
-          <h1
-            style={
-              this.props.page === "account"
-                ? {
-                    fontSize: "24px",
-                    fontWeight: "normal",
-                    marginBottom: "10px"
-                  }
-                : null
-            }
-          >
-            {this.props.page === "account"
-              ? "Favorite Movie Genres"
-              : "Choose your favorite movie genres"}
-          </h1>
-          <div
-            className={classes.MovieGenresList}
-            style={
-              this.props.page === "account"
-                ? {
-                    justifyContent: "flex-start"
-                  }
-                : null
-            }
-          >
-            {genres}
-          </div>
-
-          {!this.props.page === "account" ? (
-            <button
-              onClick={
-                this.props.clickNext
-                  ? this.props.clickNext.bind(genres, this.state.selectedGenres)
-                  : null
-              }
-              className={classes.ButtonRed}
-            >
-              Next
-            </button>
-          ) : null}
+          {genres}
         </div>
+
+        {!props.page === 'account' ? (
+          <button
+            onClick={
+              props.clickNext
+                ? props.clickNext.bind(genres, selectedGenres)
+                : null
+            }
+            className={classes.ButtonRed}
+          >
+            Next
+          </button>
+        ) : null}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default ChooseMovieGenres;

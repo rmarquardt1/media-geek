@@ -32,7 +32,7 @@ class Network extends Component {
                 backgroundColor: this.state.bgColor,
                 margin: "5px",
                 borderRadius: "3px",
-                height: "80px",
+                height: "70px",
                 width: "120px",
                 color: "#000"
               }
@@ -46,7 +46,6 @@ class Network extends Component {
           this.props.click(this.props.id);
         }}
       >
-        {this.props.name}
       </div>
     );
   }

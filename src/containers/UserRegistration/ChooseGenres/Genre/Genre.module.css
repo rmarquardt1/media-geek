@@ -16,6 +16,9 @@
   text-align: center;
   box-sizing: border-box;
 }
+.Hide {
+  display:none;
+}
 @media (max-width: 1090px) {
   .Genre {
     height: 80px;

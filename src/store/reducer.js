@@ -6,7 +6,7 @@ const initialState = {
   userId: null,
   displayName: null,
   profilePic: null,
-  email: null,
+  emailId: null,
   userData: null,
   error: null,
   loading: false,
@@ -70,10 +70,9 @@ const reducer = (state = initialState, action) => {
         profilePic: action.profilePicUrl
       };
     case actionTypes.STORE_EMAIL:
-      console.log("triggered: " + action.email);
       return {
         ...state,
-        email: action.email
+        emailId: action.email
       };
     case actionTypes.STORE_TOKEN:
       return {

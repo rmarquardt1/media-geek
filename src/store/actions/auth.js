@@ -47,7 +47,6 @@ export const storeUserData = uid => {
     axios
       .get("https://mediageek-650c6.firebaseio.com/users/" + uid + "/.json")
       .then(response => {
-        console.log(response.data);
         ls.set("userData", response.data);
         localStorage.setItem("displayName", response.data.displayName);
         dispatch(setDisplayName(response.data.displayName));
@@ -98,6 +97,7 @@ export const setDisplayName = displayName => {
 };
 
 export const setEmailAddress = email => {
+  localStorage.setItem('emailId', email);
   return {
     type: actionTypes.STORE_EMAIL,
     email: email

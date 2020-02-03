@@ -174,15 +174,17 @@ class SideBar extends Component {
         />
         <div className={sideBarClass}>
           <ul>
-            <NavLink to="/">
+            
               <li onClick={this.showMenuHandler} className={classes.ListLogo}>
                 <div className={classes.LogoContainer}>
                   {/* <img className={classes.Logo} src={mgLogo} alt="" /> */}
+                  <NavLink to="/">
                   <img
                     className={classes.Logo}
                     src="https://github.com/rmarquardt1/media-geek/blob/master/src/assets/images/mg-icon.png?raw=true"
                     alt=""
                   />
+                  </NavLink>
                   <div>
                     <div className={classes.LogoText}>
                       <span style={{ fontWeight: "200" }}>media</span>
@@ -196,7 +198,7 @@ class SideBar extends Component {
                   </div>
                 </div>
               </li>
-            </NavLink>
+            
             {!this.props.isAuth ? (
               <Aux>
                 <li onClick={this.menuHandler} className={classes.Hover}>

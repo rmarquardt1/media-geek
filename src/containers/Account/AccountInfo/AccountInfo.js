@@ -12,6 +12,10 @@ class AccountInfo extends Component {
     showChangePw: false
   };
 
+  componentDidUpdate() {
+    console.log(this.props.email)
+  }
+
   changePasswordHandler = () => {
     this.setState({ showChangePw: !this.state.showChangePw });
   };
@@ -92,7 +96,7 @@ class AccountInfo extends Component {
 const mapStateToProps = state => {
   return {
     displayName: state.displayName,
-    email: state.email
+    email: state.emailId
   };
 };
 
