@@ -5,19 +5,21 @@
   align-items: center;
   justify-content: center;
   background-repeat: no-repeat;
-  background-size: 50%;
+  background-size: cover;
   background-position: center;
   margin: 20px;
   position: relative;
   border-radius: 10px;
   cursor: pointer;
-  border: 1px solid #66b3ff;
+  /* border: 1px solid #66b3ff; */
   border-radius: 30px;
   text-align: center;
   box-sizing: border-box;
+  text-shadow: 2px 1px #000;
+  font-weight: bold;
 }
 .Hide {
-  display:none;
+  display: none;
 }
 @media (max-width: 1090px) {
   .Genre {

@@ -1,0 +1,32 @@
+.Response {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  z-index: 5;
+}
+.ResponseMessage {
+  background: #313c4e;
+  position: relative;
+  left: 100px;
+  /* height: 300px;
+  width: 500px; */
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 3px;
+}
+
+h2 {
+  margin-top: 0;
+}
+p {
+  margin-top: 0;
+}

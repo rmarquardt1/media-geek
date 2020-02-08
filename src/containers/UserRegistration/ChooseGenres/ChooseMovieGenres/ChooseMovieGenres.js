@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import Genre from '../Genre/Genre';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import Genre from "../Genre/Genre";
+import axios from "axios";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faCheck } from '@fortawesome/free-solid-svg-icons';
-import classes from './ChooseMovieGenres.module.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt, faCheck } from "@fortawesome/free-solid-svg-icons";
+import classes from "./ChooseMovieGenres.module.css";
 
 const ChooseMovieGenres = props => {
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -21,39 +21,39 @@ const ChooseMovieGenres = props => {
 
   const getGenresHandler = () => {
     axios
-      .get('https://api.themoviedb.org/3/genre/movie/list', {
+      .get("https://api.themoviedb.org/3/genre/movie/list", {
         params: {
-          api_key: '4c7294000365c14a8e42109c863ff772',
-          language: 'en-US'
+          api_key: "4c7294000365c14a8e42109c863ff772",
+          language: "en-US"
         }
       })
       .then(response => {
         setGenreList(response.data.genres);
       })
       .catch(error => {
-        console.log('error: ' + error);
+        console.log("error: " + error);
       });
   };
 
   const showHideGenresHandler = event => {
-    const genres = genresRef.current.querySelectorAll('div[favorite=false]');
+    const genres = genresRef.current.querySelectorAll("div[favorite=false]");
 
-    if (event.currentTarget.id === 'edit') {
-      editRef.current.style.display = 'none';
-      confirmRef.current.style.display = 'block';
+    if (event.currentTarget.id === "edit") {
+      editRef.current.style.display = "none";
+      confirmRef.current.style.display = "block";
     }
-    if (event.currentTarget.id === 'confirm') {
-      editRef.current.style.display = 'block';
-      confirmRef.current.style.display = 'none';
+    if (event.currentTarget.id === "confirm") {
+      editRef.current.style.display = "block";
+      confirmRef.current.style.display = "none";
     }
     if (!showAll) {
       for (let i = 0; i < genres.length; i++) {
-        genres[i].style.display = 'flex';
+        genres[i].style.display = "flex";
       }
       setShowAll(!showAll);
     } else {
       for (let i = 0; i < genres.length; i++) {
-        genres[i].style.display = 'none';
+        genres[i].style.display = "none";
       }
       setShowAll(!showAll);
     }
@@ -83,15 +83,16 @@ const ChooseMovieGenres = props => {
           name={gen.name}
           id={gen.id}
           showAll={showAll}
+          genreType="movies"
           click={
-            props.page === 'account' && showAll
+            props.page === "account" && showAll
               ? () => props.updateGenres(gen.id)
               : genreClickHandler
           }
           page={props.page}
           favorite={
             JSON.parse(
-              localStorage.getItem('userData')
+              localStorage.getItem("userData")
             ).favMovieGenres.includes(gen.id)
               ? true
               : false
@@ -105,11 +106,12 @@ const ChooseMovieGenres = props => {
     <div
       className={classes.ChooseMovieGenres}
       style={
-        props.page === 'account'
+        props.page === "account"
           ? {
               paddingLeft: 0,
               paddingTop: 0,
-              justifyContent: 'flex-start'
+              justifyContent: "flex-start",
+              marginBottom: "30px"
             }
           : null
       }
@@ -117,36 +119,36 @@ const ChooseMovieGenres = props => {
       <div
         className={classes.InnerContainer}
         style={
-          props.page === 'account'
+          props.page === "account"
             ? {
-                alignItems: 'flex-start'
+                alignItems: "flex-start"
               }
             : null
         }
       >
-        {props.page === 'account' ? (
-          <div style={{ display: 'flex', width: '100%' }}>
+        {props.page === "account" ? (
+          <div style={{ display: "flex", width: "100%" }}>
             <h1
               style={
-                props.page === 'account'
+                props.page === "account"
                   ? {
-                      fontSize: '24px',
-                      fontWeight: 'normal',
-                      marginBottom: '10px'
+                      fontSize: "24px",
+                      fontWeight: "normal",
+                      marginBottom: "10px"
                     }
                   : null
               }
             >
-              {props.page === 'account'
-                ? 'Favorite Movie Genres'
-                : 'Choose your favorite movie genres'}
+              {props.page === "account"
+                ? "Favorite Movie Genres"
+                : "Choose your favorite movie genres"}
             </h1>
-            {props.page === 'account' ? (
+            {props.page === "account" ? (
               <div
                 style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  flexGrow: '1'
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexGrow: "1"
                 }}
               >
                 <div
@@ -173,9 +175,9 @@ const ChooseMovieGenres = props => {
           ref={genresRef}
           className={classes.MovieGenresList}
           style={
-            props.page === 'account'
+            props.page === "account"
               ? {
-                  justifyContent: 'flex-start'
+                  justifyContent: "flex-start"
                 }
               : null
           }
@@ -183,7 +185,7 @@ const ChooseMovieGenres = props => {
           {genres}
         </div>
 
-        {!props.page === 'account' ? (
+        {!props.page === "account" ? (
           <button
             onClick={
               props.clickNext
