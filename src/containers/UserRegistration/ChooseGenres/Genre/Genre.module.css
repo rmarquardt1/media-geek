@@ -17,7 +17,21 @@
   box-sizing: border-box;
   text-shadow: 2px 1px #000;
   font-weight: bold;
+  padding: 5px;
+  border: solid;
+  border-width: 0px;
+  border-color: rgba(0,0,0,0.5);
+  transition: border-color 0.1s, border-width 0.1s;
 }
+
+.GenreHover:hover {
+  border: solid !important;
+  border-width: 3px !important;
+  border-color:#1a8cff !important;
+  transition: border-color 0.1s, border-width 0.1s;
+}
+
+
 .Hide {
   display: none;
 }

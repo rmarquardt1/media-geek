@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from "react";
-import Genre from "../Genre/Genre";
+import React, { useState, useEffect } from 'react';
+import Genre from '../Genre/Genre';
+import axios from 'axios';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencilAlt, faCheck } from "@fortawesome/free-solid-svg-icons";
-import classes from "./ChooseTvGenres.module.css";
-import axios from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencilAlt, faCheck } from '@fortawesome/free-solid-svg-icons';
+import classes from './ChooseTvGenres.module.css';
+import genreClasses from '../Genre/Genre.module.css';
 
-// class ChooseTvGenres extends Component {
 const ChooseTvGenres = props => {
-  // state = {
-  //   selectedGenres: [],
-  //   genreList: null
-  // };
-
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [genreList, setGenreList] = useState(null);
   const [showAll, setShowAll] = useState(false);
@@ -21,50 +16,83 @@ const ChooseTvGenres = props => {
     getGenresHandler();
   }, []);
 
+  useEffect(() => {
+    if (props.reload) {
+      reloadGenresHandler();
+      props.reloaded();
+    }
+  });
+
   let genresRef = React.createRef();
   let editRef = React.createRef();
   let confirmRef = React.createRef();
 
-  // componentDidMount() {
-  //   this.getGenresHandler();
-  // }
-
   const getGenresHandler = () => {
     axios
-      .get("https://api.themoviedb.org/3/genre/tv/list", {
+      .get('https://api.themoviedb.org/3/genre/tv/list', {
         params: {
-          api_key: "4c7294000365c14a8e42109c863ff772",
-          language: "en-US"
+          api_key: '4c7294000365c14a8e42109c863ff772',
+          language: 'en-US'
         }
       })
       .then(response => {
-        // this.setState({ genreList: response.data.genres });
         setGenreList(response.data.genres);
       })
       .catch(error => {
-        console.log("error: " + error);
+        console.log('error: ' + error);
       });
   };
 
-  const showHideGenresHandler = event => {
-    const genres = genresRef.current.querySelectorAll("div[favorite=false]");
-
-    if (event.currentTarget.id === "edit") {
-      editRef.current.style.display = "none";
-      confirmRef.current.style.display = "block";
+  const reloadGenresHandler = () => {
+    const favFalse = genresRef.current.querySelectorAll('div[favorite=false]');
+    const favTrue = genresRef.current.querySelectorAll('div[favorite=true]');
+    for (let i = 0; i < favFalse.length; i++) {
+      favFalse[i].style.display = 'none';
+      favFalse[i].classList.remove(genreClasses.GenreHover);
     }
-    if (event.currentTarget.id === "confirm") {
-      editRef.current.style.display = "block";
-      confirmRef.current.style.display = "none";
+    for (let i = 0; i < favTrue.length; i++) {
+      favTrue[i].style.border = '0px solid rgba(0,0,0,0.5)';
+      favTrue[i].style.transition = 'none';
+      favTrue[i].classList.remove(genreClasses.GenreHover);
+    }
+    editRef.current.style.display = 'block';
+    confirmRef.current.style.display = 'none';
+    setShowAll(false);
+  };
+
+  const showHideGenresHandler = event => {
+    const favGenres = genresRef.current.querySelectorAll('div[favorite=true]');
+    const genres = genresRef.current.querySelectorAll('div[favorite=false]');
+
+    Object.keys(favGenres).map(k => {
+      favGenres[k].style.border = '3px solid #1a8cff';
+    });
+
+    if (event.currentTarget.id === 'edit') {
+      editRef.current.style.display = 'none';
+      confirmRef.current.style.display = 'block';
+    }
+    if (event.currentTarget.id === 'confirm') {
+      editRef.current.style.display = 'block';
+      confirmRef.current.style.display = 'none';
     }
     if (!showAll) {
+      Object.keys(favGenres).map(k => {
+        favGenres[k].classList.add(genreClasses.GenreHover);
+      });
       for (let i = 0; i < genres.length; i++) {
-        genres[i].style.display = "flex";
+        genres[i].style.display = 'flex';
+        genres[i].classList.add(genreClasses.GenreHover);
       }
       setShowAll(!showAll);
     } else {
       for (let i = 0; i < genres.length; i++) {
-        genres[i].style.display = "none";
+        genres[i].style.display = 'none';
+        Object.keys(favGenres).map(k => {
+          favGenres[k].style.border = '0px solid rgba(0,0,0,0.5)';
+          favGenres[k].style.transition = 'none';
+          favGenres[k].classList.remove(genreClasses.GenreHover);
+        });
       }
       setShowAll(!showAll);
     }
@@ -81,11 +109,9 @@ const ChooseTvGenres = props => {
     } else {
       newGenres = selectedGenres.concat(id);
     }
-    // this.setState({ selectedGenres: newGenres });
     setSelectedGenres(newGenres);
   };
 
-  // render() {
   let genres = null;
 
   if (genreList) {
@@ -98,13 +124,13 @@ const ChooseTvGenres = props => {
           showAll={showAll}
           genreType="tv"
           click={
-            props.page === "account" && showAll
+            props.page === 'account' && showAll
               ? () => props.updateGenres(gen.id)
               : genreClickHandler
           }
           page={props.page}
           favorite={
-            JSON.parse(localStorage.getItem("userData")).favTvGenres.includes(
+            JSON.parse(localStorage.getItem('userData')).favTvGenres.includes(
               gen.id
             )
               ? true
@@ -115,28 +141,16 @@ const ChooseTvGenres = props => {
     });
   }
 
-  // if (this.state.genreList) {
-  //   genres = this.state.genreList.map(gen => {
-  //     return (
-  //       <Genre
-  //         key={gen.id}
-  //         name={gen.name}
-  //         id={gen.id}
-  //         click={this.genreClickHandler}
-  //       />
-  //     );
-  //   });
-  // }
   return (
     <div
       className={classes.ChooseTvGenres}
       style={
-        props.page === "account"
+        props.page === 'account'
           ? {
               paddingLeft: 0,
               paddingTop: 0,
-              justifyContent: "flex-start",
-              marginBottom: "30px"
+              justifyContent: 'flex-start',
+              marginBottom: '30px'
             }
           : null
       }
@@ -144,36 +158,36 @@ const ChooseTvGenres = props => {
       <div
         className={classes.InnerContainer}
         style={
-          props.page === "account"
+          props.page === 'account'
             ? {
-                alignItems: "flex-start"
+                alignItems: 'flex-start'
               }
             : null
         }
       >
-        {props.page === "account" ? (
-          <div style={{ display: "flex", width: "100%" }}>
+        {props.page === 'account' ? (
+          <div style={{ display: 'flex', width: '100%' }}>
             <h1
               style={
-                props.page === "account"
+                props.page === 'account'
                   ? {
-                      fontSize: "24px",
-                      fontWeight: "normal",
-                      marginBottom: "10px"
+                      fontSize: '24px',
+                      fontWeight: 'normal',
+                      marginBottom: '10px'
                     }
                   : null
               }
             >
-              {props.page === "account"
-                ? "Favorite Television Genres"
-                : "Choose your favorite television genres"}
+              {props.page === 'account'
+                ? 'Favorite Television Genres'
+                : 'Choose your favorite television genres'}
             </h1>
-            {props.page === "account" ? (
+            {props.page === 'account' ? (
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  flexGrow: "1"
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  flexGrow: '1'
                 }}
               >
                 <div
@@ -200,9 +214,9 @@ const ChooseTvGenres = props => {
           ref={genresRef}
           className={classes.TvGenresList}
           style={
-            props.page === "account"
+            props.page === 'account'
               ? {
-                  justifyContent: "flex-start"
+                  justifyContent: 'flex-start'
                 }
               : null
           }
@@ -210,7 +224,7 @@ const ChooseTvGenres = props => {
           {genres}
         </div>
 
-        {!props.page === "account" ? (
+        {!props.page === 'account' ? (
           <button
             onClick={
               props.clickNext
@@ -224,24 +238,7 @@ const ChooseTvGenres = props => {
         ) : null}
       </div>
     </div>
-
-    // <div className={classes.ChooseTvGenres}>
-    //   <div className={classes.InnerContainer}>
-    //     <h1>Choose your favorite Television genres</h1>
-    //     <div className={classes.TvGenresList}>{genres}</div>
-    //     <button
-    //       onClick={this.props.clickNext.bind(
-    //         genres,
-    //         this.state.selectedGenres
-    //       )}
-    //       className={classes.ButtonRed}
-    //     >
-    //       Finish
-    //     </button>
-    //   </div>
-    // </div>
   );
-  // }
 };
 
 export default ChooseTvGenres;

@@ -21,10 +21,17 @@ import WarImage from "../assets/images/war.jpg";
 import HistoryImage from "../assets/images/history.jpg";
 import HorrorImage from "../assets/images/horror.jpg";
 import ScifiImage from "../assets/images/scifi.jpg";
+import ScifiImageTv from "../assets/images/scifi_tv.jpg";
 import TvMovieImage from "../assets/images/tvmovie.jpg";
 import ThrillerImage from "../assets/images/thriller.jpg";
 import WesternImage from "../assets/images/western.jpg";
-import KidsTv from "../assets/images/kids_tv.jpg";
+import KidsImageTv from "../assets/images/kids_tv.jpg";
+import NewsImageTv from "../assets/images/news_tv.jpg";
+import RealityImageTv from "../assets/images/reality_tv.jpg";
+import SoapImageTv from "../assets/images/soap_tv.jpg";
+import TalkImageTv from "../assets/images/talk_tv.jpg";
+import PoliticsImageTv from "../assets/images/politics_tv.jpg";
+import ActionImageTv from "../assets/images/action_tv.jpg";
 
 const genreImages = {
   movieGenres: [
@@ -126,6 +133,11 @@ const genreImages = {
   ],
   tvGenres: [
     {
+      name: "Action & Adventure",
+      id: 10759,
+      image: ActionImageTv
+    },
+    {
       name: "Animation",
       id: 16,
       image: AnimationImageTv
@@ -158,13 +170,17 @@ const genreImages = {
     {
       name: "Kids",
       id: 10762,
-      image: KidsTv
+      image: KidsImageTv
     },
-
     {
       name: "Mystery",
       id: 9648,
       image: MysteryImageTv
+    },
+    {
+      name: "News",
+      id: 10763,
+      image: NewsImageTv
     },
     {
       name: "Romance",
@@ -172,24 +188,29 @@ const genreImages = {
       image: RomanceImage
     },
     {
-      name: "Science Fiction",
-      id: 878,
-      image: ScifiImage
+      name: "Reality",
+      id: 10764,
+      image: RealityImageTv
     },
     {
-      name: "TV Movie",
-      id: 10770,
-      image: TvMovieImage
+      name: "Sci-Fi & Fantasy",
+      id: 10765,
+      image: ScifiImageTv
     },
     {
-      name: "Thriller",
-      id: 53,
-      image: ThrillerImage
+      name: "Soap",
+      id: 10766,
+      image: SoapImageTv
     },
     {
-      name: "War",
-      id: 10752,
-      image: WarImage
+      name: "Talk",
+      id: 10767,
+      image: TalkImageTv
+    },
+    {
+      name: "War & Politics",
+      id: 10768,
+      image: PoliticsImageTv
     },
     {
       name: "Western",

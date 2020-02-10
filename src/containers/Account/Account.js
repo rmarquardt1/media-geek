@@ -61,18 +61,21 @@ class Account extends Component {
     updateDisplayName: false,
     updateMovieGenres: false,
     updateTvGenres: false,
+    updateNetworks: false,
     imageUploaded: false,
     movieGenres: JSON.parse(localStorage.getItem("userData")).favMovieGenres,
     tvGenres: JSON.parse(localStorage.getItem("userData")).favTvGenres,
+    networks: JSON.parse(localStorage.getItem("userData")).favNetworks,
     saveError: false,
     saveErrorMessage: [],
-    showResponse: false
+    showResponse: false,
+    reload: false
   };
 
-  componentDidUpdate() {
-    console.log(this.state.tvGenres);
-    console.log("updateGenres: " + this.state.updateTvGenres);
-  }
+  // componentDidUpdate() {
+  //   console.log(this.state.tvGenres);
+  //   console.log("updateGenres: " + this.state.updateTvGenres);
+  // }
 
   changePasswordHandler = () => {
     if (
@@ -196,7 +199,6 @@ class Account extends Component {
   };
 
   saveChangesHandler = async () => {
-    console.log(this.state.newEmail);
     if (this.state.newProfileImg) {
       await this.uploadImageHandler();
     }
@@ -384,8 +386,21 @@ class Account extends Component {
     });
   };
 
+  updateNetworksHandler = networkId => {
+    const newNetworks = [...this.state.networks];
+    if (this.state.movieGenres.includes(networkId)) {
+      for (let i = 0; i < newNetworks.length; i++) {
+        if (newNetworks[i] === networkId) {
+          newNetworks.splice(i, 1);
+        }
+      }
+    } else {
+      newNetworks.push(networkId);
+    }
+    this.setState({ networks: newNetworks, updateNetworks: true });
+  };
+
   updateMovieGenresHandler = genreId => {
-    console.log(genreId);
     const newMovieGenres = [...this.state.movieGenres];
     if (this.state.movieGenres.includes(genreId)) {
       for (let i = 0; i < newMovieGenres.length; i++) {
@@ -426,14 +441,19 @@ class Account extends Component {
       updateDisplayName: false,
       updateMovieGenres: false,
       updateTvGenres: false,
+      updateNetworks: false,
       imageUploaded: false,
       movieGenres: JSON.parse(localStorage.getItem("userData")).favMovieGenres,
       tvGenres: JSON.parse(localStorage.getItem("userData")).favTvGenres,
+      networks: JSON.parse(localStorage.getItem("userData")).favNetworks,
       saveError: false,
       saveErrorMessage: [],
-      showResponse: false
+      showResponse: false,
+      reload: false
     });
   };
+
+
 
   render() {
     // const userData = JSON.parse(localStorage.getItem("userData"));
@@ -518,14 +538,25 @@ class Account extends Component {
               {/* <div className={uiClasses.Spacer} /> */}
 
               <div className={classes.AccountPreferences}>
-                <ChooseNetworks page="account" />
+                <ChooseNetworks 
+                page="account" 
+                updateGenres={this.updateNetworksHandler}
+                reload={this.state.reload}
+                reloaded={() => this.setState({reload: false})}
+                
+                
+                />
                 <ChooseMovieGenres
                   page="account"
                   updateGenres={this.updateMovieGenresHandler}
+                  reload={this.state.reload}
+                  reloaded={() => this.setState({reload: false})}
                 />
                 <ChooseTvGenres
                   page="account"
                   updateGenres={this.updateTvGenresHandler}
+                  reload={this.state.reload}
+                  reloaded={() => this.setState({reload: false})}
                 />
               </div>
             </div>

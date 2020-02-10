@@ -5,23 +5,14 @@ import uiClasses from "../../../../components/UI/Layout/Layout.module.css";
 import classes from "./Genre.module.css";
 
 const Genre = props => {
-  //console.log(genreImages);
-
   const [fav, setFav] = useState(props.favorite ? true : false);
-
   let bgImage = null;
-
   const imgArr =
     props.genreType === "movies"
       ? genreImages.movieGenres
       : props.genreType === "tv"
       ? genreImages.tvGenres
       : [];
-
-  // const imgArr = genreImages.movieGenres;
-
-  // console.log(genreImages);
-
   bgImage = imgArr
     .map(img => {
       if (img.id === props.id) {
@@ -35,9 +26,11 @@ const Genre = props => {
   const clickHandler = event => {
     if (!fav) {
       setFav(true);
+      event.target.style.border = '3px solid #1a8cff';
     }
     if (fav) {
       setFav(false);
+      event.target.style.border = '0px solid rgba(0,0,0,0.5) ';
     }
     const favorite =
       event.target.getAttribute("favorite") === "true" ? true : false;
@@ -63,23 +56,17 @@ const Genre = props => {
       style={
         props.page === "account"
           ? {
-              // backgroundImage: bgImage ? "url(" + bgImage + ")" : null,
-
               backgroundImage: bgImage
                 ? "radial-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(" +
                   bgImage +
                   ")"
                 : null,
-
-              backgroundColor: fav ? "#1a8cff" : "rgba(0,0,0,0)",
               margin: "5px",
               borderRadius: "3px",
               height: "70px",
               width: "120px"
             }
-          : {
-              backgroundColor: fav ? "#1a8cff" : "rgba(0,0,0,0)"
-            }
+          : null
       }
       onClick={
         props.showAll
