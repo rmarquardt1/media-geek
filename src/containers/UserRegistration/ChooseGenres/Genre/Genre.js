@@ -26,11 +26,11 @@ const Genre = props => {
   const clickHandler = event => {
     if (!fav) {
       setFav(true);
-      event.target.style.border = '3px solid #1a8cff';
+      event.target.style.border = "3px solid #1a8cff";
     }
     if (fav) {
       setFav(false);
-      event.target.style.border = '0px solid rgba(0,0,0,0.5) ';
+      event.target.style.border = "0px solid rgba(0,0,0,0.5) ";
     }
     const favorite =
       event.target.getAttribute("favorite") === "true" ? true : false;
@@ -69,12 +69,14 @@ const Genre = props => {
           : null
       }
       onClick={
-        props.showAll
+        props.page === "account" && props.showAll
           ? event => {
               clickHandler(event);
               props.click(props.id);
             }
-          : null
+          : () => {
+              props.click(props.id);
+            }
       }
     >
       {props.name}

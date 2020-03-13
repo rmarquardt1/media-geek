@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import ActorThumb from '../../../components/Actor/ActorThumb/ActorThumb';
-import OpenActor from '../../Actors/OpenActor/OpenActor';
-import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { Component } from "react";
+import ActorThumb from "../../../components/Actor/ActorThumb/ActorThumb";
+import OpenActor from "../../Actors/OpenActor/OpenActor";
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
   faChevronDown,
   faChevronUp
-} from '@fortawesome/free-solid-svg-icons';
-import uiClasses from '../../../components/UI/Layout/Layout.module.css';
-import classes from './ActorList.module.css';
+} from "@fortawesome/free-solid-svg-icons";
+import uiClasses from "../../../components/UI/Layout/Layout.module.css";
+import classes from "./ActorList.module.css";
 
 class ActorList extends Component {
   state = {
@@ -63,65 +63,45 @@ class ActorList extends Component {
     this.setState({
       containerWidth: this.containerWidthRef.current.clientWidth
     });
-    window.addEventListener('resize', this.resizeHandler);
+    window.addEventListener("resize", this.resizeHandler);
     this.resizeHandler();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeHandler);
+    window.removeEventListener("resize", this.resizeHandler);
   }
 
   loadListHandler = (marg, navLeftClicked) => {
     const windowW = window.innerWidth;
-    // const movieDimensions =
-    //   windowW <= 500
-    //     ? {
-    //         width: '75px',
-    //         lazyW: 75,
-    //         height: '110px',
-    //         movieHeight: '160px',
-    //         fontSize: '12px'
-    //       }
-    //     : {
-    //         width: '170px',
-    //         lazyW: 170,
-    //         height: '255px',
-    //         movieHeight: '350px',
-    //         fontSize: '14px'
-    //       };
-
     const movieDimensions =
       windowW <= 500
         ? {
-            width: '90px',
+            width: "90px",
             lazyW: 90,
-            height: '135px',
-            // movieHeight: '160px',
-            fontSize: '12px'
+            height: "135px",
+            fontSize: "12px"
           }
         : {
-            width: '195px',
+            width: "195px",
             lazyW: 195,
-            height: '293px',
-            // movieHeight: '350px',
-            fontSize: '14px'
+            height: "293px",
+            fontSize: "14px"
           };
-
 
     const releases = this.props.actors
       ? this.props.actors.map(result => {
           const actorInfo = {
             actorName: result.name,
-            profilePic: 'http://image.tmdb.org/t/p/w185' + result.profile_path,
+            profilePic: "http://image.tmdb.org/t/p/w185" + result.profile_path,
             actorId: result.id
           };
           return (
             <ActorThumb
-              marg={marg + 'px'}
+              marg={marg + "px"}
               lazyWidth={marg * 2 + movieDimensions.lazyW}
               id={result.id}
               key={result.id}
-              poster={'http://image.tmdb.org/t/p/w185' + result.profile_path}
+              poster={"http://image.tmdb.org/t/p/w185" + result.profile_path}
               name={result.name}
               character={result.character}
               dimensions={movieDimensions}
@@ -160,18 +140,11 @@ class ActorList extends Component {
     if (this.containerWidthRef.current) {
       const containerW = this.containerWidthRef.current.clientWidth;
       const scrollW = this.containerWidthRef.current.scrollWidth;
-      // const thumbW = windowW <= 500 ? 95 : 190;
       const thumbW = windowW <= 500 ? 90 : 195;
       const elCount = Math.floor(containerW / thumbW);
-      // const marg = (containerW / elCount - thumbW) / 2 + 10;
       const marg = (containerW / elCount - thumbW) / 2;
-      // const move =
-      //   typeof elPos === 'number'
-      //     ? elPos * (thumbW - 20 + marg * 2)
-      //     : this.state.currentElPosition * (thumbW - 20 + marg * 2);
-
       const move =
-        typeof elPos === 'number'
+        typeof elPos === "number"
           ? elPos * (thumbW + marg * 2)
           : this.state.currentElPosition * (thumbW + marg * 2);
 
@@ -183,7 +156,7 @@ class ActorList extends Component {
       this.containerWidthRef.current.scrollTo({
         left: move,
         top: 0,
-        behavior: 'smooth'
+        behavior: "smooth"
       });
     }
   };
@@ -192,15 +165,11 @@ class ActorList extends Component {
     const windowW = window.innerWidth;
     const containerW = this.containerWidthRef.current.clientWidth;
     const scrollW = this.containerWidthRef.current.scrollWidth;
-    // const thumbW = windowW <= 500 ? 95 : 190;
-
     const thumbW = windowW <= 500 ? 90 : 195;
-
-
     const actElCount = Math.floor(containerW / thumbW);
     const currentElPos = { ...this.state }.currentElPosition;
     switch (direction) {
-      case 'right':
+      case "right":
         this.setState({
           moveRight: containerW + { ...this.state }.containerWidth,
           containerWidth: containerW + { ...this.state }.containerWidth,
@@ -210,7 +179,7 @@ class ActorList extends Component {
         });
         this.resizeHandler(currentElPos + actElCount, false);
         break;
-      case 'left':
+      case "left":
         this.setState({
           moveRight: containerW - { ...this.state }.containerWidth,
           containerWidth: containerW - { ...this.state }.containerWidth,
@@ -235,10 +204,10 @@ class ActorList extends Component {
 
   actorClickHandler = (actorInfo, actorChar, actorPic) => {
     axios
-      .get('https://api.themoviedb.org/3/person/' + actorInfo.actorId + '?', {
+      .get("https://api.themoviedb.org/3/person/" + actorInfo.actorId + "?", {
         params: {
-          api_key: '4c7294000365c14a8e42109c863ff772',
-          language: 'en-US'
+          api_key: "4c7294000365c14a8e42109c863ff772",
+          language: "en-US"
         }
       })
       .then(response => {
@@ -257,7 +226,7 @@ class ActorList extends Component {
         });
       })
       .catch(error => {
-        console.log('error ' + error);
+        console.log("error " + error);
       });
   };
 
@@ -279,19 +248,34 @@ class ActorList extends Component {
     this.setState({
       showAll: !this.state.showAll
     });
+
+    if (!this.state.showAll) {
+      this.containerWidthRef.current.style.flexWrap = "wrap";
+      const scrollH = this.containerWidthRef.current.scrollHeight;
+      this.containerWidthRef.current.style.height = scrollH + "px";
+      this.containerWidthRef.current.style.transition = "height 1s linear";
+    } else {
+      this.containerWidthRef.current.style.transition = "height 0.5s linear";
+      setTimeout(() => {
+        this.containerWidthRef.current.style.flexWrap = "nowrap";
+      }, 1000);
+      this.setState({ showNavRight: true });
+      this.containerWidthRef.current.style.height = "360px";
+    }
+
     this.navHandler();
   };
 
   render() {
     return (
       <React.Fragment>
-        <div className={uiClasses.SectionHeader + ' ' + classes.CastHeader}>
+        <div className={uiClasses.SectionHeader + " " + classes.CastHeader}>
           {this.state.currentElPosition > 0 && !this.state.openActor ? (
-            <div className={classes.NavLeft}>
+            <div className={uiClasses.NavLeft}>
               <FontAwesomeIcon
                 icon={faChevronLeft}
-                className={classes.ChevronArrowRight + ' ' + uiClasses.PrevIcon}
-                onClick={() => this.navHandler('left')}
+                className={classes.ChevronArrowRight + " " + uiClasses.PrevIcon}
+                onClick={() => this.navHandler("left")}
               />
             </div>
           ) : null}
@@ -304,7 +288,7 @@ class ActorList extends Component {
           >
             Cast
           </h2>
-          <div className={classes.NavRight}>
+          <div className={uiClasses.NavRight}>
             {this.state.list === null ? null : this.state.list.length > 0 &&
               !this.state.openActor ? (
               <div className={classes.ShowAll} onClick={this.showAllHandler}>
@@ -312,15 +296,17 @@ class ActorList extends Component {
                   icon={this.state.showAll ? faChevronUp : faChevronDown}
                   className={classes.ShowChevronDown}
                 />
-                {this.state.showAll ? 'Show Less' : 'Show All'}
+                {this.state.showAll ? "Show Less" : "Show All"}
               </div>
             ) : null}
 
-            {this.state.showNavRight && !this.state.openActor && !this.state.showAll ? (
+            {this.state.showNavRight &&
+            !this.state.openActor &&
+            !this.state.showAll ? (
               <FontAwesomeIcon
                 icon={faChevronRight}
-                className={classes.ChevronArrowRight + ' ' + uiClasses.NextIcon}
-                onClick={() => this.navHandler('right')}
+                className={classes.ChevronArrowRight + " " + uiClasses.NextIcon}
+                onClick={() => this.navHandler("right")}
               />
             ) : null}
           </div>
@@ -328,8 +314,8 @@ class ActorList extends Component {
 
         <div className={classes.List}>
           <div
-            style={{ display: 'flex', alignItems: 'center', marginLeft: '5px' }}
-          ></div>
+            style={{ display: "flex", alignItems: "center", marginLeft: "5px" }}
+          />
           <div className={classes.ListContainer}>
             {this.state.openActorInfo && this.state.openActorBio ? (
               <OpenActor
@@ -343,11 +329,13 @@ class ActorList extends Component {
               />
             ) : (
               <div
-                className={
-                  this.state.showAll
-                    ? classes.ListItemsShowAll
-                    : classes.ListItems
-                }
+                // className={
+                //   this.state.showAll
+                //     ? classes.ListItemsShowAll
+                //     : classes.ListItems
+                // }
+
+                className={classes.ListItems}
                 ref={this.containerWidthRef}
               >
                 {this.state.list !== null

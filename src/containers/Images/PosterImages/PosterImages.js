@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight
-} from '@fortawesome/free-solid-svg-icons';
-import uiClasses from '../../../components/UI/Layout/Layout.module.css';
-import classes from './PosterImages.module.css';
+} from "@fortawesome/free-solid-svg-icons";
+import uiClasses from "../../../components/UI/Layout/Layout.module.css";
+import classes from "./PosterImages.module.css";
 
 class List extends Component {
   state = {
     listData: null,
     list: null,
-    mobileDisplay: false,
+    // mobileDisplay: false,
     containerWidth: 0,
     currentElPosition: 0,
     listLoaded: false,
@@ -30,26 +30,26 @@ class List extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.resizeHandler);
+    window.addEventListener("resize", this.resizeHandler);
     this.getImagesHandler();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeHandler);
+    window.removeEventListener("resize", this.resizeHandler);
   }
 
   getImagesHandler = async () => {
     let listDataResponse = null;
     let url = null;
     if (this.props.tvdbId) {
-      url = 'http://webservice.fanart.tv/v3/tv/' + this.props.tvdbId;
+      url = "https://webservice.fanart.tv/v3/tv/" + this.props.tvdbId;
     } else {
-      url = 'http://webservice.fanart.tv/v3/movies/' + this.props.imdbId;
+      url = "https://webservice.fanart.tv/v3/movies/" + this.props.imdbId;
     }
     await axios
       .get(url, {
         params: {
-          api_key: 'c3f4fba1e26da407177b194566ca2d3f'
+          api_key: "c3f4fba1e26da407177b194566ca2d3f"
         }
       })
       .then(response => {
@@ -58,11 +58,11 @@ class List extends Component {
           : response.data.movieposter;
       })
       .catch(error => {
-        console.log('error ' + error);
-       if (this.state.requestAttempt < 4) {
-        this.getImagesHandler();
-        this.setState({ requestAttempt: this.state.requestAttempt + 1 });
-      }
+        console.log("error " + error);
+        if (this.state.requestAttempt < 4) {
+          this.getImagesHandler();
+          this.setState({ requestAttempt: this.state.requestAttempt + 1 });
+        }
       });
     this.setState({ listData: listDataResponse });
     this.resizeHandler();
@@ -71,7 +71,7 @@ class List extends Component {
   loadListHandler = marg => {
     const releases = this.state.listData
       ? this.state.listData.map(result => {
-          const url = result.url.replace('/fanart/', '/preview/');
+          const url = result.url.replace("/fanart/", "/preview/");
           return (
             <div
               style={{ marginLeft: marg, marginRight: marg }}
@@ -122,8 +122,8 @@ class List extends Component {
       } else {
         const thumbs = this.containerWidthRef.current.childNodes;
         thumbs.forEach(item => {
-          item.style.marginLeft = marg + 'px';
-          item.style.marginRight = marg + 'px';
+          item.style.marginLeft = marg + "px";
+          item.style.marginRight = marg + "px";
         });
       }
     }
@@ -138,7 +138,7 @@ class List extends Component {
     const currentElPos = { ...this.state }.currentElPosition;
     const currentPos = { ...this.state }.moveRight;
     switch (direction) {
-      case 'right':
+      case "right":
         this.setState({
           moveRight: currentPos + containerW,
           containerWidth: containerW,
@@ -147,7 +147,7 @@ class List extends Component {
           currentElPosition: currentElPos + actElCount
         });
         break;
-      case 'left':
+      case "left":
         this.setState({
           moveRight: currentPos - containerW,
           actorContainerWidth: containerW,
@@ -164,13 +164,13 @@ class List extends Component {
     return (
       <div className={classes.List}>
         <div
-          style={{ display: 'flex', alignItems: 'center', marginLeft: '5px' }}
+          style={{ display: "flex", alignItems: "center", marginLeft: "5px" }}
         >
           <div className={classes.Bar} />
           {this.state.moveRight > 0 ? (
             <div
               className={classes.NavLeft}
-              onClick={() => this.navHandler('left')}
+              onClick={() => this.navHandler("left")}
             >
               <FontAwesomeIcon icon={faChevronLeft} />
             </div>
@@ -181,20 +181,20 @@ class List extends Component {
             this.state.scrollWidth && this.state.showNav ? (
             <div
               className={classes.NavRight}
-              onClick={() => this.navHandler('right')}
+              onClick={() => this.navHandler("right")}
             >
               <FontAwesomeIcon icon={faChevronRight} />
             </div>
           ) : null}
         </div>
-        <div style={{ overflow: 'hidden', width: '100%' }}>
+        <div style={{ overflow: "hidden", width: "100%" }}>
           <div
             className={classes.ListItems}
             style={
               this.state.moveRight > 0
-                ? { right: this.state.moveRight + 'px' }
+                ? { right: this.state.moveRight + "px" }
                 : this.state.openActorMovies
-                ? { left: '0px' }
+                ? { left: "0px" }
                 : null
             }
             ref={this.containerWidthRef}

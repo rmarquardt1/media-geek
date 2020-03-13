@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import TvSeason from '../../../components/Tv/TvSeason/TvSeason';
-import OpenSeason from '../../Tv/OpenSeason/OpenSeason';
+import React, { Component } from "react";
+import TvSeason from "../../../components/Tv/TvSeason/TvSeason";
+import OpenSeason from "../../Tv/OpenSeason/OpenSeason";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
   faChevronDown,
   faChevronUp
-} from '@fortawesome/free-solid-svg-icons';
+} from "@fortawesome/free-solid-svg-icons";
 
-import uiClasses from '../../../components/UI/Layout/Layout.module.css';
-import classes from './SeasonList.module.css';
+import uiClasses from "../../../components/UI/Layout/Layout.module.css";
+import classes from "./SeasonList.module.css";
 
 class VideoList extends Component {
   state = {
@@ -26,7 +26,6 @@ class VideoList extends Component {
     scrollMax: 0,
     showAll: false,
     noResults: false,
-
     openSeasonNumber: null,
     openSeasonInfo: null
   };
@@ -62,12 +61,12 @@ class VideoList extends Component {
     this.setState({
       containerWidth: this.containerWidthRef.current.clientWidth
     });
-    window.addEventListener('resize', this.resizeHandler);
+    window.addEventListener("resize", this.resizeHandler);
     this.resizeHandler();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeHandler);
+    window.removeEventListener("resize", this.resizeHandler);
     clearTimeout(this.showNavRightTimeout);
   }
 
@@ -76,14 +75,14 @@ class VideoList extends Component {
     const videoDimensions =
       windowW <= 500
         ? {
-            width: '90px',
+            width: "90px",
             lazyW: 90,
-            fontSize: '12px'
+            fontSize: "12px"
           }
         : {
-            width: '330px',
+            width: "330px",
             lazyW: 330,
-            fontSize: '14px'
+            fontSize: "14px"
           };
     const tvSeasons = this.props.seasons
       ? this.props.seasons
@@ -93,7 +92,7 @@ class VideoList extends Component {
           .map(season => {
             return (
               <TvSeason
-                marg={marg + 'px'}
+                marg={marg + "px"}
                 lazyWidth={marg * 2 + videoDimensions.lazyW}
                 key={season.id}
                 seasonInfo={season}
@@ -142,7 +141,7 @@ class VideoList extends Component {
       const elCount = Math.floor(containerW / thumbW);
       const marg = (containerW / elCount - thumbW) / 2;
       const move =
-        typeof elPos === 'number'
+        typeof elPos === "number"
           ? elPos * (thumbW + marg * 2)
           : this.state.currentElPosition * (thumbW + marg * 2);
       this.setState({
@@ -153,7 +152,7 @@ class VideoList extends Component {
       this.containerWidthRef.current.scrollTo({
         left: move,
         top: 0,
-        behavior: 'smooth'
+        behavior: "smooth"
       });
     }
   };
@@ -166,7 +165,7 @@ class VideoList extends Component {
     const actElCount = Math.floor(containerW / thumbW);
     const currentElPos = { ...this.state }.currentElPosition;
     switch (direction) {
-      case 'right':
+      case "right":
         this.setState({
           moveRight: containerW + { ...this.state }.containerWidth,
           containerWidth: containerW + { ...this.state }.containerWidth,
@@ -176,7 +175,7 @@ class VideoList extends Component {
         });
         this.resizeHandler(currentElPos + actElCount, false);
         break;
-      case 'left':
+      case "left":
         this.setState({
           moveRight: containerW - { ...this.state }.containerWidth,
           containerWidth: containerW - { ...this.state }.containerWidth,
@@ -221,13 +220,13 @@ class VideoList extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className={uiClasses.SectionHeader + ' ' + classes.CastHeader}>
+        <div className={uiClasses.SectionHeader + " " + classes.CastHeader}>
           {this.state.currentElPosition > 0 && !this.state.openActor ? (
-            <div className={classes.NavLeft}>
+            <div className={uiClasses.NavLeft}>
               <FontAwesomeIcon
                 icon={faChevronLeft}
-                className={classes.ChevronArrowRight + ' ' + uiClasses.PrevIcon}
-                onClick={() => this.navHandler('left')}
+                className={classes.ChevronArrowRight + " " + uiClasses.PrevIcon}
+                onClick={() => this.navHandler("left")}
               />
             </div>
           ) : null}
@@ -240,7 +239,7 @@ class VideoList extends Component {
           >
             Seasons
           </h2>
-          <div className={classes.NavRight}>
+          <div className={uiClasses.NavRight}>
             {this.state.list === null ? null : this.state.list.length > 0 &&
               !this.state.openActor ? (
               <div className={classes.ShowAll} onClick={this.showAllHandler}>
@@ -248,14 +247,14 @@ class VideoList extends Component {
                   icon={this.state.showAll ? faChevronUp : faChevronDown}
                   className={classes.ShowChevronDown}
                 />
-                {this.state.showAll ? 'Show Less' : 'Show All'}
+                {this.state.showAll ? "Show Less" : "Show All"}
               </div>
             ) : null}
             {this.state.showNavRight && !this.state.showAll ? (
               <FontAwesomeIcon
                 icon={faChevronRight}
-                className={classes.ChevronArrowRight + ' ' + uiClasses.NextIcon}
-                onClick={() => this.navHandler('right')}
+                className={classes.ChevronArrowRight + " " + uiClasses.NextIcon}
+                onClick={() => this.navHandler("right")}
               />
             ) : null}
           </div>
@@ -273,11 +272,11 @@ class VideoList extends Component {
             <React.Fragment>
               <div
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginLeft: '5px'
+                  display: "flex",
+                  alignItems: "center",
+                  marginLeft: "5px"
                 }}
-              ></div>
+              />
               <div className={classes.ListContainer}>
                 <div
                   className={

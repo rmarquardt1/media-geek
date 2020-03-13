@@ -1,14 +1,19 @@
 .Movie {
   cursor: pointer;
+  margin-bottom: 20px;
+}
+.Movie .Poster:hover {
+  transform: scale(1.07);
+  transition: transform 0.3s;
 }
 .Movie .Poster {
-  height: 450px;
   background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   position: relative;
+  transition: transform 0.3s;
 }
 .Movie .Poster img {
   width: 100%;

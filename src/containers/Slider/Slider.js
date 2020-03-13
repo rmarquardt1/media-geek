@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import Slide from '../../components/Slider/Slide/Slide';
-import listUrl from '../../references/listUrl';
-import listAxiosParams from '../../references/listAxiosParams';
-import AwesomeSlider from 'react-awesome-slider';
-import withAutoplay from 'react-awesome-slider/dist/autoplay';
-import AwsSliderStyles from 'react-awesome-slider/dist/styles.css';
+import React, { Component } from "react";
+import axios from "axios";
+import Slide from "../../components/Slider/Slide/Slide";
+import listUrl from "../../references/listUrl";
+import listAxiosParams from "../../references/listAxiosParams";
+import AwesomeSlider from "react-awesome-slider";
+import withAutoplay from "react-awesome-slider/dist/autoplay";
+import AwsSliderStyles from "react-awesome-slider/dist/styles.css";
+import { NavLink } from "react-router-dom";
+import logo from "../../assets/images/mg-icon.png";
 // import AwsSliderStyles from 'react-awesome-slider/dist/custom-animations/fold-out-animation.css';
-import './awesome-slider-override.css';
+import "./awesome-slider-override.css";
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
@@ -29,7 +31,7 @@ class Slider extends Component {
   getSliderIds = async () => {
     let movieIdArr = [];
     axios
-      .get(listUrl('inTheatres'), {
+      .get(listUrl("inTheatres"), {
         cancelToken: this.axiosCancel.token,
         params: listAxiosParams()
       })
@@ -42,13 +44,13 @@ class Slider extends Component {
       .catch(error => {
         if (error.response && error.response.status === 429) {
           const timeOut = parseInt(
-            error.response.headers['retry-after'] + '000'
+            error.response.headers["retry-after"] + "000"
           );
           setTimeout(() => {
             this.getSliderIds();
           }, timeOut);
         } else {
-          console.log('error: ' + error);
+          console.log("error: " + error);
         }
       });
   };
@@ -57,29 +59,26 @@ class Slider extends Component {
     movieIdArr.map(item => {
       let slideData = {};
       axios
-        .get('https://api.themoviedb.org/3/movie/' + item, {
+        .get("https://api.themoviedb.org/3/movie/" + item, {
           cancelToken: this.axiosCancel.token,
           params: {
-            api_key: '4c7294000365c14a8e42109c863ff772'
+            api_key: "4c7294000365c14a8e42109c863ff772"
           }
         })
         .then(async response => {
+          console.log(response.data);
           await axios
-            .get(
-              'http://webservice.fanart.tv/v3/movies/' + response.data.imdb_id,
-              {
-                params: {
-                  api_key: 'c3f4fba1e26da407177b194566ca2d3f'
-                }
+            .get("https://webservice.fanart.tv/v3/movies/" + response.data.id, {
+              params: {
+                api_key: "c3f4fba1e26da407177b194566ca2d3f"
               }
-            )
+            })
             .then(response => {
-              //  if (response.data.hdmovielogo[0].url) {
+              console.log(response.data);
               slideData.logoUrl = response.data.hdmovielogo[0].url;
-              //  }
             })
             .catch(error => {
-              console.log('error ' + error);
+              console.log("error " + error);
             });
 
           slideData.title = response.data.title;
@@ -87,6 +86,7 @@ class Slider extends Component {
           slideData.caption = response.data.tagline;
           slideData.poster = response.data.poster_path;
           slideData.overview = response.data.overview;
+          slideData.id = response.data.id;
 
           this.setState({
             sliderData: [...this.state.sliderData, slideData]
@@ -95,13 +95,13 @@ class Slider extends Component {
         .catch(error => {
           if (error.response && error.response.status === 429) {
             const timeOut = parseInt(
-              error.response.headers['retry-after'] + '000'
+              error.response.headers["retry-after"] + "000"
             );
             setTimeout(() => {
               this.getSliderIds();
             }, timeOut);
           } else {
-            console.log('error: ' + error);
+            console.log("error: " + error);
           }
         });
     });
@@ -110,29 +110,32 @@ class Slider extends Component {
   render() {
     let slides = null;
     let startup = null;
-    
+
     if (this.state.sliderData.length !== 0) {
       slides = this.state.sliderData.map((slide, index) => {
         startup = (
           <div key={index}>
-            <Slide
+            <img src={logo} alt="" />
+            {/* <Slide
               bgImage={slide.bgImage}
               logoUrl={slide.logoUrl}
               title={slide.title}
               caption={slide.caption}
               overview={slide.overview}
-            />
+            /> */}
           </div>
         );
         return (
           <div key={index}>
-            <Slide
-              bgImage={slide.bgImage}
-              logoUrl={slide.logoUrl}
-              title={slide.title}
-              caption={slide.caption}
-              overview={slide.overview}
-            />
+            <NavLink to={"/Movies/" + slide.id}>
+              <Slide
+                bgImage={slide.bgImage}
+                logoUrl={slide.logoUrl}
+                title={slide.title}
+                caption={slide.caption}
+                overview={slide.overview}
+              />
+            </NavLink>
           </div>
         );
       });
@@ -142,7 +145,7 @@ class Slider extends Component {
       <div>
         {this.state.sliderData.length !== 0 ? (
           <AutoplaySlider
-           startupScreen={startup}
+            startupScreen={startup}
             play={true}
             cssModule={AwsSliderStyles}
             interval={5000}

@@ -1,12 +1,18 @@
 .ChooseNetworks {
   padding-left: 250px;
-  padding-top: 60px;
-  height: 100%;
+  /* padding-top: 60px; */
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
   width: 100%;
+}
+.ChooseNetworksList {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  justify-content: center;
 }
 .InnerContainer {
   display: flex;
@@ -39,6 +45,16 @@
   box-sizing: border-box;
   cursor: pointer;
   border: 1px solid #4d0019;
+}
+.Confirm,
+.Edit {
+  padding-left: 30px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+.Confirm {
+  display: none;
 }
 @media (max-width: 1090px) {
   .ChooseNetworks {

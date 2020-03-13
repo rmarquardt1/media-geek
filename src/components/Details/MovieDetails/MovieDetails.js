@@ -1,28 +1,28 @@
-import React from 'react';
-import Scores from '../../../containers/Scores/Scores';
+import React from "react";
+import Scores from "../../../containers/Scores/Scores";
 
-import classes from './MovieDetails.module.css';
+import classes from "./MovieDetails.module.css";
 
 const movieDetails = props => {
   const monthNames = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'June',
-    'July',
-    'Aug',
-    'Sept',
-    'Oct',
-    'Nov',
-    'Dec'
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "June",
+    "July",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec"
   ];
   const relDate = new Date(props.release);
   const relMonth = monthNames[relDate.getMonth()];
   const relYear =
-    props.type === 'upcoming'
-      ? relMonth + ' ' + relDate.getDate() + ', ' + relDate.getFullYear()
+    props.type === "upcoming"
+      ? relMonth + " " + relDate.getDate() + ", " + relDate.getFullYear()
       : relDate.getFullYear();
 
   return (
@@ -37,9 +37,9 @@ const movieDetails = props => {
         <Scores
           title={props.title}
           type={props.type}
-          cssOverride={{ fontSize: '12px', marginRight: '5px' }}
-          imgOverride={{ height: '16px' }}
-          scoresOverride={{ marginRight: '5px' }}
+          cssOverride={{ fontSize: "12px", marginRight: "5px" }}
+          imgOverride={{ height: "16px" }}
+          scoresOverride={{ marginRight: "5px" }}
         />
       </div>
       <div
@@ -48,7 +48,7 @@ const movieDetails = props => {
       >
         {props.release ? relYear : null}
         <span className={classes.Rating}>
-          {props.rating !== '' && props.release ? ' / ' : null}
+          {props.rating !== "" && props.release ? " / " : null}
           {props.rating}
         </span>
       </div>

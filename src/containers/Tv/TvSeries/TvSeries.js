@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import LazyLoad from 'react-lazy-load';
-import MovieDetails from '../../../components/Details/MovieDetails/MovieDetails';
-import axios from 'axios';
+import React, { Component } from "react";
+import LazyLoad from "react-lazy-load";
+import MovieDetails from "../../../components/Details/MovieDetails/MovieDetails";
+import axios from "axios";
 
-import mgLogo from '../../../assets/images/mg-icon.png';
-import uiClasses from '../../../components/UI/Layout/Layout.module.css';
-import classes from './TvSeries.module.css';
+import mgLogo from "../../../assets/images/mg-icon.png";
+import uiClasses from "../../../components/UI/Layout/Layout.module.css";
+import classes from "./TvSeries.module.css";
 
 class TvSeries extends Component {
   state = {
@@ -20,7 +20,7 @@ class TvSeries extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.resizeHandler);
+    window.addEventListener("resize", this.resizeHandler);
     this.resizeHandler();
     this.getDetailsHandler();
     this.getRatingHandler();
@@ -29,22 +29,22 @@ class TvSeries extends Component {
   getRatingHandler = () => {
     axios
       .get(
-        'https://api.themoviedb.org/3/tv/' + this.props.id + '/content_ratings',
+        "https://api.themoviedb.org/3/tv/" + this.props.id + "/content_ratings",
         {
           params: {
-            api_key: '4c7294000365c14a8e42109c863ff772',
-            language: 'en-US'
+            api_key: "4c7294000365c14a8e42109c863ff772",
+            language: "en-US"
           }
         }
       )
       .then(response => {
         if (
           response.data.results.length > 0 &&
-          response.data.results.find(rating => rating.iso_3166_1 === 'US')
+          response.data.results.find(rating => rating.iso_3166_1 === "US")
         ) {
           this.setState({
             rating: response.data.results.find(
-              rating => rating.iso_3166_1 === 'US'
+              rating => rating.iso_3166_1 === "US"
             ).rating
           });
         }
@@ -52,11 +52,11 @@ class TvSeries extends Component {
       .catch(error => {
         if (error.response && error.response.status === 429) {
           const timeOut = parseInt(
-            error.response.headers['retry-after'] + '000'
+            error.response.headers["retry-after"] + "000"
           );
           this.ratingTryAgainHandler(timeOut);
         } else {
-          console.log('error: ' + error);
+          console.log("error: " + error);
         }
 
         //console.log('error: ' + error);
@@ -76,15 +76,15 @@ class TvSeries extends Component {
   };
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeHandler);
+    window.removeEventListener("resize", this.resizeHandler);
   }
 
   getDetailsHandler = () => {
     axios
-      .get('https://api.themoviedb.org/3/tv/' + this.props.id, {
+      .get("https://api.themoviedb.org/3/tv/" + this.props.id, {
         params: {
-          api_key: '4c7294000365c14a8e42109c863ff772',
-          language: 'en-US'
+          api_key: "4c7294000365c14a8e42109c863ff772",
+          language: "en-US"
         }
       })
       .then(response => {
@@ -92,21 +92,26 @@ class TvSeries extends Component {
         const lastAir = new Date(response.data.last_air_date);
         const airSpan =
           firstAir.getFullYear() !== lastAir.getFullYear()
-            ? firstAir.getFullYear() + '-' + lastAir.getFullYear()
+            ? firstAir.getFullYear() + "-" + lastAir.getFullYear()
             : firstAir.getFullYear();
         let netLogo = null;
         if (this.props.streaming) {
           for (let i = 0; i < response.data.networks.length; i++) {
             const networkId = response.data.networks[i].id;
-            if (networkId === 213 || networkId === 1024 || networkId === 453 || networkId === 2739) {
+            if (
+              networkId === 213 ||
+              networkId === 1024 ||
+              networkId === 453 ||
+              networkId === 2739
+            ) {
               netLogo =
-                'http://image.tmdb.org/t/p/w92' +
+                "http://image.tmdb.org/t/p/w92" +
                 response.data.networks[i].logo_path;
             }
           }
         } else {
           netLogo = response.data.networks[0].logo_path
-            ? 'http://image.tmdb.org/t/p/w92' +
+            ? "http://image.tmdb.org/t/p/w92" +
               response.data.networks[0].logo_path
             : response.data.networks[0].name;
         }
@@ -119,13 +124,12 @@ class TvSeries extends Component {
       .catch(error => {
         if (error.response && error.response.status === 429) {
           const timeOut = parseInt(
-            error.response.headers['retry-after'] + '000'
+            error.response.headers["retry-after"] + "000"
           );
           this.ratingTryAgainHandler(timeOut);
         } else {
-          console.log('error: ' + error);
+          console.log("error: " + error);
         }
-
 
         //console.log('error: ' + error);
       });
@@ -152,45 +156,45 @@ class TvSeries extends Component {
         <div
           className={classes.Movie}
           style={{
-            width: this.props.dimensions ? this.props.dimensions.width : '',
+            width: this.props.dimensions ? this.props.dimensions.width : "",
             height: this.props.dimensions
               ? this.props.dimensions.movieHeight
-              : '',
+              : "",
             marginLeft: this.props.marg,
             marginRight: this.props.marg
           }}
         >
           <div
-            className={classes.Poster}
+            className={classes.Poster + " " + uiClasses.BoxShadow}
             ref={this.posterRef}
             style={{
               minHeight: this.state.posterHeight,
-              width: this.props.dimensions ? this.props.dimensions.width : '',
-              height: this.props.dimensions ? this.props.dimensions.height : ''
+              width: this.props.dimensions ? this.props.dimensions.width : "",
+              height: this.props.dimensions ? this.props.dimensions.height : ""
             }}
           >
             <img
               src={
                 this.props.poster
-                  ? 'http://image.tmdb.org/t/p/w342/' + this.props.poster
+                  ? "http://image.tmdb.org/t/p/w342/" + this.props.poster
                   : mgLogo
               }
-              style={!this.props.poster ? { width: '40%' } : null}
+              style={!this.props.poster ? { width: "40%" } : null}
               className={uiClasses.BoxShadow}
               alt=""
             />
             {this.state.networkLogo ? (
               <div
                 style={{
-                  width: '50%',
-                  height: '30px',
-                  position: 'absolute',
+                  width: "50%",
+                  height: "30px",
+                  position: "absolute",
                   right: 0,
                   bottom: 0
                 }}
               >
                 <img
-                  className={classes.Network + ' ' + uiClasses.BoxShadowReverse}
+                  className={classes.Network + " " + uiClasses.BoxShadowReverse}
                   src={this.state.networkLogo}
                   alt=""
                 />

@@ -72,10 +72,10 @@ class Account extends Component {
     reload: false
   };
 
-  // componentDidUpdate() {
-  //   console.log(this.state.tvGenres);
-  //   console.log("updateGenres: " + this.state.updateTvGenres);
-  // }
+  componentDidUpdate() {
+    console.log(this.state.networks);
+    console.log("updateGenres: " + this.state.updateNetworks);
+  }
 
   changePasswordHandler = () => {
     if (
@@ -279,7 +279,6 @@ class Account extends Component {
     }
 
     if (this.state.updateTvGenres) {
-      console.log(this.state.tvGenres);
       await axios
         .patch(
           "https://mediageek-650c6.firebaseio.com/users/" +
@@ -297,6 +296,31 @@ class Account extends Component {
             saveErrorMessage: [
               ...this.state.saveErrorMessage,
               "Television Genres could not be updated"
+            ]
+          });
+          console.log("error " + error);
+        });
+    }
+
+    if (this.state.updateNetworks) {
+      console.log(this.state.networks);
+      await axios
+        .patch(
+          "https://mediageek-650c6.firebaseio.com/users/" +
+            localStorage.getItem("userId") +
+            ".json",
+          { favNetworks: this.state.networks }
+        )
+        .then(response => {
+          console.log(response);
+          // console.log("if 3 done");
+        })
+        .catch(error => {
+          this.setState({
+            saveError: true,
+            saveErrorMessage: [
+              ...this.state.saveErrorMessage,
+              "Networks could not be updated"
             ]
           });
           console.log("error " + error);
@@ -388,7 +412,7 @@ class Account extends Component {
 
   updateNetworksHandler = networkId => {
     const newNetworks = [...this.state.networks];
-    if (this.state.movieGenres.includes(networkId)) {
+    if (this.state.networks.includes(networkId)) {
       for (let i = 0; i < newNetworks.length; i++) {
         if (newNetworks[i] === networkId) {
           newNetworks.splice(i, 1);
@@ -452,8 +476,6 @@ class Account extends Component {
       reload: false
     });
   };
-
-
 
   render() {
     // const userData = JSON.parse(localStorage.getItem("userData"));
@@ -538,25 +560,23 @@ class Account extends Component {
               {/* <div className={uiClasses.Spacer} /> */}
 
               <div className={classes.AccountPreferences}>
-                <ChooseNetworks 
-                page="account" 
-                updateGenres={this.updateNetworksHandler}
-                reload={this.state.reload}
-                reloaded={() => this.setState({reload: false})}
-                
-                
+                <ChooseNetworks
+                  page="account"
+                  updateNetworks={this.updateNetworksHandler}
+                  reload={this.state.reload}
+                  reloaded={() => this.setState({ reload: false })}
                 />
                 <ChooseMovieGenres
                   page="account"
                   updateGenres={this.updateMovieGenresHandler}
                   reload={this.state.reload}
-                  reloaded={() => this.setState({reload: false})}
+                  reloaded={() => this.setState({ reload: false })}
                 />
                 <ChooseTvGenres
                   page="account"
                   updateGenres={this.updateTvGenresHandler}
                   reload={this.state.reload}
-                  reloaded={() => this.setState({reload: false})}
+                  reloaded={() => this.setState({ reload: false })}
                 />
               </div>
             </div>

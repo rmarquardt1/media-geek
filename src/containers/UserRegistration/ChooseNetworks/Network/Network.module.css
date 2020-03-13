@@ -11,12 +11,23 @@
   position: relative;
   border-radius: 10px;
   cursor: pointer;
+  box-sizing: border-box;
+  border: 3px solid transparent;
+  transition: border-color 0.3s;
 }
 .NetworkClicked {
   background: #ffccdd;
 }
 .Network img {
   width: 80%;
+}
+.NetworkHover:hover {
+  border-width: 3px !important;
+  border-color: #1a8cff !important;
+  transition: border-color 0.3s;
+}
+.Hide {
+  display: none;
 }
 @media (max-width: 1090px) {
   .Network {

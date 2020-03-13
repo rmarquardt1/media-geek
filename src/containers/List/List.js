@@ -53,7 +53,6 @@ class List extends Component {
   }
 
   componentDidMount() {
-    // console.log(JSON.parse(this.props.userData));
     this.setState({
       containerWidth: this.containerWidthRef.current.clientWidth
     });
@@ -87,14 +86,6 @@ class List extends Component {
           page[i] = response.data.results;
         })
         .catch(error => {
-          // if (error.response && error.response.status === 429) {
-          //   const timeOut = parseInt(
-          //     error.response.headers['retry-after'] + '000'
-          //   );
-          //   this.getListTryAgainHandler(timeOut);
-          // } else {
-          //   console.log('error: ' + error);
-          // }
           console.log("error: " + error);
         });
     }
@@ -127,7 +118,7 @@ class List extends Component {
             width: "90px",
             lazyW: 90,
             height: "135px",
-            movieHeight: "160px",
+            movieHeight: "initial",
             fontSize: "12px"
           }
         : {
@@ -143,7 +134,11 @@ class List extends Component {
           if (this.props.mediaType === "movies") {
             return (
               <NavLink
-                style={{ color: "#fff", textDecoration: "none" }}
+                style={{
+                  color: "#fff",
+                  textDecoration: "none",
+                  paddingBottom: "20px"
+                }}
                 to={"/Movies/" + result.id}
                 key={index}
               >
@@ -206,15 +201,9 @@ class List extends Component {
     if (this.containerWidthRef.current) {
       const containerW = this.containerWidthRef.current.clientWidth;
       const scrollW = this.containerWidthRef.current.scrollWidth;
-      // const thumbW = windowW <= 500 ? 95 : 190;
       const thumbW = windowW <= 500 ? 90 : 195;
       const elCount = Math.floor(containerW / thumbW);
-      // const marg = (containerW / elCount - thumbW) / 2 + 10;
       const marg = (containerW / elCount - thumbW) / 2;
-      // const move =
-      //   typeof elPos === 'number'
-      //     ? elPos * (thumbW - 20 + marg * 2)
-      //     : this.state.currentElPosition * (thumbW - 20 + marg * 2);
       const move =
         typeof elPos === "number"
           ? elPos * (thumbW + marg * 2)
@@ -275,10 +264,36 @@ class List extends Component {
     }
   };
 
+  // showAllHandler = () => {
+  //   this.setState({
+  //     showAll: !this.state.showAll
+  //   });
+  //   this.navHandler();
+  // };
+
   showAllHandler = () => {
     this.setState({
       showAll: !this.state.showAll
     });
+
+    const initMax = window.innerWidth > 500 ? "370px" : "194px";
+
+    if (!this.state.showAll) {
+      this.containerWidthRef.current.style.flexWrap = "wrap";
+      const scrollH = this.containerWidthRef.current.scrollHeight;
+      this.containerWidthRef.current.style.maxHeight = scrollH + "px";
+      this.containerWidthRef.current.style.transition =
+        "max-height 0.5s linear";
+    } else {
+      this.containerWidthRef.current.style.transition =
+        "max-height 0.5s linear";
+      setTimeout(() => {
+        this.containerWidthRef.current.style.flexWrap = "nowrap";
+      }, 1000);
+      this.setState({ showNavRight: true });
+      this.containerWidthRef.current.style.maxHeight = initMax;
+    }
+
     this.navHandler();
   };
 
@@ -286,12 +301,17 @@ class List extends Component {
     return (
       <div className={classes.List}>
         <div
-          style={{ display: "flex", alignItems: "center", marginLeft: "5px" }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginLeft: "5px",
+            position: "relative"
+          }}
         >
           <div className={classes.Bar} />
           {this.state.currentElPosition > 0 ? (
             <div
-              className={classes.NavLeft}
+              className={uiClasses.NavLeft}
               onClick={() => this.navHandler("left")}
             >
               <FontAwesomeIcon icon={faChevronLeft} />
@@ -319,10 +339,18 @@ class List extends Component {
               <h2 style={{ marginLeft: 0 }}>{this.props.heading}</h2>
             </React.Fragment>
           ) : (
-            <h2>{this.props.heading}</h2>
+            <h2
+              className={
+                this.state.currentElPosition > 0
+                  ? classes.SectionHeaderMoveLeft
+                  : null
+              }
+            >
+              {this.props.heading}
+            </h2>
           )}
 
-          <div className={classes.NavRight}>
+          <div className={uiClasses.NavRight}>
             {this.state.list === null ? null : this.state.list.length > 0 ? (
               <div className={classes.ShowAll} onClick={this.showAllHandler}>
                 <FontAwesomeIcon
@@ -344,7 +372,9 @@ class List extends Component {
         <div className={classes.ListContainer}>
           <div
             className={
-              this.state.showAll ? classes.ListItemsShowAll : classes.ListItems
+              this.state.showAll
+                ? classes.ListItemsShowAll + " " + classes.ListItems
+                : classes.ListItems
             }
             ref={this.containerWidthRef}
           >
@@ -362,8 +392,6 @@ class List extends Component {
     );
   }
 }
-
-// export default List;
 
 const mapStateToProps = state => {
   return {

@@ -50,25 +50,6 @@
   width: 10px;
   background: #1a8cff;
 }
-.NavRight,
-.NavLeft {
-  height: 100%;
-  margin-left: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 5;
-}
-.NavRight {
-  float: right;
-}
-.NavLeft {
-  margin-left: initial;
-  width: 45px;
-  float: left;
-}
 .FadeOut {
   opacity: 0;
   transition: 0.3s;

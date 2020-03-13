@@ -3,16 +3,19 @@
   position: relative;
   height: 52px;
   box-shadow: 3px 3px 10px #000;
+  display: flex;
+  align-items: center;
 }
 .SectionHeader h2 {
   display: inline-block;
-  margin: 10px 0;
+  /* margin: 10px 0; */
   position: absolute;
   left: 18px;
-  transition: left 0.3s linear;
+  transition: left 0.2s linear;
 }
 h2.SectionHeaderMoveLeft {
   left: 60px;
+  transition: left 0.2s linear;
 }
 .PageHeader {
   display: flex;
@@ -23,15 +26,16 @@ h2.SectionHeaderMoveLeft {
 }
 .PageHeader h2 {
   margin: 0;
+  left: 50px;
 }
 .PageTitle {
   display: flex;
   align-items: center;
   width: 100%;
 }
-.SectionHeader h2 {
+/* .SectionHeader h2 {
   left: 46px !important;
-}
+} */
 .HeaderSearchIcon {
   font-size: 24px;
   cursor: pointer;
@@ -79,6 +83,39 @@ h2.SectionHeaderMoveLeft {
   color: #990033;
   font-size: 26px;
 }
+.NavRight,
+.NavLeft {
+  height: 100%;
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 5;
+}
+.NavRight {
+  float: right;
+}
+.NavLeft {
+  margin-left: initial;
+  width: 45px;
+  float: left;
+  opacity: 0;
+  animation-delay: 0.2s;
+  animation-duration: 0.1s;
+  animation-name: showNavLeft;
+  animation-fill-mode: forwards;
+}
+@keyframes showNavLeft {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .ButtonBlue {
   color: #e6e6e6;
   padding: 7px 15px;
@@ -109,6 +146,9 @@ h2.SectionHeaderMoveLeft {
   border-radius: 20px;
   border: none;
 }
+.InputError {
+  background: #ffccdd;
+}
 .Input::placeholder {
   font-style: italic;
 }
@@ -122,7 +162,7 @@ h2.SectionHeaderMoveLeft {
 }
 @media (max-width: 500px) {
   .SectionHeader h2 {
-    left: 0;
+    /* left: 18px; */
     font-weight: normal;
     font-size: 20px;
   }

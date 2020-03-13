@@ -1,18 +1,18 @@
-
 .SliderContainer {
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: flex-start;
 }
 .SlideInfo {
   /* margin-left:50px;
   margin-right: 50px; */
-  padding-left:50px;
+  padding-left: 50px;
   padding-right: 50px;
   height: 100%;
 }
 .SliderImage {
   min-width: 780px;
+  width: 100%;
 }
 .Title {
   margin-top: 57px;
@@ -32,10 +32,10 @@
 .CaptionContainer {
   margin-bottom: 20px;
 }
-.LogoImg img{
+.LogoImg img {
   width: 400px;
   max-width: 400px;
-  margin-top:20px;
+  margin-top: 20px;
 }
 .Title h1 {
   font-size: 52px;
@@ -43,18 +43,14 @@
 }
 .Overview {
   overflow-y: auto;
-  font-size:16px;
-  color:#ccc;
+  font-size: 16px;
+  color: #ccc;
   max-height: 150px;
   padding-right: 20px;
 }
 .Overview p {
   margin: 0;
 }
-
-
-
-
 
 @media (max-width: 1700px) {
   .Title {
@@ -64,21 +60,12 @@
     font-size: 42px;
   }
   .LogoImg img {
-    width:300px;
+    width: 300px;
   }
   .Caption {
     font-size: 28px;
   }
 }
-
-
-
-
-
-
-
-
-
 
 @media (max-width: 1600px) {
   .Title {
@@ -125,7 +112,6 @@
   }
 }
 
-
 @media (max-width: 1250px) {
   .SliderImage {
     min-width: 450px;
@@ -140,10 +126,7 @@
   .Overview {
     max-height: 64px;
   }
-  
-
 }
-
 
 @media (max-width: 1090px) {
   .SliderImage {
@@ -159,15 +142,13 @@
   }
 }
 
-
-
 @media (max-width: 768px) {
   .SliderImage {
     /* min-width: 500px;
     max-width: 500px; */
 
     min-width: 100%;
-    max-width:100%;
+    max-width: 100%;
   }
 
   .SlideInfo {
@@ -175,32 +156,33 @@
     max-width: 60%;
     min-width: 60%;
     padding-right: 0;
-    background-image: linear-gradient(to right, rgba(0,0,0,1) , rgba(0,0,0,0));
+    background-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 1),
+      rgba(0, 0, 0, 0)
+    );
   }
 
   .Caption {
     /* color: #fff; */
-    text-shadow: 2px 2px rgba(0,0,0,0.5);
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
   }
 
   .Overview p {
     color: #fff;
-    text-shadow: 2px 2px rgba(0,0,0,0.5);
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
   }
-
-
-
 }
-
 
 @media (max-width: 500px) {
   .SliderContainer {
-    height:100%;
+    height: 100%;
+    /* width: 100%; */
   }
   .SlideInfo {
     /* margin-left:50px;
     margin-right: 50px; */
-    padding-left:10px;
+    padding-left: 10px;
     width: 90%;
     min-width: 90%;
     /* height: 100%; */
@@ -217,7 +199,7 @@
   }
   .Overview p {
     font-size: 14px;
-    color:#e6e6e6;
+    color: #e6e6e6;
   }
   .Title {
     font-size: 30px;
@@ -227,9 +209,6 @@
   }
   .Caption {
     font-weight: normal;
-    color:#e6e6e6;
+    color: #e6e6e6;
   }
-
-
-
 }

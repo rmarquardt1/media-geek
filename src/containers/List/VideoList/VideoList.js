@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import VideoThumb from '../../../components/VideoThumb/VideoThumb';
+import React, { Component } from "react";
+import VideoThumb from "../../../components/VideoThumb/VideoThumb";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
   faChevronDown,
   faChevronUp
-} from '@fortawesome/free-solid-svg-icons';
+} from "@fortawesome/free-solid-svg-icons";
 
-import uiClasses from '../../../components/UI/Layout/Layout.module.css';
-import classes from './VideoList.module.css';
+import uiClasses from "../../../components/UI/Layout/Layout.module.css";
+import classes from "./VideoList.module.css";
 
 class VideoList extends Component {
   state = {
@@ -58,12 +58,12 @@ class VideoList extends Component {
     this.setState({
       containerWidth: this.containerWidthRef.current.clientWidth
     });
-    window.addEventListener('resize', this.resizeHandler);
+    window.addEventListener("resize", this.resizeHandler);
     this.resizeHandler();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeHandler);
+    window.removeEventListener("resize", this.resizeHandler);
     clearTimeout(this.showNavRightTimeout);
   }
 
@@ -72,33 +72,33 @@ class VideoList extends Component {
     const videoDimensions =
       windowW <= 500
         ? {
-            width: '120px',
+            width: "120px",
             lazyW: 120,
-            fontSize: '12px'
+            fontSize: "12px"
           }
         : {
-            width: '278px',
+            width: "278px",
             lazyW: 278,
-            fontSize: '14px'
+            fontSize: "14px"
           };
     const releases = this.props.actors
       ? this.props.actors.map(result => {
           let videoName = result.name;
           const charMax = windowW > 500 ? 50 : 30;
           if (videoName.length > charMax) {
-            videoName = videoName.substring(0, charMax) + '...';
+            videoName = videoName.substring(0, charMax) + "...";
           }
 
           return (
             <VideoThumb
-              marg={marg + 'px'}
+              marg={marg + "px"}
               lazyWidth={marg * 2 + videoDimensions.lazyW}
               id={result.id}
               key={result.id}
               poster={
-                'https://img.youtube.com/vi/' + result.key + '/mqdefault.jpg'
+                "https://img.youtube.com/vi/" + result.key + "/mqdefault.jpg"
               }
-              videoUrl={'https://www.youtube.com/embed/' + result.key}
+              videoUrl={"https://www.youtube.com/embed/" + result.key}
               name={videoName}
               dimensions={videoDimensions}
               click={this.props.play}
@@ -116,16 +116,21 @@ class VideoList extends Component {
   showNavRightHandler = (navLeftClicked, scrollLeft) => {
     this.showNavRightTimeout = setTimeout(() => {
       if (this.containerWidthRef.current) {
-      const scrollPosition = this.containerWidthRef.current.scrollLeft;
-      const scrollMax =
-        this.containerWidthRef.current.scrollWidth -
-        this.containerWidthRef.current.clientWidth;
-      this.setState({
-        showNavRight: scrollPosition <= (scrollMax - 50) ? true : navLeftClicked ? true : false,
-        scrollPos: scrollPosition
-      });
+        const scrollPosition = this.containerWidthRef.current.scrollLeft;
+        const scrollMax =
+          this.containerWidthRef.current.scrollWidth -
+          this.containerWidthRef.current.clientWidth;
+        this.setState({
+          showNavRight:
+            scrollPosition <= scrollMax - 50
+              ? true
+              : navLeftClicked
+              ? true
+              : false,
+          scrollPos: scrollPosition
+        });
       }
-    }, 700)
+    }, 700);
   };
 
   resizeHandler = (elPos, navLeftClicked, scrollWidth) => {
@@ -140,7 +145,7 @@ class VideoList extends Component {
       const elCount = Math.floor(containerW / thumbW);
       const marg = (containerW / elCount - thumbW) / 2;
       const move =
-        typeof elPos === 'number'
+        typeof elPos === "number"
           ? elPos * (thumbW + marg * 2)
           : this.state.currentElPosition * (thumbW + marg * 2);
       this.setState({
@@ -151,7 +156,7 @@ class VideoList extends Component {
       this.containerWidthRef.current.scrollTo({
         left: move,
         top: 0,
-        behavior: 'smooth'
+        behavior: "smooth"
       });
     }
   };
@@ -164,7 +169,7 @@ class VideoList extends Component {
     const actElCount = Math.floor(containerW / thumbW);
     const currentElPos = { ...this.state }.currentElPosition;
     switch (direction) {
-      case 'right':
+      case "right":
         this.setState({
           moveRight: containerW + { ...this.state }.containerWidth,
           containerWidth: containerW + { ...this.state }.containerWidth,
@@ -174,7 +179,7 @@ class VideoList extends Component {
         });
         this.resizeHandler(currentElPos + actElCount, false);
         break;
-      case 'left':
+      case "left":
         this.setState({
           moveRight: containerW - { ...this.state }.containerWidth,
           containerWidth: containerW - { ...this.state }.containerWidth,
@@ -207,13 +212,13 @@ class VideoList extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className={uiClasses.SectionHeader + ' ' + classes.CastHeader}>
+        <div className={uiClasses.SectionHeader + " " + classes.CastHeader}>
           {this.state.currentElPosition > 0 && !this.state.openActor ? (
-            <div className={classes.NavLeft}>
+            <div className={uiClasses.NavLeft}>
               <FontAwesomeIcon
                 icon={faChevronLeft}
-                className={classes.ChevronArrowRight + ' ' + uiClasses.PrevIcon}
-                onClick={() => this.navHandler('left')}
+                className={classes.ChevronArrowRight + " " + uiClasses.PrevIcon}
+                onClick={() => this.navHandler("left")}
               />
             </div>
           ) : null}
@@ -226,7 +231,7 @@ class VideoList extends Component {
           >
             Videos
           </h2>
-          <div className={classes.NavRight}>
+          <div className={uiClasses.NavRight}>
             {this.state.list === null ? null : this.state.list.length > 0 &&
               !this.state.openActor ? (
               <div className={classes.ShowAll} onClick={this.showAllHandler}>
@@ -234,15 +239,15 @@ class VideoList extends Component {
                   icon={this.state.showAll ? faChevronUp : faChevronDown}
                   className={classes.ShowChevronDown}
                 />
-                {this.state.showAll ? 'Show Less' : 'Show All'}
+                {this.state.showAll ? "Show Less" : "Show All"}
               </div>
             ) : null}
 
             {this.state.showNavRight && !this.state.showAll ? (
               <FontAwesomeIcon
                 icon={faChevronRight}
-                className={classes.ChevronArrowRight + ' ' + uiClasses.NextIcon}
-                onClick={() => this.navHandler('right')}
+                className={classes.ChevronArrowRight + " " + uiClasses.NextIcon}
+                onClick={() => this.navHandler("right")}
               />
             ) : null}
           </div>
@@ -250,8 +255,8 @@ class VideoList extends Component {
 
         <div className={classes.List}>
           <div
-            style={{ display: 'flex', alignItems: 'center', marginLeft: '5px' }}
-          ></div>
+            style={{ display: "flex", alignItems: "center", marginLeft: "5px" }}
+          />
           <div className={classes.ListContainer}>
             <div
               className={
