@@ -132,12 +132,13 @@ class List extends Component {
     const releases = this.state.listData
       ? this.state.listData.map((result, index) => {
           if (this.props.mediaType === "movies") {
+            // console.log("movieMarg: " + marg);
             return (
               <NavLink
                 style={{
                   color: "#fff",
                   textDecoration: "none",
-                  paddingBottom: "20px"
+                  paddingTop: "20px"
                 }}
                 to={"/Movies/" + result.id}
                 key={index}
@@ -155,9 +156,14 @@ class List extends Component {
             );
           }
           if (this.props.mediaType === "tv" && result.poster_path) {
+            // console.log("tvMarg: " + marg);
             return (
               <NavLink
-                style={{ color: "#fff", textDecoration: "none" }}
+                style={{
+                  color: "#fff",
+                  textDecoration: "none",
+                  paddingTop: "20px"
+                }}
                 to={"/Tv/" + result.id}
                 key={index}
               >
@@ -276,7 +282,7 @@ class List extends Component {
       showAll: !this.state.showAll
     });
 
-    const initMax = window.innerWidth > 500 ? "370px" : "194px";
+    const initMax = window.innerWidth > 500 ? "370px" : "223px";
 
     if (!this.state.showAll) {
       this.containerWidthRef.current.style.flexWrap = "wrap";

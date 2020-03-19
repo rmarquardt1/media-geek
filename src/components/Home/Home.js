@@ -15,8 +15,9 @@ const Home = props => {
   return (
     <Aux>
       <div className={classes.Home}>
-        <Slider />
-
+        <div className={classes.SliderContainer}>
+          <Slider />
+        </div>
         <Aux>
           {props.isAuth && localStorage.getItem("userData") ? (
             // {props.isAuth && props.userData ? (
@@ -44,7 +45,15 @@ const Home = props => {
               />
             </Aux>
           ) : null}
-          <div className={uiClasses.SectionHeader + " " + uiClasses.PageHeader}>
+          <div
+            className={
+              uiClasses.SectionHeader +
+              " " +
+              uiClasses.PageHeader +
+              " " +
+              classes.PageHeaderFirst
+            }
+          >
             <div className={uiClasses.PageTitle}>
               <FontAwesomeIcon icon={faFilm} className={classes.MoviesIcon} />
               <h2>Movies</h2>

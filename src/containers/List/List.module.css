@@ -20,11 +20,11 @@ h2.SectionHeaderMoveLeft {
 }
 .ListItems {
   display: flex;
-  padding-top: 20px;
+  /* padding-top: 20px; */
   /* padding-left: 10px; */
   position: relative;
   right: 0;
-  max-height: 370px;
+  /* max-height: 370px; */
   /* height: 360px; */
   overflow-x: scroll;
   overflow-y: hidden;

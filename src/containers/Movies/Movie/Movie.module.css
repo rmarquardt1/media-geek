@@ -68,8 +68,13 @@
     right: 0;
     background: rgba(0, 0, 0, 0.7);
     font-size: 18px;
-    padding: 7px 10px;
+    /* padding: 7px 10px; */
     border-top-left-radius: 10px;
+  }
+
+  .EllipsisIcon img {
+    width: 34px !important;
+    padding: 7px 5px 3px 10px;
   }
 
   .Front {

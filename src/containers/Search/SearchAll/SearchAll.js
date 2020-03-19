@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import * as actions from '../../../store/actions/auth';
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import * as actions from "../../../store/actions/auth";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import classes from './SearchAll.module.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import classes from "./SearchAll.module.css";
 
 class SearchAll extends Component {
   state = {
@@ -25,7 +25,8 @@ class SearchAll extends Component {
   render() {
     if (this.state.submitted) {
       this.props.showSearchSidebar();
-      return <Redirect to={'/SearchResults/' + this.state.query} />;
+      this.props.hideFavWatch();
+      return <Redirect to={"/SearchResults/" + this.state.query} />;
     }
     return (
       <form className={classes.SearchForm} onSubmit={this.searchHandler}>
@@ -57,4 +58,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchAll);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchAll);

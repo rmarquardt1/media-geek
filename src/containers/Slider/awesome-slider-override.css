@@ -1,5 +1,10 @@
 .awssld {
-  height: 439px;
+  /* height: 439px; */
+
+  /* width: calc(100% + 200px);
+  position: relative; */
+  background: #000;
+  height: 520px;
 }
 
 .awssld__startUp,
@@ -54,7 +59,7 @@
 
 @media (max-width: 1600px) {
   .awssld {
-    height: 382px;
+    height: 420px;
   }
   .awssld__bullets {
     width: 680px;
@@ -70,18 +75,18 @@
   }
 }
 
-@media (max-width: 1360px) {
+/* @media (max-width: 1360px) {
   .awssld {
     height: 281px;
   }
   .awssld__bullets {
     width: 500px;
   }
-}
+} */
 
 @media (max-width: 1250px) {
   .awssld {
-    height: 254px;
+    height: 290px;
   }
   .awssld__bullets {
     width: 450px;

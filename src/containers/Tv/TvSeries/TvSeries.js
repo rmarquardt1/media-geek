@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import LazyLoad from "react-lazy-load";
 import MovieDetails from "../../../components/Details/MovieDetails/MovieDetails";
+import Scores from "../../Scores/Scores";
 import axios from "axios";
 
 import mgLogo from "../../../assets/images/mg-icon.png";
+import ratingsIcon from "../../../assets/images/mobile-ratings-64.png";
 import uiClasses from "../../../components/UI/Layout/Layout.module.css";
 import classes from "./TvSeries.module.css";
 
@@ -11,12 +13,15 @@ class TvSeries extends Component {
   state = {
     posterHeight: null,
     rating: null,
-    networkLogo: null
+    networkLogo: null,
+    flip: false
   };
 
   constructor(props) {
     super(props);
     this.posterRef = React.createRef();
+    this.frontRef = React.createRef();
+    this.backRef = React.createRef();
   }
 
   componentDidMount() {
@@ -24,6 +29,10 @@ class TvSeries extends Component {
     this.resizeHandler();
     this.getDetailsHandler();
     this.getRatingHandler();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.resizeHandler);
   }
 
   getRatingHandler = () => {
@@ -74,10 +83,6 @@ class TvSeries extends Component {
       this.getDetailsHandler();
     }, timeOut);
   };
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.resizeHandler);
-  }
 
   getDetailsHandler = () => {
     axios
@@ -145,6 +150,12 @@ class TvSeries extends Component {
     }
   };
 
+  scoresClick = event => {
+    event.preventDefault();
+    this.setState({ flip: !this.state.flip });
+    console.dir(this.backRef.current);
+  };
+
   render() {
     return (
       <LazyLoad
@@ -173,7 +184,73 @@ class TvSeries extends Component {
               height: this.props.dimensions ? this.props.dimensions.height : ""
             }}
           >
+            <div
+              // className={classes.Back}
+              className={
+                this.state.flip
+                  ? classes.Back + " " + classes.BackFlip
+                  : classes.Back
+              }
+              style={{
+                backgroundImage:
+                  "url('http://image.tmdb.org/t/p/w342/" +
+                  this.props.poster +
+                  "')"
+              }}
+              ref={this.backRef}
+            >
+              <div className={classes.BackOverlay} />
+              <div className={classes.BackInfo}>
+                {window.innerWidth <= 500 ? (
+                  <Scores
+                    scoreType="list"
+                    title={this.props.title}
+                    //type={props.type}
+                    cssOverride={{ marginRight: "0px" }}
+                    //imgOverride={{ height: "16px" }}
+                    scoresOverride={{
+                      flexDirection: "column",
+                      justifyContent: "center"
+                    }}
+                  />
+                ) : null}
+              </div>
+            </div>
+
             <img
+              src={
+                this.props.poster
+                  ? "http://image.tmdb.org/t/p/w342/" + this.props.poster
+                  : mgLogo
+              }
+              // src={tempImage}
+              style={!this.props.poster ? { width: "40%" } : null}
+              // className={classes.Front}
+
+              className={
+                this.state.flip
+                  ? classes.Front + " " + classes.FrontFlip
+                  : classes.Front
+              }
+              alt=""
+              ref={this.frontRef}
+            />
+
+            {/* <FontAwesomeIcon
+              className={classes.EllipsisIcon}
+              icon={faEllipsisH}
+            /> */}
+            <div
+              className={classes.EllipsisIcon}
+              onClick={event => this.scoresClick(event)}
+              style={{ color: "#ccc" }}
+            >
+              {/* <FontAwesomeIcon icon={faInfoCircle} /> */}
+              {/* <FontAwesomeIcon icon={faBoxes} /> */}
+              <img src={ratingsIcon} alt="" />
+            </div>
+
+            {/* <img
               src={
                 this.props.poster
                   ? "http://image.tmdb.org/t/p/w342/" + this.props.poster
@@ -199,7 +276,7 @@ class TvSeries extends Component {
                   alt=""
                 />
               </div>
-            ) : null}
+            ) : null} */}
           </div>
           <MovieDetails
             title={this.props.title}
@@ -207,7 +284,7 @@ class TvSeries extends Component {
             release={this.props.release}
             movieId={this.props.id}
             rating={this.state.rating}
-            type={this.props.type}
+            // type={this.props.type}
             fontSize={
               this.props.dimensions ? this.props.dimensions.fontSize : null
             }

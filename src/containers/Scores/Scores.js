@@ -13,7 +13,8 @@ class Scores extends Component {
   state = {
     imdbScore: null,
     rtScore: null,
-    mcScore: null
+    mcScore: null,
+    score: false
   };
 
   componentDidMount() {
@@ -37,14 +38,14 @@ class Scores extends Component {
       .then(response => {
         response.data.Ratings.map(rating => {
           if (rating.Source === "Internet Movie Database") {
-            this.setState({ imdbScore: rating.Value });
+            this.setState({ imdbScore: rating.Value, score: true });
           }
           if (rating.Source === "Rotten Tomatoes") {
-            this.setState({ rtScore: rating.Value });
+            this.setState({ rtScore: rating.Value, score: true });
           }
           if (rating.Source === "Metacritic") {
             const mc = rating.Value.substr(0, rating.Value.length - 4) + "%";
-            this.setState({ mcScore: mc });
+            this.setState({ mcScore: mc, score: true });
           }
           return null;
         });
@@ -62,45 +63,56 @@ class Scores extends Component {
     }
     return (
       <div className={classes.Scores} style={this.props.scoresOverride}>
-        {this.state.imdbScore ? (
-          <div className={classes.Score} style={this.props.cssOverride}>
-            <div className={classes.ImageContainer}>
-              <img
-                src={imdbIcon}
-                className={classes.ImdbIcon}
-                style={this.props.imgOverride}
-                alt=""
-              />{" "}
-            </div>
-            <span style={this.props.cssOverride}>{this.state.imdbScore}</span>
-          </div>
-        ) : null}
-        {this.state.rtScore ? (
-          <div className={classes.Score} style={this.props.cssOverride}>
-            <div className={classes.ImageContainer}>
-              <img
-                src={rtNumber < 60 ? rtIconSplat : rtIconFresh}
-                className={classes.RtIcon}
-                style={this.props.imgOverride}
-                alt=""
-              />
-            </div>
-            <span style={this.props.cssOverride}>{this.state.rtScore}</span>
-          </div>
-        ) : null}
-        {this.state.mcScore ? (
-          <div style={{ marginRight: 0 }} className={classes.Score}>
-            <div className={classes.ImageContainer}>
-              <img
-                src={mcIcon}
-                className={classes.McIcon}
-                style={this.props.imgOverride}
-                alt=""
-              />
-            </div>
-            <span style={this.props.cssOverride}>{this.state.mcScore}</span>
-          </div>
-        ) : null}
+        {!this.state.imdbScore &&
+        !this.state.rtScore &&
+        !this.state.mcScore &&
+        this.props.scoreType === "list" ? (
+          "No Scores Found"
+        ) : (
+          <React.Fragment>
+            {this.state.imdbScore ? (
+              <div className={classes.Score} style={this.props.cssOverride}>
+                <div className={classes.ImageContainer}>
+                  <img
+                    src={imdbIcon}
+                    className={classes.ImdbIcon}
+                    style={this.props.imgOverride}
+                    alt=""
+                  />{" "}
+                </div>
+                <span style={this.props.cssOverride}>
+                  {this.state.imdbScore}
+                </span>
+              </div>
+            ) : null}
+            {this.state.rtScore ? (
+              <div className={classes.Score} style={this.props.cssOverride}>
+                <div className={classes.ImageContainer}>
+                  <img
+                    src={rtNumber < 60 ? rtIconSplat : rtIconFresh}
+                    className={classes.RtIcon}
+                    style={this.props.imgOverride}
+                    alt=""
+                  />
+                </div>
+                <span style={this.props.cssOverride}>{this.state.rtScore}</span>
+              </div>
+            ) : null}
+            {this.state.mcScore ? (
+              <div style={{ marginRight: 0 }} className={classes.Score}>
+                <div className={classes.ImageContainer}>
+                  <img
+                    src={mcIcon}
+                    className={classes.McIcon}
+                    style={this.props.imgOverride}
+                    alt=""
+                  />
+                </div>
+                <span style={this.props.cssOverride}>{this.state.mcScore}</span>
+              </div>
+            ) : null}
+          </React.Fragment>
+        )}
       </div>
     );
   }

@@ -66,7 +66,6 @@ class Slider extends Component {
           }
         })
         .then(async response => {
-          console.log(response.data);
           await axios
             .get("https://webservice.fanart.tv/v3/movies/" + response.data.id, {
               params: {
@@ -74,8 +73,10 @@ class Slider extends Component {
               }
             })
             .then(response => {
-              console.log(response.data);
-              slideData.logoUrl = response.data.hdmovielogo[0].url;
+              // slideData.logoUrl = response.data.hdmovielogo[0].url;
+
+              let url = response.data.hdmovielogo[0].url;
+              slideData.logoUrl = url.replace("assets.", "");
             })
             .catch(error => {
               console.log("error " + error);
@@ -148,7 +149,7 @@ class Slider extends Component {
             startupScreen={startup}
             play={true}
             cssModule={AwsSliderStyles}
-            interval={5000}
+            interval={5000000}
           >
             {slides}
           </AutoplaySlider>

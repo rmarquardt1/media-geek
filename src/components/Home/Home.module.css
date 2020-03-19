@@ -2,12 +2,24 @@
   margin: 0 100px 100px 350px;
   /* margin: 70px 100px 100px 350px; */
 }
+.PageHeaderFirst {
+  width: calc(100% + 200px);
+  margin-left: -100px;
+  padding-left: 100px;
+}
+.SliderContainer {
+  width: calc(100% + 200px);
+  margin-left: -100px;
+}
+.PageHeaderFirst h2 {
+  left: 150px;
+}
 .SectionHeaderSearch h2 {
-  display:flex;
+  display: flex;
   margin: 0 10px 10px 10px;
-  padding:10px 20px 10px 20px;
-  justify-content:space-between;
-  align-items:center;
+  padding: 10px 20px 10px 20px;
+  justify-content: space-between;
+  align-items: center;
 }
 .MoviesIcon {
   margin-left: 10px;
@@ -24,11 +36,36 @@
     margin: 0 50px 100px 300px;
     /* margin: 70px 50px 100px 300px; */
   }
+  .SliderContainer {
+    width: calc(100% + 100px);
+    margin-left: -50px;
+  }
+  .PageHeaderFirst {
+    width: calc(100% + 100px);
+    margin-left: -50px;
+    padding-left: 50px;
+  }
+  .PageHeaderFirst h2 {
+    left: 100px;
+  }
 }
 @media (max-width: 1090px) {
   .Home {
     /* margin: 60px 50px 100px 50px; */
     margin: 60px 0;
+  }
+
+  .SliderContainer {
+    width: 100%;
+    margin-left: 0;
+  }
+  .PageHeaderFirst {
+    width: 100%;
+    margin-left: 0;
+    padding-left: 50px;
+  }
+  .PageHeaderFirst h2 {
+    /* left: 100px; */
   }
 }
 @media (max-width: 500px) {

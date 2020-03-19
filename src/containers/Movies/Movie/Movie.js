@@ -5,9 +5,8 @@ import Scores from "../../Scores/Scores";
 import axios from "axios";
 
 import mgLogo from "../../../assets/images/mg-icon.png";
-import tempImage from "../../../assets/images/thor_poster.jpg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import ratingsIcon from "../../../assets/images/mobile-ratings-64.png";
+// import tempImage from "../../../assets/images/thor_poster.jpg";
 import uiClasses from "../../../components/UI/Layout/Layout.module.css";
 import classes from "./Movie.module.css";
 
@@ -25,14 +24,11 @@ class Movie extends Component {
     this.backRef = React.createRef();
   }
 
-  componentDidUpdate() {}
-
   componentDidMount() {
     window.addEventListener("resize", this.resizeHandler);
     window.addEventListener("orientationchange", this.resizeHandler);
     this.resizeHandler();
     this.getRatingHandler();
-    console.log(this.props.type);
   }
 
   componentWillUnmount() {
@@ -81,7 +77,7 @@ class Movie extends Component {
     }
   };
 
-  ellipseClick = event => {
+  scoresClick = event => {
     event.preventDefault();
     this.setState({ flip: !this.state.flip });
     console.dir(this.backRef.current);
@@ -92,7 +88,7 @@ class Movie extends Component {
       <LazyLoad threshold={1400} width={this.props.lazyWidth}>
         <div
           className={classes.Movie}
-          onClick={this.props.clicked}
+          // onClick={this.props.clicked}
           style={{
             width: this.props.dimensions ? this.props.dimensions.width : "",
             height: this.props.dimensions
@@ -135,10 +131,9 @@ class Movie extends Component {
               <div className={classes.BackInfo}>
                 {window.innerWidth <= 500 ? (
                   <Scores
+                    scoreType="list"
                     title={this.props.title}
-                    //type={props.type}
                     cssOverride={{ marginRight: "0px" }}
-                    //imgOverride={{ height: "16px" }}
                     scoresOverride={{
                       flexDirection: "column",
                       justifyContent: "center"
@@ -154,10 +149,7 @@ class Movie extends Component {
                   ? "http://image.tmdb.org/t/p/w342/" + this.props.poster
                   : mgLogo
               }
-              // src={tempImage}
               style={!this.props.poster ? { width: "40%" } : null}
-              // className={classes.Front}
-
               className={
                 this.state.flip
                   ? classes.Front + " " + classes.FrontFlip
@@ -166,16 +158,12 @@ class Movie extends Component {
               alt=""
               ref={this.frontRef}
             />
-
-            {/* <FontAwesomeIcon
-              className={classes.EllipsisIcon}
-              icon={faEllipsisH}
-            /> */}
             <div
               className={classes.EllipsisIcon}
-              onClick={event => this.ellipseClick(event)}
+              onClick={event => this.scoresClick(event)}
+              style={{ color: "#ccc" }}
             >
-              <FontAwesomeIcon icon={faInfoCircle} />
+              <img src={ratingsIcon} alt="" />
             </div>
           </div>
           <MovieDetails

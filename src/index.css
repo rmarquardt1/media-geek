@@ -10,6 +10,7 @@ html {
 body * {
   scrollbar-width: thin;
   scrollbar-color: #1a8cff #262f3d;
+  box-sizing: border-box;
 }
 body *::-webkit-scrollbar {
   width: 6px;

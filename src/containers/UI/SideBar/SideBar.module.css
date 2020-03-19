@@ -49,6 +49,7 @@
 .SideBar ul li {
   border-bottom: 1px solid #4d4d4d;
   padding: 20px;
+  cursor: pointer;
 }
 .SideBar ul li.AccountProfileImage {
   padding: 0;
@@ -103,8 +104,17 @@
 .FlexCenter {
   display: flex;
 }
+.Hover {
+  transition: background 0.2s;
+}
 .Hover:hover {
   background: #313c4e;
+  transition: background 0.2s;
+}
+.Hover:hover .ListText,
+.AccountLink:hover .ListText {
+  left: 5px;
+  transition: left 0.3s;
 }
 .Selected {
   background: #313c4e;
@@ -143,22 +153,37 @@
 .ListIconAccount {
   min-height: 40px;
 }
+.ListText {
+  position: relative;
+  left: 0;
+  transition: left 0.3s;
+}
 .CreateAccount {
   cursor: pointer;
 }
 .SearchHeading {
   cursor: pointer;
   position: relative;
+  width: 100%;
 }
 .Search {
+  /* margin: 0; */
   height: 0;
+  display: flex;
+  align-items: flex-end;
   overflow: hidden;
-  transition: height 0.2s linear;
+  transition: all 0.2s linear;
 }
 .SearchOpen {
-  margin: 20px 0 10px 0;
-  height: 30px;
-  transition: height 0.2s linear;
+  /* margin: 20px 0 10px 0; */
+  height: 50px;
+  transition: all 0.2s linear;
+  display: flex;
+  align-items: flex-end;
+  background: #313c4e;
+}
+.SearchClicked {
+  background: #313c4e;
 }
 .SearchChevron {
   position: absolute;

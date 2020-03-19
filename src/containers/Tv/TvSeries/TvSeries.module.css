@@ -7,27 +7,26 @@
   transition: transform 0.3s;
 }
 .Movie .Poster {
-  background: #000;
+  /* background: #000; */
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  position: relative;
   transition: transform 0.3s;
+  position: relative;
+}
+.EllipsisIcon {
+  display: none;
 }
 .Movie .Poster img {
   width: 100%;
   max-height: 100%;
 }
-.Movie .Poster img.Network {
-  position: absolute;
-  height: 16px;
-  padding: 5px;
-  background: #fff;
-  width: initial;
-  right: 0;
-  bottom: 0;
+
+.Back {
+  display: none;
 }
+
 @media (max-width: 1366px) {
   .Movie {
     width: 220px;
@@ -47,12 +46,101 @@
   }
 }
 @media (max-width: 500px) {
+  .Movie {
+    margin-bottom: 0;
+  }
+
   .Movie .Poster {
     height: initial;
     background-size: contain !important;
   }
-  .Movie .Poster img.Network {
+
+  .Movie .Poster:hover {
+    transform: none;
+    transition: none;
+  }
+
+  .EllipsisIcon {
+    display: block;
+    position: absolute;
+    z-index: 5;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    font-size: 18px;
+    /* padding: 7px 10px; */
+    border-top-left-radius: 10px;
+  }
+
+  .EllipsisIcon img {
+    width: 34px !important;
+    padding: 7px 5px 3px 10px;
+  }
+
+  .Front {
+    /* display: block; */
+    backface-visibility: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.7);
+    font-size: 12px;
+    transition: transform 0.5s;
+  }
+
+  .Back {
+    backface-visibility: hidden;
+    transform: rotateY(-180deg);
+    /* background: rgba(0, 0, 0, 0.7); */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    font-size: 12px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 5px;
+    box-sizing: border-box;
+
+    background-size: contain;
+    transition: transform 0.5s;
+  }
+  .Back .BackInfo {
+    transform: scaleX(-1);
+  }
+  .BackOverlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    top: 0;
+  }
+
+  .FrontFlip {
+    transform: rotateY(-180deg);
+    transition: transform 0.5s;
+  }
+
+  .BackFlip {
+    transform: rotateY(0deg) scaleX(-1);
+    transition: transform 0.5s;
+  }
+}
+@media (max-width: 410px) {
+  .Movie {
+    width: 100%;
     height: initial;
-    max-width: 60%;
+  }
+  .Movie .Poster {
+    height: initial;
+    background-size: contain !important;
   }
 }

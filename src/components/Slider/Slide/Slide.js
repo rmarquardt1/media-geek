@@ -2,7 +2,10 @@ import React, { Component } from "react";
 
 import classes from "./Slide.module.css";
 
-// import testSlide from "../../../assets/images/indiana-jones.jpg";
+import testSlide from "../../../assets/images/thor-ragnarok.jpg";
+import testSlide2 from "../../../assets/images/thor-ragnarok-2.jpg";
+import testSlide3 from "../../../assets/images/thor-ragnarok-3.jpg";
+
 // import testLogo from "../../../assets/images/indiana-jones-hdclearlogo.png";
 
 class Slide extends Component {
@@ -67,7 +70,8 @@ class Slide extends Component {
 
           {this.props.overview ? (
             <div className={classes.Overview}>
-              <p>{this.props.overview}</p>
+              {/* <p>{this.props.overview}</p> */}
+              {this.props.overview}
             </div>
           ) : null}
         </div>
@@ -75,8 +79,8 @@ class Slide extends Component {
         <img
           alt=""
           className={classes.SliderImage}
-          src={"http://image.tmdb.org/t/p/w780/" + this.props.bgImage}
-          //src={testSlide}
+          //src={"http://image.tmdb.org/t/p/w780/" + this.props.bgImage}
+          src={testSlide2}
         />
       </div>
     );
