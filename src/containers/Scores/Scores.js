@@ -26,6 +26,10 @@ class Scores extends Component {
   }
 
   getRatingsHandler = () => {
+    if (this.props.scoreType === "slideScore") {
+      console.log("slider");
+      console.log("title: " + this.props.title);
+    }
     axios
       .get("https://www.omdbapi.com/", {
         cancelToken: this.axiosCancel.token,

@@ -112,7 +112,9 @@ class Slider extends Component {
     let slides = null;
     let startup = null;
 
-    if (this.state.sliderData.length !== 0) {
+    // if (this.state.sliderData.length !== 0) {
+    if (this.state.sliderData.length === 10) {
+      //console.log(this.state.sliderData.length);
       slides = this.state.sliderData.map((slide, index) => {
         startup = (
           <div key={index}>
@@ -144,7 +146,7 @@ class Slider extends Component {
 
     return (
       <div>
-        {this.state.sliderData.length !== 0 ? (
+        {this.state.sliderData.length === 10 ? (
           <AutoplaySlider
             startupScreen={startup}
             play={true}

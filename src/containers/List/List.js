@@ -42,6 +42,10 @@ class List extends Component {
   }
 
   componentDidUpdate(prevState) {
+    // if (this.containerWidthRef.current.clientHeight === 0) {
+    //   console.dir(this.containerWidthRef.current.clientHeight);
+    // }
+
     if (
       prevState.listLoaded !== this.state.listLoaded &&
       this.state.scrollWidth !== this.containerWidthRef.current.scrollWidth
@@ -58,6 +62,10 @@ class List extends Component {
     });
     window.addEventListener("resize", this.resizeHandler);
     this.getListHandler();
+
+    // setTimeout(() => {
+    //   console.dir(this.containerWidthRef.current.clientHeight);
+    // }, 2000);
   }
 
   componentWillUnmount() {
@@ -203,6 +211,12 @@ class List extends Component {
   };
 
   resizeHandler = async (elPos, navLeftClicked) => {
+    if (this.state.showAll) {
+      console.log("triggered");
+      this.containerWidthRef.current.style.maxHeight =
+        this.containerWidthRef.current.scrollHeight + "px";
+    }
+
     const windowW = window.innerWidth;
     if (this.containerWidthRef.current) {
       const containerW = this.containerWidthRef.current.clientWidth;
@@ -281,25 +295,34 @@ class List extends Component {
     this.setState({
       showAll: !this.state.showAll
     });
-
-    const initMax = window.innerWidth > 500 ? "370px" : "223px";
-
+    const initMax =
+      this.containerWidthRef.current.querySelector("a").clientHeight + "px";
+    this.containerWidthRef.current.style.maxHeight = initMax;
     if (!this.state.showAll) {
       this.containerWidthRef.current.style.flexWrap = "wrap";
       const scrollH = this.containerWidthRef.current.scrollHeight;
       this.containerWidthRef.current.style.maxHeight = scrollH + "px";
-      this.containerWidthRef.current.style.transition =
-        "max-height 0.5s linear";
+      this.containerWidthRef.current.style.transition = "max-height 1s linear";
+
+      // setTimeout(() => {
+      //   this.containerWidthRef.current.style.maxHeight = "100000px";
+      // }, 1000);
     } else {
-      this.containerWidthRef.current.style.transition =
-        "max-height 0.5s linear";
+      console.log(this.containerWidthRef.current.scrollHeight);
+
+      // this.containerWidthRef.current.style.maxHeight =
+      //   this.containerWidthRef.current.scrollHeight + "px";
+
+      this.containerWidthRef.current.style.transition = "max-height 1s linear";
+
+      this.containerWidthRef.current.style.maxHeight =
+        this.containerWidthRef.current.querySelector("a").clientHeight + "px";
+
       setTimeout(() => {
         this.containerWidthRef.current.style.flexWrap = "nowrap";
       }, 1000);
       this.setState({ showNavRight: true });
-      this.containerWidthRef.current.style.maxHeight = initMax;
     }
-
     this.navHandler();
   };
 

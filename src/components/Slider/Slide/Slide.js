@@ -55,11 +55,6 @@ class Slide extends Component {
               <h1>{this.props.title}</h1>
             </div>
           )}
-
-          {/* <div className={classes.LogoImg}>
-            <img src={testLogo} alt="" />
-          </div> */}
-
           {this.props.caption ? (
             <div className={classes.CaptionContainer}>
               <h2 className={classes.Caption}>{this.props.caption}</h2>
@@ -75,7 +70,6 @@ class Slide extends Component {
             </div>
           ) : null}
         </div>
-
         <img
           alt=""
           className={classes.SliderImage}

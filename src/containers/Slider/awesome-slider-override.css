@@ -66,14 +66,14 @@
   }
 }
 
-@media (max-width: 1450px) {
+/* @media (max-width: 1300px) {
   .awssld {
     height: 338px;
   }
   .awssld__bullets {
     width: 600px;
   }
-}
+} */
 
 /* @media (max-width: 1360px) {
   .awssld {
