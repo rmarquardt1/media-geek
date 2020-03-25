@@ -48,10 +48,11 @@ class SideBar extends Component {
   }
 
   menuHandler = event => {
+    console.dir(event.target.attributes);
     if (this.props.authError) {
       this.props.clearAuthError();
     }
-    if (event.target.id === "signIn") {
+    if (event.target.hasAttribute("signin")) {
       this.setState({ showSignIn: !this.state.showSignIn });
     }
   };
@@ -149,11 +150,12 @@ class SideBar extends Component {
             {!this.props.isAuth ? (
               <Aux>
                 <li
+                  signin="signin"
                   className={classes.Hover}
                   id="signIn"
                   onClick={this.menuHandler}
                 >
-                  <div className={classes.ItemHeader}>
+                  <div signin="signin" className={classes.ItemHeader}>
                     <div className={classes.ListText}>Sign In</div>
                     <FontAwesomeIcon
                       icon={faChevronDown}

@@ -1,12 +1,10 @@
 .awssld {
-  /* height: 439px; */
-
-  /* width: calc(100% + 200px);
-  position: relative; */
   background: #000;
   height: 520px;
 }
-
+.awssld__container {
+  padding-bottom: 0;
+}
 .awssld__startUp,
 .awssld__content {
   background: none;
@@ -50,13 +48,11 @@
   background: #fff;
   box-shadow: 3px 3px 3px #000;
 }
-
 @media (max-width: 1700px) {
   .awssld__controls button {
     top: 22px;
   }
 }
-
 @media (max-width: 1600px) {
   .awssld {
     height: 420px;
@@ -65,25 +61,6 @@
     width: 680px;
   }
 }
-
-/* @media (max-width: 1300px) {
-  .awssld {
-    height: 338px;
-  }
-  .awssld__bullets {
-    width: 600px;
-  }
-} */
-
-/* @media (max-width: 1360px) {
-  .awssld {
-    height: 281px;
-  }
-  .awssld__bullets {
-    width: 500px;
-  }
-} */
-
 @media (max-width: 1250px) {
   .awssld {
     height: 290px;
@@ -92,7 +69,6 @@
     width: 450px;
   }
 }
-
 @media (max-width: 1090px) {
   .awssld {
     height: 309px;
@@ -101,7 +77,6 @@
     width: 550px;
   }
 }
-
 @media (max-width: 1090px) {
   .awssld {
     height: 281px;
@@ -110,16 +85,11 @@
     width: 500px;
   }
 }
-
 @media (max-width: 768px) {
-  /* .awssld {
-    height: 281px;
-  } */
   .awssld__bullets {
     width: 100%;
   }
 }
-
 @media (max-width: 500px) {
   .awssld {
     height: 250px;

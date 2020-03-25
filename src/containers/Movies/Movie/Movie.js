@@ -29,6 +29,7 @@ class Movie extends Component {
     window.addEventListener("orientationchange", this.resizeHandler);
     this.resizeHandler();
     this.getRatingHandler();
+    console.log(this.props.showAll);
   }
 
   componentWillUnmount() {

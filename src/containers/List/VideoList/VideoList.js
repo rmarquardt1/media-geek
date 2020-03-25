@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import uiClasses from "../../../components/UI/Layout/Layout.module.css";
-import classes from "./VideoList.module.css";
+import classes from "../List.module.css";
 
 class VideoList extends Component {
   state = {
@@ -204,9 +204,33 @@ class VideoList extends Component {
 
   showAllHandler = () => {
     this.setState({
-      showAll: !this.state.showAll
+      showAll: !this.state.showAll,
+      currentElPosition: 0
     });
-    this.navHandler();
+    const el = this.containerWidthRef.current;
+    const initMax = el.querySelector(".is-visible").clientHeight + "px";
+    el.style.maxHeight = initMax;
+    if (!this.state.showAll) {
+      el.scrollTo({
+        left: el.scrollWidth - el.clientWidth
+      });
+      el.style.flexWrap = "wrap";
+      el.style.maxHeight = "1500px";
+      setTimeout(() => {
+        el.style.maxHeight = "initial";
+      }, 500);
+    } else {
+      el.style.maxHeight = "1500px";
+      setTimeout(() => {
+        el.style.maxHeight = initMax;
+      }, 10);
+      setTimeout(() => {
+        el.style.flexWrap = "nowrap";
+      }, 500);
+      this.setState({ showNavRight: true });
+      this.setState({ showAll: false });
+      this.navHandler();
+    }
   };
 
   render() {
@@ -215,11 +239,12 @@ class VideoList extends Component {
         <div className={uiClasses.SectionHeader + " " + classes.CastHeader}>
           {this.state.currentElPosition > 0 && !this.state.openActor ? (
             <div className={uiClasses.NavLeft}>
-              <FontAwesomeIcon
-                icon={faChevronLeft}
-                className={classes.ChevronArrowRight + " " + uiClasses.PrevIcon}
+              <div
+                className={uiClasses.PrevIcon}
                 onClick={() => this.navHandler("left")}
-              />
+              >
+                <FontAwesomeIcon icon={faChevronLeft} />
+              </div>
             </div>
           ) : null}
           <h2
@@ -244,11 +269,12 @@ class VideoList extends Component {
             ) : null}
 
             {this.state.showNavRight && !this.state.showAll ? (
-              <FontAwesomeIcon
-                icon={faChevronRight}
-                className={classes.ChevronArrowRight + " " + uiClasses.NextIcon}
+              <div
+                className={uiClasses.NextIcon}
                 onClick={() => this.navHandler("right")}
-              />
+              >
+                <FontAwesomeIcon icon={faChevronRight} />
+              </div>
             ) : null}
           </div>
         </div>
@@ -258,14 +284,7 @@ class VideoList extends Component {
             style={{ display: "flex", alignItems: "center", marginLeft: "5px" }}
           />
           <div className={classes.ListContainer}>
-            <div
-              className={
-                this.state.showAll
-                  ? classes.ListItemsShowAll
-                  : classes.ListItems
-              }
-              ref={this.containerWidthRef}
-            >
+            <div className={classes.ListItems} ref={this.containerWidthRef}>
               {this.state.list !== null
                 ? this.state.list.length > 0
                   ? this.state.list

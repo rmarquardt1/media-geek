@@ -42,10 +42,6 @@ class List extends Component {
   }
 
   componentDidUpdate(prevState) {
-    // if (this.containerWidthRef.current.clientHeight === 0) {
-    //   console.dir(this.containerWidthRef.current.clientHeight);
-    // }
-
     if (
       prevState.listLoaded !== this.state.listLoaded &&
       this.state.scrollWidth !== this.containerWidthRef.current.scrollWidth
@@ -57,15 +53,14 @@ class List extends Component {
   }
 
   componentDidMount() {
+    setTimeout(() => {
+      this.resizeHandler();
+    }, 1000);
     this.setState({
       containerWidth: this.containerWidthRef.current.clientWidth
     });
     window.addEventListener("resize", this.resizeHandler);
     this.getListHandler();
-
-    // setTimeout(() => {
-    //   console.dir(this.containerWidthRef.current.clientHeight);
-    // }, 2000);
   }
 
   componentWillUnmount() {
@@ -133,14 +128,12 @@ class List extends Component {
             width: "195px",
             lazyW: 195,
             height: "293px",
-            // movieHeight: '350px',
             fontSize: "14px"
           };
 
     const releases = this.state.listData
       ? this.state.listData.map((result, index) => {
           if (this.props.mediaType === "movies") {
-            // console.log("movieMarg: " + marg);
             return (
               <NavLink
                 style={{
@@ -152,6 +145,7 @@ class List extends Component {
                 key={index}
               >
                 <Movie
+                  showAll={this.state.showAll}
                   marg={marg + "px"}
                   lazyWidth={marg * 2 + movieDimensions.lazyW}
                   id={result.id}
@@ -164,7 +158,6 @@ class List extends Component {
             );
           }
           if (this.props.mediaType === "tv" && result.poster_path) {
-            // console.log("tvMarg: " + marg);
             return (
               <NavLink
                 style={{
@@ -212,7 +205,6 @@ class List extends Component {
 
   resizeHandler = async (elPos, navLeftClicked) => {
     if (this.state.showAll) {
-      console.log("triggered");
       this.containerWidthRef.current.style.maxHeight =
         this.containerWidthRef.current.scrollHeight + "px";
     }
@@ -284,43 +276,27 @@ class List extends Component {
     }
   };
 
-  // showAllHandler = () => {
-  //   this.setState({
-  //     showAll: !this.state.showAll
-  //   });
-  //   this.navHandler();
-  // };
-
   showAllHandler = () => {
     this.setState({
       showAll: !this.state.showAll
     });
-    const initMax =
-      this.containerWidthRef.current.querySelector("a").clientHeight + "px";
-    this.containerWidthRef.current.style.maxHeight = initMax;
+    const el = this.containerWidthRef.current;
+    const initMax = el.querySelector("a").clientHeight + "px";
+    el.style.maxHeight = initMax;
     if (!this.state.showAll) {
-      this.containerWidthRef.current.style.flexWrap = "wrap";
-      const scrollH = this.containerWidthRef.current.scrollHeight;
-      this.containerWidthRef.current.style.maxHeight = scrollH + "px";
-      this.containerWidthRef.current.style.transition = "max-height 1s linear";
-
-      // setTimeout(() => {
-      //   this.containerWidthRef.current.style.maxHeight = "100000px";
-      // }, 1000);
-    } else {
-      console.log(this.containerWidthRef.current.scrollHeight);
-
-      // this.containerWidthRef.current.style.maxHeight =
-      //   this.containerWidthRef.current.scrollHeight + "px";
-
-      this.containerWidthRef.current.style.transition = "max-height 1s linear";
-
-      this.containerWidthRef.current.style.maxHeight =
-        this.containerWidthRef.current.querySelector("a").clientHeight + "px";
-
+      el.scrollTo({
+        left: el.scrollWidth - el.clientWidth
+      });
+      el.style.flexWrap = "wrap";
+      el.style.maxHeight = "1500px";
       setTimeout(() => {
-        this.containerWidthRef.current.style.flexWrap = "nowrap";
-      }, 1000);
+        el.style.maxHeight = "initial";
+      }, 500);
+    } else {
+      el.style.maxHeight = "1500px";
+      setTimeout(() => {
+        el.style.maxHeight = initMax;
+      }, 10);
       this.setState({ showNavRight: true });
     }
     this.navHandler();
@@ -399,14 +375,7 @@ class List extends Component {
           </div>
         </div>
         <div className={classes.ListContainer}>
-          <div
-            className={
-              this.state.showAll
-                ? classes.ListItemsShowAll + " " + classes.ListItems
-                : classes.ListItems
-            }
-            ref={this.containerWidthRef}
-          >
+          <div className={classes.ListItems} ref={this.containerWidthRef}>
             {this.state.list !== null
               ? this.state.list.length > 0
                 ? this.state.list

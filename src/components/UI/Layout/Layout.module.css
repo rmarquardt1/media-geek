@@ -8,7 +8,6 @@
 }
 .SectionHeader h2 {
   display: inline-block;
-  /* margin: 10px 0; */
   position: absolute;
   left: 18px;
   transition: left 0.2s linear;
@@ -33,9 +32,6 @@ h2.SectionHeaderMoveLeft {
   align-items: center;
   width: 100%;
 }
-/* .SectionHeader h2 {
-  left: 46px !important;
-} */
 .HeaderSearchIcon {
   font-size: 24px;
   cursor: pointer;
@@ -55,7 +51,6 @@ h2.SectionHeaderMoveLeft {
 .NextIcon {
   background: rgba(0, 0, 0, 0.2);
   padding: 14px;
-  float: right;
   font-size: 24px;
   cursor: pointer;
 }
@@ -162,7 +157,6 @@ h2.SectionHeaderMoveLeft {
 }
 @media (max-width: 500px) {
   .SectionHeader h2 {
-    /* left: 18px; */
     font-weight: normal;
     font-size: 20px;
   }

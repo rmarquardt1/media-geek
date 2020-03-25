@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Slide from "../../components/Slider/Slide/Slide";
+import Loader from "../../components/UI/Loader/Loader";
 import listUrl from "../../references/listUrl";
 import listAxiosParams from "../../references/listAxiosParams";
 import AwesomeSlider from "react-awesome-slider";
@@ -8,7 +9,7 @@ import withAutoplay from "react-awesome-slider/dist/autoplay";
 import AwsSliderStyles from "react-awesome-slider/dist/styles.css";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/images/mg-icon.png";
-// import AwsSliderStyles from 'react-awesome-slider/dist/custom-animations/fold-out-animation.css';
+import classes from "./Slider.module.css";
 import "./awesome-slider-override.css";
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
@@ -114,18 +115,20 @@ class Slider extends Component {
 
     // if (this.state.sliderData.length !== 0) {
     if (this.state.sliderData.length === 10) {
-      //console.log(this.state.sliderData.length);
       slides = this.state.sliderData.map((slide, index) => {
         startup = (
-          <div key={index}>
-            <img src={logo} alt="" />
-            {/* <Slide
-              bgImage={slide.bgImage}
-              logoUrl={slide.logoUrl}
-              title={slide.title}
-              caption={slide.caption}
-              overview={slide.overview}
-            /> */}
+          // <div key={index}>
+          //   <img src={logo} alt="" />
+          //   {/* <Slide
+          //     bgImage={slide.bgImage}
+          //     logoUrl={slide.logoUrl}
+          //     title={slide.title}
+          //     caption={slide.caption}
+          //     overview={slide.overview}
+          //   /> */}
+          // </div>
+          <div class={classes.Loading}>
+            <Loader />
           </div>
         );
         return (
@@ -145,7 +148,7 @@ class Slider extends Component {
     }
 
     return (
-      <div>
+      <div className={classes.SliderBox}>
         {this.state.sliderData.length === 10 ? (
           <AutoplaySlider
             startupScreen={startup}

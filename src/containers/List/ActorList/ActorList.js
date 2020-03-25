@@ -10,7 +10,7 @@ import {
   faChevronUp
 } from "@fortawesome/free-solid-svg-icons";
 import uiClasses from "../../../components/UI/Layout/Layout.module.css";
-import classes from "./ActorList.module.css";
+import classes from "../List.module.css";
 
 class ActorList extends Component {
   state = {
@@ -87,7 +87,6 @@ class ActorList extends Component {
             height: "293px",
             fontSize: "14px"
           };
-
     const releases = this.props.actors
       ? this.props.actors.map(result => {
           const actorInfo = {
@@ -246,24 +245,33 @@ class ActorList extends Component {
 
   showAllHandler = () => {
     this.setState({
-      showAll: !this.state.showAll
+      showAll: !this.state.showAll,
+      currentElPosition: 0
     });
-
+    const el = this.containerWidthRef.current;
+    const initMax = el.querySelector(".is-visible").clientHeight + "px";
+    el.style.maxHeight = initMax;
     if (!this.state.showAll) {
-      this.containerWidthRef.current.style.flexWrap = "wrap";
-      const scrollH = this.containerWidthRef.current.scrollHeight;
-      this.containerWidthRef.current.style.height = scrollH + "px";
-      this.containerWidthRef.current.style.transition = "height 1s linear";
-    } else {
-      this.containerWidthRef.current.style.transition = "height 0.5s linear";
+      el.scrollTo({
+        left: el.scrollWidth - el.clientWidth
+      });
+      el.style.flexWrap = "wrap";
+      el.style.maxHeight = "1500px";
       setTimeout(() => {
-        this.containerWidthRef.current.style.flexWrap = "nowrap";
-      }, 1000);
+        el.style.maxHeight = "initial";
+      }, 500);
+    } else {
+      el.style.maxHeight = "1500px";
+      setTimeout(() => {
+        el.style.maxHeight = initMax;
+      }, 10);
+      setTimeout(() => {
+        el.style.flexWrap = "nowrap";
+      }, 500);
       this.setState({ showNavRight: true });
-      this.containerWidthRef.current.style.height = "360px";
+      this.setState({ showAll: false });
+      this.navHandler();
     }
-
-    this.navHandler();
   };
 
   render() {
@@ -272,11 +280,12 @@ class ActorList extends Component {
         <div className={uiClasses.SectionHeader + " " + classes.CastHeader}>
           {this.state.currentElPosition > 0 && !this.state.openActor ? (
             <div className={uiClasses.NavLeft}>
-              <FontAwesomeIcon
-                icon={faChevronLeft}
-                className={classes.ChevronArrowRight + " " + uiClasses.PrevIcon}
+              <div
+                className={uiClasses.PrevIcon}
                 onClick={() => this.navHandler("left")}
-              />
+              >
+                <FontAwesomeIcon icon={faChevronLeft} />
+              </div>
             </div>
           ) : null}
           <h2
@@ -303,11 +312,12 @@ class ActorList extends Component {
             {this.state.showNavRight &&
             !this.state.openActor &&
             !this.state.showAll ? (
-              <FontAwesomeIcon
-                icon={faChevronRight}
-                className={classes.ChevronArrowRight + " " + uiClasses.NextIcon}
+              <div
+                className={uiClasses.NextIcon}
                 onClick={() => this.navHandler("right")}
-              />
+              >
+                <FontAwesomeIcon icon={faChevronRight} />
+              </div>
             ) : null}
           </div>
         </div>
@@ -325,19 +335,9 @@ class ActorList extends Component {
                 actorBio={this.state.openActorBio}
                 close={this.actorCloseHandler}
                 openMovieClick={this.props.openMovie}
-                // actorId={this.state.actorInfo.actorId}
               />
             ) : (
-              <div
-                // className={
-                //   this.state.showAll
-                //     ? classes.ListItemsShowAll
-                //     : classes.ListItems
-                // }
-
-                className={classes.ListItems}
-                ref={this.containerWidthRef}
-              >
+              <div className={classes.ListItems} ref={this.containerWidthRef}>
                 {this.state.list !== null
                   ? this.state.list.length > 0
                     ? this.state.list

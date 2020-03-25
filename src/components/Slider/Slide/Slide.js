@@ -30,21 +30,7 @@ class Slide extends Component {
 
   render() {
     return (
-      <div
-        className={classes.SliderContainer}
-        style={
-          this.state.mobile
-            ? {
-                backgroundImage:
-                  'url("' +
-                  "http://image.tmdb.org/t/p/w780/" +
-                  this.props.bgImage +
-                  '")',
-                backgroundSize: "cover"
-              }
-            : null
-        }
-      >
+      <div className={classes.SlideContainer}>
         <div className={classes.SlideInfo}>
           {this.props.logoUrl ? (
             <div className={classes.LogoImg}>
@@ -64,10 +50,7 @@ class Slide extends Component {
           )}
 
           {this.props.overview ? (
-            <div className={classes.Overview}>
-              {/* <p>{this.props.overview}</p> */}
-              {this.props.overview}
-            </div>
+            <div className={classes.Overview}>{this.props.overview}</div>
           ) : null}
         </div>
         <img

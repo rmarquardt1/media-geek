@@ -2,7 +2,21 @@
   margin: 0 100px 100px 350px;
   /* margin: 70px 100px 100px 350px; */
 }
+/* .Sect {
+  display: flex;
+}
+.Sect:first-of-type {
+  width: calc(100% + 200px);
+  margin-left: -100px;
+  padding-left: 100px;
+}
+.Sect:first-of-type h2 {
+  width: calc(100% + 200px);
+  margin-left: -100px;
+  padding-left: 100px;
+} */
 .PageHeaderFirst {
+  /* .Section { */
   width: calc(100% + 200px);
   margin-left: -100px;
   padding-left: 100px;
@@ -39,6 +53,7 @@
   .SliderContainer {
     width: calc(100% + 100px);
     margin-left: -50px;
+    position: relative;
   }
   .PageHeaderFirst {
     width: calc(100% + 100px);

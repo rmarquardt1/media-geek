@@ -23,14 +23,27 @@ const Home = props => {
             // {props.isAuth && props.userData ? (
             <Aux>
               <div
-                className={uiClasses.SectionHeader + " " + uiClasses.PageHeader}
+                // className={
+                //   uiClasses.SectionHeader +
+                //   " " +
+                //   uiClasses.PageHeader
+                // }
+                className={
+                  props.isAuth
+                    ? uiClasses.SectionHeader +
+                      " " +
+                      uiClasses.PageHeader +
+                      " " +
+                      classes.PageHeaderFirst
+                    : uiClasses.SectionHeader + " " + uiClasses.PageHeader
+                }
               >
                 <div className={uiClasses.PageTitle}>
                   <FontAwesomeIcon
                     icon={faUserCircle}
                     className={classes.MoviesIcon}
                   />
-                  <h2 style={{ left: "46px" }}>Just For You</h2>
+                  <h2>Just For You</h2>
                 </div>
               </div>
               <List
@@ -45,13 +58,24 @@ const Home = props => {
               />
             </Aux>
           ) : null}
-          <div
+          {/* <div
             className={
               uiClasses.SectionHeader +
               " " +
               uiClasses.PageHeader +
               " " +
               classes.PageHeaderFirst
+            }
+          > */}
+          <div
+            className={
+              !props.isAuth
+                ? uiClasses.SectionHeader +
+                  " " +
+                  uiClasses.PageHeader +
+                  " " +
+                  classes.PageHeaderFirst
+                : uiClasses.SectionHeader + " " + uiClasses.PageHeader
             }
           >
             <div className={uiClasses.PageTitle}>
@@ -69,7 +93,15 @@ const Home = props => {
             mediaType="movies"
             heading="Upcoming Releases"
           />
-          <div className={uiClasses.SectionHeader + " " + uiClasses.PageHeader}>
+          <div
+            className={
+              uiClasses.SectionHeader +
+              " " +
+              uiClasses.PageHeader +
+              " " +
+              classes.Sect
+            }
+          >
             <div className={uiClasses.PageTitle}>
               <FontAwesomeIcon icon={faTv} className={classes.TvIcon} />
               <h2>Television</h2>
